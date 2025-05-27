@@ -1,0 +1,129 @@
+/* Obecné nastavení */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Navigace */
+nav {
+    position: fixed;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Logo jako obrázek */
+.logo img {
+    width: 100px;  /* Nastavíme vhodnou velikost */
+    height: auto;
+    padding: 10px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+nav a:hover {
+    font-weight: bold;
+}
+
+/* Hlavní sekce */
+section {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    padding-left: 200px;
+}
+
+/* Omezení šířky obsahu */
+section p {
+    max-width: 800px;
+    text-align: center;
+}
+
+/* Úvodní sekce */
+#home h1 {
+    font-size: 80px;  /* Zvýšíme velikost názvu */
+    font-weight: bold;
+    text-align: center;
+}
+
+#home p {
+    font-size: 20px;  /* Zmenšíme velikost sloganu */
+    font-weight: normal;
+    text-align: center;
+}
+
+/* Šipka dolů – vždy dole a správná velikost */
+.scroll-down img {
+    width: 40px;
+    height: auto;
+    position: absolute;
+    bottom: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.scroll-down img:hover {
+    transform: translateY(-5px);
+}
+
+/* Sekce Domů */
+#domu {
+    height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ddd;
+}
+
+#domu a {
+    text-decoration: none;
+    font-size: 20px;
+    color: #333;
+    font-weight: bold;
+}
+
+#domu a:hover {
+    text-decoration: underline;
+}
+
+/* Responsivní design */
+@media (max-width: 768px) {
+    nav {
+        position: absolute;
+        display: none;
+        background: white;
+        padding: 10px;
+        left: 0;
+        width: 100%;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    nav a {
+        padding: 15px;
+        font-size: 20px;
+    }
+}
