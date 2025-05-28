@@ -14,13 +14,14 @@
         </div>
         <a href="#home">Domů</a>
         <a href="#onas">O nás</a>
-        <a href="#modelovani">Modelování RK</a>
+        <a href="#rizeni">Řízení</a>
+        <a href="#modelovani">Modelování</a>
         <a href="#kontakt">Kontakt</a>
     </nav>
 
     <section id="home">
         <h1>Livenia</h1>
-        <p>Snižujeme náklady na energie</p>
+        <p>Snižujeme náklady na energie.</p>
         <div class="scroll-down">
             <img src="arrow.png" alt="Šipka dolů">
         </div>
@@ -29,16 +30,65 @@
     <section id="onas">
         <h2>O nás</h2>
         <p>Jsme moderní platforma zaměřená na inovace v úspoře energií.</p>
+     
+        <p>Náš tým se zabývá pokročilým modelováním reálných systémů. Prvním úspěchem je vytvoření <b>matematického modelu pro nastavení rezervované kapacity</b>.</p>
+    
+    </section>
+
+    
+ 
+    <section id="rizeni">
+        
+    <h2>Čtvrthodinové maximum</h2>
+        <p>Čtvrthodinové maximum definuje maximální množství energie (kWh), které je odběratel oprávněn odebrat za dobu 15 minut.</p>
+    <h2>Sjednané maximum</h2>
+        <p>Odběratel si s dodavatelem sjednává maximální hodnotu čtvrthodinového maxima. Sjednané čtvrthodinové maximum má vliv na výši plateb za elektřinu (například 610 kW znamená náklad 1 500 000 Kč ročně). Nezřídka je rezervovaná kapacita určena nepřesně až o 30%, to znamená 500 000Kč ročně navíc.</p>
+    <h2>Hlídače</h2> 
+        <p>K monitorování a regulaci čtvrthodinového maxima se používají speciální přístroje (hlídače 1/4max), které se připojují k elektroměru a sledují aktuální odběr. </p>
+    <h2>Hodnoty rezevované kapacity</h2>
+        <p>Snížení odběrových špiček vede ke nižším měsíčním nákladům na elektřinu a k lepšímu využití energetických zdrojů. Avšak neméně důležité je sjednat správné hodnoty roční a měsíční rezervované kapacity a s tím pomůže matematický model Livenia.</p>
     </section>
 
     <section id="modelovani">
-        <h2>Modelování RK</h2>
-        <p>Náš tým se zabývá pokročilým modelováním reálných systémů. Prvním úspěchem je vytvoření matematického modelu pro nastavení rezervované kapacity.</p>
+    <h2>Modelování</h2>
+        <p>Vložte data z faktur nebo systému dodavatele a model spočíta idální nastavení a roční úsporu. </p>
+  
+        <form id="rkForm">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Měsíc</th>
+                        <th>Sjednané RRK</th>
+                        <th>Sjednané MRK</th>
+                        <th>Skutečně naměřené 1/4h maximum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Generování 12 řádků pro měsíce -->
+                    <script>
+                        for (let i = 1; i <= 12; i++) {
+                            document.write(`<tr>
+                                <td>${i}</td>
+                                <td><input type="number" id="rrk" onchange="kopirujRRK()" /></td>
+                                <td><input type="number" id="mrk${i}" /></td>
+                                <td><input type="number" id="max${i}" /></td>
+                            </tr>`);
+                        }
+                    </script>
+                </tbody>
+            </table>
+            <button type="button" onclick="odeslatData()">Odeslat</button>
+        </form>
+
+        <div id="vysledky"></div>
+    </section>
+
+     
     </section>
 
     <section id="kontakt">
         <h2>Kontakt</h2>
-        <p>Email: info@livenia.eu</p>
+        <p>arpo4all@gmail.com</p>
     </section>
 
     <section id="domu">
