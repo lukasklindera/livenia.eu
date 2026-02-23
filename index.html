@@ -4,208 +4,176 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Livenia – Optimalizace rezervované kapacity</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120'%3E%3Crect width='100' height='120' rx='18' fill='%23f4f0e8'/%3E%3Cpath d='M50 10C50 10 20 50 20 70C20 88 33 102 50 102C67 102 80 88 80 70C80 50 50 10 50 10Z' stroke='%2300c060' stroke-width='6' stroke-linejoin='round' stroke-linecap='round' fill='none'/%3E%3Cline x1='50' y1='88' x2='50' y2='56' stroke='%2300c060' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M50 56C44 46 35 43 31 45C33 53 40 58 50 59C60 58 67 53 69 45C65 43 56 46 50 56Z' stroke='%2300c060' stroke-width='4' fill='none' stroke-linejoin='round' stroke-linecap='round'/%3E%3Cpath d='M50 71C43 64 35 63 32 65C34 71 41 74 50 73Z' stroke='%2300c060' stroke-width='3.5' fill='none' stroke-linejoin='round' stroke-linecap='round'/%3E%3Cpath d='M50 71C57 64 65 63 68 65C66 71 59 74 50 73Z' stroke='%2300c060' stroke-width='3.5' fill='none' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:         #07100a;
-  --surface:    #0d1a10;
-  --surface2:   #122018;
-  --border:     #1c3022;
-  --accent:     #00e87a;
-  --accent-dim: rgba(0,232,122,.12);
-  --text:       #e2f0e6;
-  --text-dim:   #5a7d63;
-  --warn:       #f0b429;
-  --mono:       'IBM Plex Mono', monospace;
-  --sans:       'Syne', sans-serif;
+  --bg: #f4f0e8;
+  --bg2: #ede9e0;
+  --text: #1a1a18;
+  --mid: #6b6860;
+  --light: #b0aca4;
+  --border: #d8d4cc;
+  --g: #00e87a;
+  --gdim: rgba(0,232,122,.13);
+  --green: #1e5c3a;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'DM Sans', sans-serif;
+  --mono: 'DM Mono', monospace;
 }
-
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { font-family: var(--sans); background: var(--bg); color: var(--text); overflow-x: hidden; }
-
-body::after {
-  content: '';
-  position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  pointer-events: none; z-index: 9999;
-}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);overflow-x:hidden}
 
 /* NAV */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: center;
-  padding: 1.25rem 3rem;
-  border-bottom: 1px solid transparent;
-  transition: background .4s, border-color .4s, backdrop-filter .4s;
-}
-nav.scrolled {
-  background: rgba(7,16,10,.88); border-color: var(--border);
-  backdrop-filter: blur(16px);
-}
-.nav-logo { display: flex; align-items: center; gap: .75rem; text-decoration: none; }
-.nav-logo-mark { width: 32px; height: 32px; background: var(--accent); border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 4px; }
-.nav-logo-text { font-size: 1.25rem; font-weight: 800; letter-spacing: -.03em; color: var(--text); }
-.nav-logo-text em { font-style: normal; color: var(--accent); }
-.nav-links { display: flex; align-items: center; gap: 2rem; margin-left: auto; list-style: none; }
-.nav-links a { text-decoration: none; font-size: .85rem; font-weight: 600; color: var(--text-dim); transition: color .2s; }
-.nav-links a:hover { color: var(--text); }
-.nav-cta { background: var(--accent) !important; color: #07100a !important; padding: .5rem 1.25rem; border-radius: 100px; transition: box-shadow .2s, transform .2s; }
-.nav-cta:hover { box-shadow: 0 4px 20px rgba(0,232,122,.35) !important; transform: translateY(-1px); }
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;padding:1.5rem 3rem;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+nav.scrolled{background:rgba(244,240,232,.94);border-color:var(--border);backdrop-filter:blur(12px)}
+.nav-logo{display:flex;align-items:center;gap:.75rem;text-decoration:none;color:var(--text)}
+.nav-logo svg{width:26px;height:32px}
+.nav-name{font-family:var(--serif);font-size:1.35rem;letter-spacing:-.01em;background:linear-gradient(135deg,var(--text) 40%,var(--green) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;align-items:center;gap:2.5rem;margin-left:auto;list-style:none}
+.nav-links a{text-decoration:none;font-size:.85rem;color:var(--mid);font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
 
 /* HERO */
-#home {
-  min-height: 100vh; display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center; padding: 8rem 2rem 4rem; position: relative; overflow: hidden;
-}
-#home::before {
-  content: ''; position: absolute; inset: 0;
-  background-image: linear-gradient(rgba(0,232,122,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,232,122,.04) 1px, transparent 1px);
-  background-size: 60px 60px;
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 40%, transparent 100%);
-}
-#home::after {
-  content: ''; position: absolute; top: 20%; left: 50%; transform: translate(-50%,-50%);
-  width: 600px; height: 600px;
-  background: radial-gradient(circle, rgba(0,232,122,.07) 0%, transparent 70%);
-  pointer-events: none;
-}
-.hero-badge {
-  display: inline-flex; align-items: center; gap: .5rem;
-  background: var(--accent-dim); border: 1px solid rgba(0,232,122,.25);
-  border-radius: 100px; padding: .4rem 1rem;
-  font-family: var(--mono); font-size: .7rem; color: var(--accent); letter-spacing: .08em;
-  margin-bottom: 2rem; animation: fadeUp .6s ease both;
-}
-.hero-badge::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s ease infinite; }
-@keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.4; transform:scale(.7); } }
-.hero-h1 { font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 800; letter-spacing: -.05em; line-height: 1.0; max-width: 800px; animation: fadeUp .6s .1s ease both; }
-.hero-h1 em { font-style: normal; color: var(--accent); }
-.hero-sub { margin-top: 1.5rem; font-size: 1.05rem; color: var(--text-dim); max-width: 520px; line-height: 1.7; animation: fadeUp .6s .2s ease both; }
-.hero-actions { display: flex; gap: 1rem; margin-top: 2.5rem; animation: fadeUp .6s .3s ease both; flex-wrap: wrap; justify-content: center; }
-.btn-primary { background: var(--accent); color: #07100a; padding: .85rem 2rem; border-radius: 100px; text-decoration: none; font-weight: 700; font-size: .95rem; transition: transform .2s, box-shadow .2s; }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,232,122,.3); }
-.btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text-dim); padding: .85rem 2rem; border-radius: 100px; text-decoration: none; font-weight: 600; font-size: .95rem; transition: border-color .2s, color .2s; }
-.btn-secondary:hover { border-color: var(--accent); color: var(--text); }
-.hero-stats { display: flex; gap: 3rem; margin-top: 5rem; animation: fadeUp .6s .4s ease both; flex-wrap: wrap; justify-content: center; }
-.stat .num { font-size: 2rem; font-weight: 800; letter-spacing: -.04em; color: var(--accent); }
-.stat .lbl { font-family: var(--mono); font-size: .65rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: .1em; margin-top: .2rem; }
-.scroll-hint { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: .5rem; font-family: var(--mono); font-size: .6rem; color: var(--text-dim); animation: fadeUp .6s .6s ease both; }
-.scroll-hint::after { content: ''; width: 1px; height: 40px; background: linear-gradient(to bottom, var(--text-dim), transparent); animation: scrollLine 2s ease-in-out infinite; }
-@keyframes scrollLine { 0%,100% { transform:scaleY(1); opacity:1; } 50% { transform:scaleY(.5); opacity:.4; } }
+#home{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10rem 2rem 6rem;position:relative}
+.hero-eyebrow{font-family:var(--mono);font-size:.75rem;color:var(--g);letter-spacing:.12em;text-transform:uppercase;margin-bottom:2.5rem;animation:fadeUp .7s ease both}
+.hero-h1{font-family:var(--serif);font-size:clamp(3.5rem,9vw,7.5rem);font-weight:400;letter-spacing:-.03em;line-height:.95;max-width:900px;animation:fadeUp .7s .1s ease both}
+.hero-h1 .big{display:block}
+.hero-h1 .italic{display:block;font-style:italic;color:var(--mid);font-size:.72em}
+.hero-sub{margin-top:2.5rem;font-size:1rem;color:var(--mid);max-width:460px;line-height:1.75;animation:fadeUp .7s .2s ease both}
+.hero-cta{display:flex;gap:1rem;margin-top:3rem;animation:fadeUp .7s .3s ease both;flex-wrap:wrap;justify-content:center}
+.btn-dark{background:var(--text);color:var(--bg);padding:.8rem 2rem;border-radius:2px;text-decoration:none;font-size:.875rem;font-weight:500;transition:opacity .2s}
+.btn-dark:hover{opacity:.8}
+.btn-ghost{background:transparent;color:var(--text);padding:.8rem 2rem;border-radius:2px;text-decoration:none;font-size:.875rem;font-weight:500;border:1px solid var(--border);transition:border-color .2s}
+.btn-ghost:hover{border-color:var(--g)}
+.hero-stats{display:flex;gap:0;margin-top:6rem;animation:fadeUp .7s .4s ease both;border:1px solid var(--border);border-top:2px solid transparent;border-image:linear-gradient(90deg,transparent,var(--g),transparent) 1}
+.hstat{padding:1.5rem 2.5rem;text-align:center;border-right:1px solid var(--border)}
+.hstat:last-child{border-right:none}
+.hstat .n{font-family:var(--serif);font-size:2rem;letter-spacing:-.03em}
+.hstat .l{font-size:.72rem;color:var(--mid);margin-top:.3rem;font-family:var(--mono);letter-spacing:.05em}
+.scroll-arrow{position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.75rem;animation:fadeUp .7s .6s ease both;text-decoration:none}
+.scroll-arrow span{font-family:var(--mono);font-size:.65rem;color:var(--mid);letter-spacing:.1em;text-transform:uppercase}
+.scroll-arrow svg{animation:bounce 2s ease infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
 
-/* SECTIONS */
-section { padding: 6rem 2rem; }
-.section-inner { max-width: 1100px; margin: 0 auto; }
-.section-label { font-family: var(--mono); font-size: .65rem; color: var(--accent); text-transform: uppercase; letter-spacing: .15em; margin-bottom: 1rem; display: flex; align-items: center; gap: .5rem; }
-.section-label::before { content: ''; display: inline-block; width: 20px; height: 1px; background: var(--accent); }
-.section-h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -.04em; line-height: 1.1; margin-bottom: 1.25rem; }
-.section-p { color: var(--text-dim); line-height: 1.8; max-width: 600px; }
+/* SHARED */
+section{position:relative}
+.sw{max-width:1100px;margin:0 auto;padding:6rem 3rem}
+.divider{border:none;height:1px;background:linear-gradient(90deg,transparent 0%,var(--g) 30%,var(--g) 70%,transparent 100%);opacity:.2}
+.stag{font-family:var(--mono);font-size:.7rem;color:var(--g);text-transform:uppercase;letter-spacing:.12em;margin-bottom:3rem}
 
-/* O NÁS */
-#onas { border-top: 1px solid var(--border); }
-.onas-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-top: 3rem; }
-.feature-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.feature-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; transition: border-color .3s, transform .3s; }
-.feature-card:hover { border-color: rgba(0,232,122,.3); transform: translateY(-2px); }
-.feature-icon { font-size: 1.5rem; margin-bottom: .75rem; }
-.feature-card h3 { font-size: .9rem; font-weight: 700; margin-bottom: .5rem; }
-.feature-card p { font-size: .8rem; color: var(--text-dim); line-height: 1.6; }
+/* O NAS */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
+.about-h{font-family:var(--serif);font-size:clamp(2.5rem,4vw,3.5rem);letter-spacing:-.03em;line-height:1.05;font-weight:400}
+.about-h em{font-style:italic;color:var(--mid)}
+.about-body{margin-top:2rem}
+.about-body p{color:var(--mid);line-height:1.8;font-size:.95rem;margin-bottom:1rem}
+.feature-list{}
+.fi-row{display:flex;gap:1.5rem;padding:1.5rem 0;border-bottom:1px solid var(--border)}
+.fi-row:first-child{border-top:1px solid var(--border)}
+.fi-num{font-family:var(--mono);font-size:.7rem;color:var(--g);padding-top:.2rem;flex-shrink:0;width:2rem}
+.fi-body h3{font-size:.9rem;font-weight:600;margin-bottom:.35rem}
+.fi-body p{font-size:.82rem;color:var(--mid);line-height:1.6}
 
 /* RIZENI */
-#rizeni { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.steps { display: flex; flex-direction: column; gap: 0; margin-top: 3rem; position: relative; }
-.steps::before { content: ''; position: absolute; left: 19px; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--accent), transparent); }
-.step { display: grid; grid-template-columns: 40px 1fr; gap: 1.5rem; padding: 0 0 2.5rem 0; align-items: start; }
-.step-num { width: 40px; height: 40px; background: var(--bg); border: 1px solid var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: .8rem; color: var(--accent); flex-shrink: 0; position: relative; z-index: 1; }
-.step-body h3 { font-size: 1rem; font-weight: 700; margin-bottom: .4rem; padding-top: .6rem; }
-.step-body p { color: var(--text-dim); font-size: .875rem; line-height: 1.7; max-width: 560px; }
-.highlight-box { background: var(--accent-dim); border: 1px solid rgba(0,232,122,.2); border-radius: 10px; padding: 1rem 1.25rem; font-family: var(--mono); font-size: .8rem; color: #b4f07e; margin-top: .75rem; line-height: 1.6; }
+#rizeni{background:var(--bg2)}
+.how-layout{display:grid;grid-template-columns:1fr 1fr;gap:6rem}
+.how-h{font-family:var(--serif);font-size:clamp(2.5rem,4vw,3.5rem);letter-spacing:-.03em;line-height:1.05;font-weight:400;position:sticky;top:8rem;align-self:start}
+.how-h em{font-style:italic}
+.steps-list{display:flex;flex-direction:column}
+.step-row{padding:2rem 0;border-bottom:1px solid var(--border)}
+.step-row:first-child{border-top:1px solid var(--border)}
+.step-n{font-family:var(--mono);font-size:.65rem;color:var(--g);letter-spacing:.1em;margin-bottom:.75rem;text-transform:uppercase}
+.step-row h3{font-family:var(--serif);font-size:1.3rem;letter-spacing:-.02em;margin-bottom:.75rem;font-weight:400}
+.step-row p{font-size:.875rem;color:var(--mid);line-height:1.75}
+.insight{margin-top:1rem;background:var(--gdim);border:1px solid rgba(0,232,122,.25);border-left:3px solid var(--g);border-radius:0 2px 2px 0;padding:1rem 1.25rem;font-family:var(--mono);font-size:.75rem;color:var(--green);line-height:1.6}
 
-/* KALKULAČKA */
-#modelovani { border-top: 1px solid var(--border); }
-.calc-layout { display: grid; grid-template-columns: 1fr 320px; gap: 2rem; align-items: start; margin-top: 3rem; }
-.card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
-.card-header { padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: .75rem; background: var(--surface2); }
-.card-header h3 { font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--text-dim); }
-.dot-green { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
-.prices-row { display: flex; gap: .75rem; padding: 1rem 1.5rem; background: var(--surface2); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
-.price-chip { display: flex; flex-direction: column; gap: 2px; }
-.price-chip label { font-family: var(--mono); font-size: .6rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: .07em; }
-.price-chip input { background: transparent; border: none; border-bottom: 1px solid var(--border); color: var(--accent); font-family: var(--mono); font-size: .9rem; width: 110px; outline: none; padding: 2px 0; }
-.price-chip input:focus { border-color: var(--accent); }
-table { width: 100%; border-collapse: collapse; }
-thead th { padding: .6rem 1rem; font-family: var(--mono); font-size: .6rem; text-transform: uppercase; letter-spacing: .1em; color: var(--text-dim); text-align: left; border-bottom: 1px solid var(--border); background: var(--surface2); }
-tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
-tbody tr:last-child { border-bottom: none; }
-tbody tr:hover { background: var(--accent-dim); }
-tbody td { padding: .55rem 1rem; font-family: var(--mono); font-size: .82rem; vertical-align: middle; }
-.m-name { color: var(--text-dim); font-size: .75rem; }
-input[type="number"] { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; color: var(--text); font-family: var(--mono); font-size: .82rem; padding: 5px 8px; width: 85px; text-align: right; outline: none; transition: border-color .2s, box-shadow .2s; -moz-appearance: textfield; }
-input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
-input[type="number"]:focus { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-dim); }
-.mrk-badge { font-size: .68rem; color: var(--text-dim); background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 2px 7px; white-space: nowrap; transition: all .3s; }
-.mrk-badge.ok { color: var(--accent); border-color: rgba(0,232,122,.3); background: var(--accent-dim); }
-.mrk-badge.over { color: var(--warn); border-color: rgba(240,180,41,.3); background: rgba(240,180,41,.08); }
-.rrk-row { display: flex; align-items: center; gap: 1rem; padding: .9rem 1.5rem; border-top: 1px solid var(--border); background: var(--surface2); flex-wrap: wrap; }
-.rrk-row label { font-family: var(--mono); font-size: .75rem; color: var(--text-dim); }
-.rrk-row .rrk-note { font-family: var(--mono); font-size: .65rem; color: var(--text-dim); margin-left: auto; }
-.btn-calc { width: 100%; margin-top: 1.25rem; padding: 1rem; background: var(--accent); color: #07100a; border: none; border-radius: 10px; font-family: var(--sans); font-size: 1rem; font-weight: 700; cursor: pointer; transition: transform .15s, box-shadow .2s; }
-.btn-calc:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,232,122,.3); }
-.btn-calc:active { transform: translateY(0); }
-.btn-example { font-family: var(--mono); font-size: .7rem; color: var(--accent); background: transparent; border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; cursor: pointer; margin-left: auto; transition: border-color .2s, background .2s; }
-.btn-example:hover { border-color: var(--accent); background: var(--accent-dim); }
-.sidebar { display: flex; flex-direction: column; gap: 1rem; }
-.r-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem; transition: border-color .4s; }
-.r-card.highlight { border-color: var(--accent); background: linear-gradient(135deg, var(--surface) 0%, #0b1d10 100%); }
-.r-label { font-family: var(--mono); font-size: .6rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .4rem; }
-.r-val { font-size: 1.9rem; font-weight: 800; letter-spacing: -.04em; color: var(--text); transition: color .4s; }
-.r-card.highlight .r-val { color: var(--accent); }
-.r-sub { font-family: var(--mono); font-size: .65rem; color: var(--text-dim); margin-top: .2rem; }
-.br-row { display: flex; justify-content: space-between; font-family: var(--mono); font-size: .72rem; color: var(--text-dim); padding: .35rem 0; border-bottom: 1px solid var(--border); }
-.br-row:last-child { border-bottom: none; }
-.br-row .bv { color: var(--text); }
-.br-row.total { color: var(--text); border-top: 1px solid rgba(0,232,122,.3); margin-top: 4px; padding-top: 8px; }
-.br-row.total .bv { color: var(--accent); font-weight: 700; }
-.chart-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem; }
-.chart-title { font-family: var(--mono); font-size: .6rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 1rem; }
-.bars { display: flex; align-items: flex-end; gap: 3px; height: 90px; position: relative; }
-.bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; height: 100%; justify-content: flex-end; }
-.bar { width: 100%; border-radius: 3px 3px 0 0; transition: height .6s cubic-bezier(.34,1.56,.64,1); min-height: 2px; }
-.bar.b-actual { background: var(--text-dim); }
-.bar.b-over { background: var(--warn); }
-.bar-lbl { font-family: var(--mono); font-size: .5rem; color: var(--text-dim); }
-.chart-legend { display: flex; gap: .75rem; margin-top: .75rem; flex-wrap: wrap; }
-.lg-item { display: flex; align-items: center; gap: 4px; font-family: var(--mono); font-size: .6rem; color: var(--text-dim); }
-.lg-dot { width: 7px; height: 7px; border-radius: 2px; }
-.placeholder-hint { text-align: center; padding: 1.5rem 1rem; font-family: var(--mono); font-size: .72rem; color: var(--text-dim); line-height: 1.7; }
-.info-note { background: var(--surface2); border-left: 2px solid var(--accent); border-radius: 0 8px 8px 0; padding: .9rem 1.1rem; font-family: var(--mono); font-size: .72rem; color: var(--text-dim); line-height: 1.6; margin-top: 1.25rem; }
-.info-note strong { color: var(--text); }
+/* KALKULATOR */
+.calc-intro{max-width:600px;margin-bottom:4rem}
+.calc-intro h2{font-family:var(--serif);font-size:clamp(2.5rem,4vw,3.5rem);letter-spacing:-.03em;line-height:1.05;font-weight:400;margin-bottom:1rem}
+.calc-intro p{font-size:.95rem;color:var(--mid);line-height:1.75}
+.calc-layout{display:grid;grid-template-columns:1fr 300px;gap:3rem;align-items:start}
+.table-wrap{border:1px solid var(--border);border-top:2px solid transparent;border-image:linear-gradient(90deg,var(--g),transparent) 1;border-radius:0 0 2px 2px;overflow:hidden;background:white}
+.table-top{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;border-bottom:1px solid var(--border);background:var(--bg2)}
+.table-top span{font-family:var(--mono);font-size:.7rem;color:var(--mid);text-transform:uppercase;letter-spacing:.1em}
+.prices-bar{display:flex;gap:2rem;padding:1rem 1.5rem;border-bottom:1px solid var(--border);background:var(--bg2);flex-wrap:wrap}
+.pc{display:flex;flex-direction:column;gap:3px}
+.pc label{font-family:var(--mono);font-size:.6rem;color:var(--light);text-transform:uppercase;letter-spacing:.07em}
+.pc input{background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:.85rem;width:120px;outline:none;padding:2px 0}
+.pc input:focus{border-color:var(--g)}
+table{width:100%;border-collapse:collapse;background:white}
+thead th{padding:.75rem 1.5rem;font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:var(--light);text-align:left;border-bottom:1px solid var(--border);background:var(--bg2)}
+tbody tr{border-bottom:1px solid var(--border);transition:background .15s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:#f8fdf9}
+tbody td{padding:.6rem 1.5rem;font-size:.875rem;vertical-align:middle}
+.mc{font-family:var(--mono);font-size:.75rem;color:var(--mid)}
+input[type="number"]{background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:.85rem;width:80px;text-align:right;outline:none;padding:3px 0;transition:border-color .2s;-moz-appearance:textfield}
+input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none}
+input[type="number"]:focus{border-color:var(--g)}
+.rbadge{font-family:var(--mono);font-size:.65rem;color:var(--light);white-space:nowrap;transition:color .3s}
+.rbadge.ok{color:var(--green)}
+.rbadge.over{color:#c45c00}
+.rrk-bar{display:flex;align-items:center;gap:1.5rem;padding:1rem 1.5rem;border-top:1px solid var(--border);background:var(--bg2);flex-wrap:wrap}
+.rrk-bar label{font-family:var(--mono);font-size:.7rem;color:var(--mid)}
+.rrk-bar .rn{font-family:var(--mono);font-size:.65rem;color:var(--light);margin-left:auto}
+.btn-calc{width:100%;margin-top:1.5rem;padding:.9rem;background:var(--text);color:var(--bg);border:none;border-radius:2px;font-family:var(--sans);font-size:.9rem;font-weight:600;cursor:pointer;letter-spacing:.02em;transition:opacity .2s,box-shadow .2s}
+.btn-calc:hover{opacity:.9;box-shadow:0 0 0 2px var(--g)}
+.btn-ex{font-family:var(--mono);font-size:.65rem;color:var(--mid);background:transparent;border:1px solid var(--border);border-radius:2px;padding:4px 10px;cursor:pointer;transition:border-color .2s,color .2s}
+.btn-ex:hover{border-color:var(--g);color:var(--green)}
+.method-note{margin-top:1.25rem;font-family:var(--mono);font-size:.7rem;color:var(--light);line-height:1.7;padding-left:1rem;border-left:2px solid var(--border)}
+.method-note strong{color:var(--mid)}
+
+/* Results */
+.results-col{display:flex;flex-direction:column;gap:0}
+.res-block{padding:1.5rem 0;border-bottom:1px solid var(--border)}
+.res-block:first-child{border-top:1px solid var(--border)}
+.res-tag{font-family:var(--mono);font-size:.62rem;color:var(--g);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem}
+.res-val{font-family:var(--serif);font-size:2.2rem;letter-spacing:-.04em;color:var(--text);line-height:1}
+.res-val.pos{background:linear-gradient(135deg,var(--text) 30%,var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.res-sub{font-family:var(--mono);font-size:.65rem;color:var(--light);margin-top:.4rem}
+.brow{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--mid);padding:.35rem 0;border-bottom:1px solid var(--border)}
+.brow:last-child{border-bottom:none}
+.brow .bv{color:var(--text)}
+.brow.tot{color:var(--text);font-weight:600;border-top:1px solid var(--g);margin-top:4px;padding-top:8px}
+.brow.tot .bv{color:var(--green)}
+.empty-state{font-family:var(--mono);font-size:.72rem;color:var(--light);line-height:1.7;padding:1rem 0}
+.chart-block{margin-top:1.5rem}
+.chart-tag{font-family:var(--mono);font-size:.62rem;color:var(--light);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem}
+.bars{display:flex;align-items:flex-end;gap:3px;height:80px;position:relative}
+.bwrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end}
+.bar{width:100%;border-radius:1px 1px 0 0;transition:height .5s cubic-bezier(.34,1.3,.64,1);min-height:2px}
+.bar.ba{background:var(--border)}
+.bar.bo{background:#c45c00;opacity:.7}
+.blbl{font-family:var(--mono);font-size:.45rem;color:var(--light)}
+.clegend{display:flex;gap:.75rem;margin-top:.6rem;flex-wrap:wrap}
+.lg{display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:.58rem;color:var(--light)}
+.lgd{width:8px;height:6px;border-radius:1px}
 
 /* KONTAKT */
-#kontakt { background: var(--surface); border-top: 1px solid var(--border); text-align: center; }
-.kontakt-inner { max-width: 600px; margin: 0 auto; }
-.contact-card { background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; display: inline-block; margin-top: 2rem; }
-.contact-card a { font-family: var(--mono); font-size: 1.1rem; color: var(--accent); text-decoration: none; }
-.contact-card a:hover { text-decoration: underline; }
-.contact-label { font-family: var(--mono); font-size: .65rem; color: var(--text-dim); margin-bottom: .5rem; }
-footer { padding: 2rem; text-align: center; font-family: var(--mono); font-size: .65rem; color: var(--text-dim); border-top: 1px solid var(--border); }
+#kontakt{background:var(--bg2)}
+.contact-h{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);letter-spacing:-.03em;line-height:1.05;font-weight:400;margin-bottom:1.5rem}
+.contact-h em{font-style:italic}
+.contact-p{font-size:.95rem;color:var(--mid);line-height:1.75;margin-bottom:2.5rem;max-width:500px}
+.contact-email{display:inline-flex;align-items:center;gap:.75rem;font-family:var(--serif);font-size:1.5rem;letter-spacing:-.02em;color:var(--text);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:.5rem;transition:border-color .2s,color .2s}
+.contact-email:hover{border-color:var(--g);color:var(--green)}
+footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);font-family:var(--mono);font-size:.65rem;color:var(--light)}
 
 /* ANIMATIONS */
-@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-.fade-in { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
-.fade-in.visible { opacity: 1; transform: translateY(0); }
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.fi{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.fi.v{opacity:1;transform:translateY(0)}
 
 /* RESPONSIVE */
-@media (max-width: 960px) { .calc-layout { grid-template-columns: 1fr; } }
-@media (max-width: 768px) {
-  nav { padding: 1rem 1.5rem; }
-  .nav-links { display: none; }
-  section { padding: 4rem 1.25rem; }
-  .onas-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .feature-cards { grid-template-columns: 1fr; }
-  .hero-stats { gap: 1.5rem; }
+@media(max-width:960px){.calc-layout{grid-template-columns:1fr}}
+@media(max-width:768px){
+  nav{padding:1.25rem 1.5rem}.nav-links{display:none}
+  .sw{padding:4rem 1.5rem}
+  .about-grid,.how-layout{grid-template-columns:1fr;gap:3rem}
+  .how-h{position:static}
+  .hero-stats{flex-wrap:wrap}
+  .hstat{border-right:none!important;border-bottom:1px solid var(--border);min-width:140px;flex:1}
 }
 </style>
 </head>
@@ -213,170 +181,169 @@ footer { padding: 2rem; text-align: center; font-family: var(--mono); font-size:
 
 <nav id="mainNav">
   <a href="#home" class="nav-logo">
-    <div class="nav-logo-mark">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120" fill="none" width="20" height="24">
-        <path d="M50 8 C50 8 18 52 18 72 C18 90 32 104 50 104 C68 104 82 90 82 72 C82 52 50 8 50 8Z" stroke="#07100a" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
-        <line x1="50" y1="92" x2="50" y2="55" stroke="#07100a" stroke-width="3.5" stroke-linecap="round"/>
-        <path d="M50 55 C44 45 36 42 32 44 C34 52 40 57 50 58 C60 57 66 52 68 44 C64 42 56 45 50 55Z" stroke="#07100a" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
-        <path d="M50 70 C44 63 36 62 33 64 C35 70 41 73 50 72Z" stroke="#07100a" stroke-width="2.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
-        <path d="M50 70 C56 63 64 62 67 64 C65 70 59 73 50 72Z" stroke="#07100a" stroke-width="2.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
-        <path d="M50 92 C46 88 43 86 50 84 C57 86 54 88 50 92Z" stroke="#07100a" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
-      </svg>
-    </div>
-    <div class="nav-logo-text">Live<em>nia</em></div>
+    <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 8C50 8 18 52 18 72C18 90 32 104 50 104C68 104 82 90 82 72C82 52 50 8 50 8Z" stroke="url(#lg1)" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+      <line x1="50" y1="90" x2="50" y2="56" stroke="url(#lg1)" stroke-width="5" stroke-linecap="round"/>
+      <path d="M50 56C44 46 35 43 31 45C33 53 40 58 50 59C60 58 67 53 69 45C65 43 56 46 50 56Z" stroke="url(#lg1)" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M50 71C43 64 35 63 32 65C34 71 41 74 50 73Z" stroke="url(#lg1)" stroke-width="3.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M50 71C57 64 65 63 68 65C66 71 59 74 50 73Z" stroke="url(#lg1)" stroke-width="3.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+      <defs>
+        <linearGradient id="lg1" x1="50" y1="8" x2="50" y2="104" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#1a1a18"/>
+          <stop offset="100%" stop-color="#00c060"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div class="nav-name">Livenia</div>
   </a>
   <ul class="nav-links">
     <li><a href="#onas">O nás</a></li>
     <li><a href="#rizeni">Jak to funguje</a></li>
     <li><a href="#modelovani">Kalkulačka</a></li>
-    <li><a href="#kontakt" class="nav-cta">Kontakt</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
   </ul>
 </nav>
 
-<!-- HERO -->
 <section id="home">
-  <div class="hero-badge">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120" fill="none" width="14" height="17" style="flex-shrink:0">
-      <path d="M50 8 C50 8 18 52 18 72 C18 90 32 104 50 104 C68 104 82 90 82 72 C82 52 50 8 50 8Z" stroke="#00e87a" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
-      <line x1="50" y1="92" x2="50" y2="55" stroke="#00e87a" stroke-width="4" stroke-linecap="round"/>
-      <path d="M50 55 C44 45 36 42 32 44 C34 52 40 57 50 58 C60 57 66 52 68 44 C64 42 56 45 50 55Z" stroke="#00e87a" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
-      <path d="M50 70 C44 63 36 62 33 64 C35 70 41 73 50 72Z" stroke="#00e87a" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
-      <path d="M50 70 C56 63 64 62 67 64 C65 70 59 73 50 72Z" stroke="#00e87a" stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
-    </svg>
-    Matematický model pro úsporu energií
-  </div>
-  <h1 class="hero-h1">Snižujeme náklady<br>na <em>elektřinu</em></h1>
-  <p class="hero-sub">Váš podnik pravděpodobně přeplácí za rezervovanou kapacitu. Náš model přesně spočítá, jak nastavit smlouvu s distributorem, abyste platili jen to nezbytné.</p>
-  <div class="hero-actions">
-    <a href="#modelovani" class="btn-primary">Vyzkoušet kalkulačku →</a>
-    <a href="#rizeni" class="btn-secondary">Jak to funguje?</a>
+  <p class="hero-eyebrow">Optimalizace rezervované kapacity elektřiny</p>
+  <h1 class="hero-h1">
+    <span class="big">Snižujeme</span>
+    <span class="italic">náklady na elektřinu.</span>
+  </h1>
+  <p class="hero-sub">Váš podnik pravděpodobně přeplácí za rezervovanou kapacitu. Náš model přesně spočítá, jak nastavit smlouvu — abyste platili jen to nezbytné.</p>
+  <div class="hero-cta">
+    <a href="#modelovani" class="btn-dark">Vyzkoušet kalkulačku</a>
+    <a href="#rizeni" class="btn-ghost">Jak to funguje?</a>
   </div>
   <div class="hero-stats">
-    <div class="stat"><div class="num">30 %</div><div class="lbl">průměrné předražení RK</div></div>
-    <div class="stat"><div class="num">500 tis.</div><div class="lbl">Kč zbytečných nákladů/rok</div></div>
-    <div class="stat"><div class="num">1 den</div><div class="lbl">na doporučení ke smlouvě</div></div>
+    <div class="hstat"><div class="n">30 %</div><div class="l">průměrné předražení RK</div></div>
+    <div class="hstat"><div class="n">500 tis.</div><div class="l">Kč zbytečně ročně</div></div>
+    <div class="hstat"><div class="n">1 den</div><div class="l">na doporučení</div></div>
   </div>
-  <div class="scroll-hint">Procházet níže</div>
+  <a href="#onas" class="scroll-arrow">
+    <span>Pokračovat</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b6860" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+  </a>
 </section>
 
-<!-- O NÁS -->
+<hr class="divider">
+
 <section id="onas">
-  <div class="section-inner">
-    <div class="onas-grid fade-in">
+  <div class="sw">
+    <div class="stag fi">O nás</div>
+    <div class="about-grid fi">
       <div>
-        <div class="section-label">O nás</div>
-        <h2 class="section-h2">Platforma pro inteligentní správu energií</h2>
-        <p class="section-p">Livenia je moderní analytická platforma pro optimalizaci energetických smluv průmyslových a komerčních odběratelů. Náš <strong>matematický model pro nastavení rezervované kapacity</strong> pomáhá firmám ušetřit statisíce korun ročně bez investic do nového vybavení.</p>
-        <p class="section-p" style="margin-top:1rem">Pracujeme na bázi <em>success fee</em> — platíte pouze procento z reálně dosažené úspory. Pokud neuetříte, nic neplatíte.</p>
+        <h2 class="about-h">Platforma pro <em>inteligentní</em> správu energií</h2>
+        <div class="about-body">
+          <p>Livenia je analytická platforma zaměřená na optimalizaci energetických smluv pro průmyslové a komerční odběratele. Náš matematický model pro nastavení rezervované kapacity pomáhá firmám ušetřit statisíce korun ročně bez investic do nového vybavení.</p>
+          <p>Předplatné stojí <strong>11 800 Kč ročně</strong> — to je jen 990 Kč měsíčně. Každý rok vám nastavíme a zkontrolujeme rezervovanou kapacitu, aby platila správně nastavenou smlouvu.</p>
+        </div>
       </div>
-      <div class="feature-cards">
-        <div class="feature-card"><div class="feature-icon">🔢</div><h3>Přesný model</h3><p>Matematická optimalizace RRK + MRK na základě vašich historických dat.</p></div>
-        <div class="feature-card"><div class="feature-icon">📉</div><h3>Reálná úspora</h3><p>Průměrná úspora přes 300 000 Kč ročně na poplatcích za kapacitu.</p></div>
-        <div class="feature-card"><div class="feature-icon">⚡</div><h3>Rychlá analýza</h3><p>Stačí data z posledních 12 faktur nebo systému distributora.</p></div>
-        <div class="feature-card"><div class="feature-icon">🤝</div><h3>Bez rizika</h3><p>Platíte jen za skutečně dosažené výsledky — success fee model.</p></div>
+      <div class="feature-list">
+        <div class="fi-row"><div class="fi-num">01</div><div class="fi-body"><h3>Přesný matematický model</h3><p>Optimalizace RRK + MRK na základě vašich historických dat z faktur nebo systému distributora.</p></div></div>
+        <div class="fi-row"><div class="fi-num">02</div><div class="fi-body"><h3>Reálná úspora bez investic</h3><p>Průměrná úspora přesahuje 300 000 Kč ročně. Žádné nové přístroje, jen správně nastavená smlouva.</p></div></div>
+        <div class="fi-row"><div class="fi-num">03</div><div class="fi-body"><h3>Rychlá analýza</h3><p>Stačí data z posledních 12 faktur. Do 24 hodin máte konkrétní doporučení ke smlouvě.</p></div></div>
+        <div class="fi-row"><div class="fi-num">04</div><div class="fi-body"><h3>Předplatné 990 Kč/měsíc</h3><p>Pevná cena 11 800 Kč ročně. Každý rok nastavíme, zkontrolujeme a doporučíme optimální nastavení pro vaši smlouvu.</p></div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- JAK TO FUNGUJE -->
+<hr class="divider">
+
 <section id="rizeni">
-  <div class="section-inner">
-    <div class="fade-in">
-      <div class="section-label">Jak to funguje</div>
-      <h2 class="section-h2">Systém rezervované kapacity</h2>
-      <p class="section-p">Pochopení mechanismu je klíčem k úspoře.</p>
-    </div>
-    <div class="steps">
-      <div class="step fade-in">
-        <div class="step-num">01</div>
-        <div class="step-body">
-          <h3>Čtvrthodinové maximum (1/4h max)</h3>
-          <p>Distributor měří každých 15 minut průměrný příkon. Nejvyšší naměřená hodnota za měsíc je vaše čtvrthodinové maximum — a podle něj se počítají poplatky.</p>
+  <div class="sw">
+    <div class="stag fi">Jak to funguje</div>
+    <div class="how-layout">
+      <div><h2 class="how-h fi">Systém rezervované <em>kapacity.</em></h2></div>
+      <div class="steps-list fi">
+        <div class="step-row">
+          <div class="step-n">Krok 01</div>
+          <h3>Čtvrthodinové maximum</h3>
+          <p>Distributor měří každých 15 minut průměrný příkon. Nejvyšší naměřená hodnota za měsíc — čtvrthodinové maximum — určuje výši poplatků.</p>
         </div>
-      </div>
-      <div class="step fade-in">
-        <div class="step-num">02</div>
-        <div class="step-body">
-          <h3>Sjednaná rezervovaná kapacita (RRK / MRK)</h3>
-          <p>Ve smlouvě s distributorem si sjednáváte roční (RRK) a měsíční (MRK) strop. Platíte za tuto rezervaci bez ohledu na využití. Za překročení platíte 1,5násobek sazby MRK.</p>
-          <div class="highlight-box">💡 Příklad: RRK 650 kW = ~1 500 000 Kč ročně. Snížením na 580 kW ušetříte až 500 000 Kč — i přesto, že v létě platíte za překročení přes MRK navýšení.</div>
+        <div class="step-row">
+          <div class="step-n">Krok 02</div>
+          <h3>Rezervovaná kapacita</h3>
+          <p>Ve smlouvě si sjednáváte roční (RRK) a měsíční (MRK) strop. Za překročení platíte 1,5násobek sazby MRK.</p>
+          <div class="insight">Příklad: RRK 650 kW = ~1 500 000 Kč ročně. Snížením na 580 kW ušetříte až 500 000 Kč — i přes letní překročení.</div>
         </div>
-      </div>
-      <div class="step fade-in">
-        <div class="step-num">03</div>
-        <div class="step-body">
-          <h3>Kde leží ideální hodnota RRK?</h3>
-          <p>Model prochází všechny možné hodnoty RRK a pro každou spočítá celkové roční náklady (RRK + MRK navýšení + poplatky za překročení). Najde bod, kde je součet minimální.</p>
+        <div class="step-row">
+          <div class="step-n">Krok 03</div>
+          <h3>Kde je optimum?</h3>
+          <p>Model prochází všechny hodnoty RRK a hledá bod, kde je součet RRK + MRK navýšení + poplatky za překročení nejnižší. To je vaše ideální smlouva.</p>
         </div>
-      </div>
-      <div class="step fade-in">
-        <div class="step-num">04</div>
-        <div class="step-body">
-          <h3>Implementace a monitoring</h3>
-          <p>Doporučíme konkrétní hodnoty do smlouvy s distributorem. Pro kontrolu špiček lze používat hlídače 1/4max připojené k elektroměru.</p>
+        <div class="step-row">
+          <div class="step-n">Krok 04</div>
+          <h3>Implementace</h3>
+          <p>Doporučíme konkrétní hodnoty do smlouvy s distributorem. Pro kontrolu špiček lze doplnit hlídač 1/4max připojený k elektroměru.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- KALKULAČKA -->
+<hr class="divider">
+
 <section id="modelovani">
-  <div class="section-inner">
-    <div class="fade-in">
-      <div class="section-label">Kalkulačka</div>
-      <h2 class="section-h2">Spočítejte si úsporu</h2>
-      <p class="section-p">Zadejte naměřená čtvrthodinová maxima z faktur a aktuálně sjednanou RRK. Model spočítá ideální nastavení a roční úsporu.</p>
+  <div class="sw">
+    <div class="stag fi">Kalkulačka</div>
+    <div class="calc-intro fi">
+      <h2>Spočítejte si úsporu.</h2>
+      <p>Zadejte naměřená čtvrthodinová maxima z faktur a aktuálně sjednanou RRK. Model okamžitě spočítá ideální nastavení a roční úsporu.</p>
     </div>
     <div class="calc-layout">
-      <div>
-        <div class="card fade-in">
-          <div class="card-header">
-            <div class="dot-green"></div>
-            <h3>Vstupní data — 12 měsíců</h3>
-            <button class="btn-example" onclick="fillExample()">Načíst ukázkový příklad</button>
+      <div class="fi">
+        <div class="table-wrap">
+          <div class="table-top">
+            <span>Vstupní data — 12 měsíců</span>
+            <button class="btn-ex" id="btnEx">Načíst příklad</button>
           </div>
-          <div class="prices-row">
-            <div class="price-chip"><label>Cena RRK (Kč/kW/rok)</label><input type="number" id="cenaRRK" value="204.788" step="0.001"></div>
-            <div class="price-chip"><label>Cena MRK (Kč/kW/měs.)</label><input type="number" id="cenaMRK" value="224.429" step="0.001"></div>
-            <div class="price-chip"><label>Koef. překročení</label><input type="number" id="koef" value="1.5" step="0.1"></div>
+          <div class="prices-bar">
+            <div class="pc"><label>Cena RRK (Kč/kW/rok)</label><input type="number" id="cenaRRK" value="204.788" step="0.001"></div>
+            <div class="pc"><label>Cena MRK (Kč/kW/měs.)</label><input type="number" id="cenaMRK" value="224.429" step="0.001"></div>
+            <div class="pc"><label>Koef. překročení</label><input type="number" id="koef" value="1.5" step="0.1"></div>
           </div>
           <table>
             <thead><tr><th>Měsíc</th><th>1/4h max (kW)</th><th>Navýšení MRK (kW)</th><th>Doporučení</th></tr></thead>
             <tbody id="calcTable"></tbody>
           </table>
-          <div class="rrk-row">
+          <div class="rrk-bar">
             <label>Aktuálně sjednaná RRK (kW):</label>
-            <input type="number" id="sjednanaRRK" value="650" style="width:100px">
-            <span class="rrk-note">Porovná se s optimem</span>
+            <input type="number" id="sjednanaRRK" value="650" style="width:90px">
+            <span class="rn">Porovná se s optimem</span>
           </div>
         </div>
-        <button class="btn-calc" onclick="vypocitat()">⚡ Spočítat optimální nastavení</button>
-        <div class="info-note"><strong>Metodika:</strong> Model hledá nejnižší RRK, při níž je součet ročních nákladů na RRK + MRK navýšení + 1,5× poplatky za překročení minimální. Letní špičky jsou pokryty měsíčním navýšením MRK.</div>
+        <button class="btn-calc" id="btnCalc">Spočítat optimální nastavení →</button>
+        <p class="method-note"><strong>Metodika:</strong> Model hledá nejnižší RRK, při níž je součet ročních nákladů na RRK + MRK navýšení + 1,5× poplatky za překročení minimální.</p>
       </div>
-      <div class="sidebar fade-in">
-        <div class="r-card highlight">
-          <div class="r-label">Potenciální roční úspora</div>
-          <div class="r-val" id="resUspora">—</div>
-          <div class="r-sub" id="resUsporaSub">Zadejte data a spočítejte</div>
+      <div class="results-col fi">
+        <div class="res-block">
+          <div class="res-tag">Potenciální roční úspora</div>
+          <div class="res-val pos" id="resUspora">—</div>
+          <div class="res-sub" id="resUsporaSub">Zadejte data a spočítejte</div>
         </div>
-        <div class="r-card">
-          <div class="r-label">Doporučená hodnota RRK</div>
-          <div class="r-val" id="resRRK">—</div>
-          <div class="r-sub" id="resRRKsub">kW ročně sjednaná kapacita</div>
+        <div class="res-block" style="background:var(--gdim);border-radius:2px;padding:1rem;margin-top:.5rem;border:1px solid rgba(0,232,122,.2);border-left:3px solid var(--g)">
+          <div class="res-tag" style="margin-bottom:.4rem">Předplatné</div>
+          <div style="font-family:var(--serif);font-size:1.4rem;letter-spacing:-.03em">11 800 Kč/rok</div>
+          <div class="res-sub" style="margin-top:.3rem">= 990 Kč měsíčně · roční kontrola a nastavení</div>
         </div>
-        <div class="r-card">
-          <div class="r-label">Rozpis nákladů — optimum</div>
-          <div id="resBreakdown"><div class="placeholder-hint">Po kliknutí na „Spočítat"<br>se zobrazí detailní výsledky.</div></div>
+        <div class="res-block">
+          <div class="res-tag">Doporučená hodnota RRK</div>
+          <div class="res-val" id="resRRK">—</div>
+          <div class="res-sub" id="resRRKsub">kW ročně sjednaná kapacita</div>
         </div>
-        <div class="chart-wrap">
-          <div class="chart-title">Průběh odběrů (kW)</div>
+        <div class="res-block">
+          <div class="res-tag">Rozpis nákladů</div>
+          <div id="resBreakdown"><div class="empty-state">Po spočítání se zobrazí<br>detailní výsledky.</div></div>
+        </div>
+        <div class="chart-block">
+          <div class="chart-tag">Průběh odběrů</div>
           <div class="bars" id="chartBars"></div>
-          <div class="chart-legend">
-            <div class="lg-item"><div class="lg-dot" style="background:var(--text-dim)"></div>Naměřeno</div>
-            <div class="lg-item"><div class="lg-dot" style="background:var(--warn)"></div>Překročení RRK</div>
-            <div class="lg-item"><div class="lg-dot" style="background:var(--accent);height:2px;width:14px;border-radius:1px"></div>Ideální RRK</div>
+          <div class="clegend">
+            <div class="lg"><div class="lgd" style="background:var(--border)"></div>V normě</div>
+            <div class="lg"><div class="lgd" style="background:#c45c00;opacity:.7"></div>Překročení</div>
+            <div class="lg"><div class="lgd" style="background:var(--g);height:2px;width:14px"></div>Ideální RRK</div>
           </div>
         </div>
       </div>
@@ -384,143 +351,155 @@ footer { padding: 2rem; text-align: center; font-family: var(--mono); font-size:
   </div>
 </section>
 
-<!-- KONTAKT -->
+<hr class="divider">
+
 <section id="kontakt">
-  <div class="section-inner kontakt-inner fade-in">
-    <div class="section-label" style="justify-content:center">Kontakt</div>
-    <h2 class="section-h2">Pojďme si promluvit o vaší úspoře</h2>
-    <p class="section-p" style="margin:0 auto;text-align:center">Pošlete nám e-mail s vašimi fakturačními daty a do 24 hodin připravíme konkrétní analýzu vaší rezervované kapacity.</p>
-    <div class="contact-card">
-      <div class="contact-label">E-mail</div>
-      <a href="/cdn-cgi/l/email-protection#18796a68772c797474587f75797174367b7775"><span class="__cf_email__" data-cfemail="a9c8dbd9c69dc8c5c5e9cec4c8c0c587cac6c4">[email&#160;protected]</span></a>
+  <div class="sw">
+    <div class="stag fi">Kontakt</div>
+    <div class="fi">
+      <h2 class="contact-h">Pojďme si promluvit<br><em>o vaší úspoře.</em></h2>
+      <p class="contact-p">Pošlete nám e-mail s daty z faktur a do 24 hodin připravíme konkrétní analýzu vaší rezervované kapacity. Předplatné začíná na 11 800 Kč ročně (990 Kč/měs.) — každý rok nastavíme a zkontrolujeme vaši smlouvu.</p>
+      <a href="/cdn-cgi/l/email-protection#87e6f5f7e8b3e6ebebc7e0eae6eeeba9e4e8ea" class="contact-email">
+        <span class="__cf_email__" data-cfemail="513023213e65303d3d11363c30383d7f323e3c">[email&#160;protected]</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+      </a>
     </div>
   </div>
 </section>
 
-<footer>© 2025 Livenia — Optimalizace rezervované kapacity | Snižujeme náklady na energie.</footer>
+<footer>
+  <span>© 2025 Livenia</span>
+  <span>Snižujeme náklady na energie.</span>
+</footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-const MESICE = ['Led','Úno','Bře','Dub','Kvě','Čer','Čvc','Srp','Zář','Říj','Lis','Pro'];
-const MESICE_F = ['Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec'];
+document.addEventListener('DOMContentLoaded', function () {
+  var MF = ['Leden','Unor','Brezen','Duben','Kveten','Cerven','Cervenec','Srpen','Zari','Rijen','Listopad','Prosinec'];
+  var MS = ['Led','Uno','Bre','Dub','Kve','Cer','Cvc','Srp','Zar','Rij','Lis','Pro'];
 
-// Build table
-const tbody = document.getElementById('calcTable');
-for (let i = 0; i < 12; i++) {
-  const tr = document.createElement('tr');
-  tr.innerHTML = `<td class="m-name">${MESICE_F[i]}</td><td><input type="number" id="max${i}" placeholder="0" min="0"></td><td><input type="number" id="mrk${i}" value="0" min="0"></td><td><span class="mrk-badge" id="hint${i}">—</span></td>`;
-  tbody.appendChild(tr);
-}
-
-// Build placeholder chart
-const chartEl = document.getElementById('chartBars');
-for (let i = 0; i < 12; i++) {
-  chartEl.innerHTML += `<div class="bar-wrap"><div class="bar b-actual" id="bar${i}" style="height:${20+Math.random()*35}%"></div><div class="bar-lbl">${MESICE[i]}</div></div>`;
-}
-
-function fillExample() {
-  const mx = [566,583,608,615,661,732,724,776,729,620,583,566];
-  const mr = [0,0,0,50,0,120,150,100,100,0,0,0];
-  for (let i = 0; i < 12; i++) {
-    document.getElementById('max'+i).value = mx[i];
-    document.getElementById('mrk'+i).value = mr[i];
-  }
-  document.getElementById('sjednanaRRK').value = 650;
-}
-
-function fmt(n) {
-  return new Intl.NumberFormat('cs-CZ', {maximumFractionDigits:0}).format(n) + ' Kč';
-}
-
-function vypocitat() {
-  const cRRK = parseFloat(document.getElementById('cenaRRK').value) || 204.788;
-  const cMRK = parseFloat(document.getElementById('cenaMRK').value) || 224.429;
-  const koef = parseFloat(document.getElementById('koef').value) || 1.5;
-  const sjedRRK = parseFloat(document.getElementById('sjednanaRRK').value) || 650;
-
-  const maxima = [], mrkNav = [];
-  for (let i = 0; i < 12; i++) {
-    maxima.push(parseFloat(document.getElementById('max'+i).value) || 0);
-    mrkNav.push(parseFloat(document.getElementById('mrk'+i).value) || 0);
-  }
-
-  // Find optimal RRK
-  let minCena = Infinity, idealRRK = 1;
-  for (let rk = 1; rk <= 3000; rk++) {
-    let c = rk * cRRK * 12;
-    for (let i = 0; i < 12; i++) {
-      c += mrkNav[i] * cMRK;
-      const ef = rk + mrkNav[i];
-      if (ef < maxima[i]) c += (maxima[i] - ef) * cMRK * koef;
+  var tb = document.getElementById('calcTable');
+  if (tb) {
+    for (var i = 0; i < 12; i++) {
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td class="mc">' + MF[i] + '</td><td><input type="number" id="max' + i + '" placeholder="0" min="0"></td><td><input type="number" id="mrk' + i + '" value="0" min="0"></td><td><span class="rbadge" id="hint' + i + '">—</span></td>';
+      tb.appendChild(tr);
     }
-    if (c < minCena) { minCena = c; idealRRK = rk; }
-    else if (c > minCena + 5000) break;
   }
 
-  // Current costs
-  const sRRK = sjedRRK * cRRK * 12;
-  let sMRK = 0, sOver = 0;
-  for (let i = 0; i < 12; i++) {
-    sMRK += mrkNav[i] * cMRK;
-    const ef = sjedRRK + mrkNav[i];
-    if (ef < maxima[i]) sOver += (maxima[i] - ef) * cMRK * koef;
-  }
-  const sCelkem = sRRK + sMRK + sOver;
-
-  // Optimal costs
-  const oRRK = idealRRK * cRRK * 12;
-  let oMRK = 0, oOver = 0;
-  const dop = [];
-  for (let i = 0; i < 12; i++) {
-    oMRK += mrkNav[i] * cMRK;
-    const ef = idealRRK + mrkNav[i];
-    if (ef < maxima[i]) {
-      const d = maxima[i] - ef;
-      oOver += d * cMRK * koef;
-      dop.push(Math.ceil(d));
-    } else dop.push(0);
-  }
-  const oCelkem = oRRK + oMRK + oOver;
-  const uspora = sCelkem - oCelkem;
-
-  // Update hints
-  for (let i = 0; i < 12; i++) {
-    const h = document.getElementById('hint'+i);
-    if (dop[i] > 0) { h.textContent = '+'+dop[i]+' kW'; h.className = 'mrk-badge over'; }
-    else { h.textContent = '✓ OK'; h.className = 'mrk-badge ok'; }
+  var cel = document.getElementById('chartBars');
+  if (cel) {
+    for (var j = 0; j < 12; j++) {
+      cel.innerHTML += '<div class="bwrap"><div class="bar ba" style="height:' + (15 + Math.floor(Math.random() * 40)) + '%"></div><div class="blbl">' + MS[j] + '</div></div>';
+    }
   }
 
-  // Results
-  document.getElementById('resUspora').textContent = fmt(uspora);
-  document.getElementById('resUsporaSub').textContent = uspora > 0 ? `Oproti aktuální RRK ${sjedRRK} kW` : 'Nastavení je již optimální!';
-  document.getElementById('resRRK').textContent = idealRRK + ' kW';
-  document.getElementById('resRRKsub').textContent = `Min. náklady: ${fmt(oCelkem)}`;
-  document.getElementById('resBreakdown').innerHTML = `
-    <div class="br-row"><span>Roční RRK</span><span class="bv">${fmt(oRRK)}</span></div>
-    <div class="br-row"><span>MRK navýšení</span><span class="bv">${fmt(oMRK)}</span></div>
-    <div class="br-row"><span>Poplatky za překročení</span><span class="bv">${fmt(oOver)}</span></div>
-    <div class="br-row total"><span><strong>Optimum celkem</strong></span><span class="bv">${fmt(oCelkem)}</span></div>
-    <div class="br-row"><span>Aktuálně platíte</span><span class="bv">${fmt(sCelkem)}</span></div>`;
+  function fmt(n) { return Math.round(n).toLocaleString('cs-CZ') + ' Kc'; }
 
-  // Chart
-  const maxV = Math.max(...maxima, idealRRK, 1);
-  chartEl.innerHTML = '';
-  for (let i = 0; i < 12; i++) {
-    const h = (maxima[i] / maxV * 88);
-    const over = (idealRRK + mrkNav[i]) < maxima[i];
-    chartEl.innerHTML += `<div class="bar-wrap"><div class="bar ${over?'b-over':'b-actual'}" style="height:${h}%"></div><div class="bar-lbl">${MESICE[i]}</div></div>`;
+  function fillExample() {
+    var mx = [566,583,608,615,661,732,724,776,729,620,583,566];
+    var mr = [0,0,0,50,0,120,150,100,100,0,0,0];
+    for (var i = 0; i < 12; i++) {
+      var e1 = document.getElementById('max' + i), e2 = document.getElementById('mrk' + i);
+      if (e1) e1.value = mx[i];
+      if (e2) e2.value = mr[i];
+    }
+    var s = document.getElementById('sjednanaRRK');
+    if (s) s.value = 650;
   }
-  const old = document.getElementById('rrkLine');
-  if (old) old.remove();
-  const line = document.createElement('div');
-  line.id = 'rrkLine';
-  line.style.cssText = `position:absolute;bottom:${(idealRRK/maxV*88)}%;left:0;right:0;height:2px;background:var(--accent);border-radius:2px;pointer-events:none;`;
-  chartEl.appendChild(line);
-}
 
-// Nav scroll
-window.addEventListener('scroll', () => {
-  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 50);
+  function vypocitat() {
+    var cRRK = parseFloat(document.getElementById('cenaRRK').value) || 204.788;
+    var cMRK = parseFloat(document.getElementById('cenaMRK').value) || 224.429;
+    var koef = parseFloat(document.getElementById('koef').value) || 1.5;
+    var sjed = parseFloat(document.getElementById('sjednanaRRK').value) || 650;
+    var maxima = [], mrkNav = [];
+    for (var i = 0; i < 12; i++) {
+      var e1 = document.getElementById('max' + i), e2 = document.getElementById('mrk' + i);
+      maxima.push(e1 ? (parseFloat(e1.value) || 0) : 0);
+      mrkNav.push(e2 ? (parseFloat(e2.value) || 0) : 0);
+    }
+    var minC = Infinity, idealRRK = 1;
+    for (var rk = 1; rk <= 3000; rk++) {
+      var c = rk * cRRK * 12;
+      for (var i = 0; i < 12; i++) {
+        c += mrkNav[i] * cMRK;
+        var ef = rk + mrkNav[i];
+        if (ef < maxima[i]) c += (maxima[i] - ef) * cMRK * koef;
+      }
+      if (c < minC) { minC = c; idealRRK = rk; }
+      else if (c > minC + 5000) break;
+    }
+    var sC = sjed * cRRK * 12, sM = 0, sO = 0;
+    for (var i = 0; i < 12; i++) {
+      sM += mrkNav[i] * cMRK;
+      var ef2 = sjed + mrkNav[i];
+      if (ef2 < maxima[i]) sO += (maxima[i] - ef2) * cMRK * koef;
+    }
+    var sTot = sC + sM + sO;
+    var oC = idealRRK * cRRK * 12, oM = 0, oO = 0, dop = [];
+    for (var i = 0; i < 12; i++) {
+      oM += mrkNav[i] * cMRK;
+      var ef3 = idealRRK + mrkNav[i];
+      if (ef3 < maxima[i]) { var d = maxima[i] - ef3; oO += d * cMRK * koef; dop.push(Math.ceil(d)); }
+      else dop.push(0);
+    }
+    var oTot = oC + oM + oO, usp = sTot - oTot;
+    for (var i = 0; i < 12; i++) {
+      var h = document.getElementById('hint' + i);
+      if (h) {
+        if (dop[i] > 0) { h.textContent = '+' + dop[i] + ' kW'; h.className = 'rbadge over'; }
+        else { h.textContent = 'V poradku'; h.className = 'rbadge ok'; }
+      }
+    }
+    var ru = document.getElementById('resUspora'), rs = document.getElementById('resUsporaSub');
+    var rr = document.getElementById('resRRK'), rb = document.getElementById('resRRKsub'), rd = document.getElementById('resBreakdown');
+    if (ru) { ru.textContent = fmt(usp); ru.className = usp > 0 ? 'res-val pos' : 'res-val'; }
+
+    // Threshold logic: < 20 000 Kč = already optimal within subscription
+    if (usp < 20000) {
+      if (ru) { ru.textContent = 'Nastaveno správně'; ru.className = 'res-val'; ru.style.fontSize = '1.4rem'; }
+      if (rs) rs.innerHTML = 'V rámci předplatného a odchylky máte<br>nastaveno správně — <strong>můžete být spokojeni.</strong>';
+    } else {
+      if (ru) { ru.style.fontSize = ''; }
+      var cistUsp = usp - 11800;
+      if (rs) rs.textContent = 'Čistá úspora po odečtení předplatného: ' + fmt(cistUsp);
+    }
+    if (rr) rr.textContent = idealRRK + ' kW';
+    if (rb) rb.textContent = 'Minimalni naklady: ' + fmt(oTot);
+    if (rd) rd.innerHTML =
+      '<div class="brow"><span>Rocni RRK</span><span class="bv">' + fmt(oC) + '</span></div>' +
+      '<div class="brow"><span>MRK navyseni</span><span class="bv">' + fmt(oM) + '</span></div>' +
+      '<div class="brow"><span>Poplatky za prekroceni</span><span class="bv">' + fmt(oO) + '</span></div>' +
+      '<div class="brow tot"><span>Optimum celkem</span><span class="bv">' + fmt(oTot) + '</span></div>' +
+      '<div class="brow"><span>Aktualne platite</span><span class="bv">' + fmt(sTot) + '</span></div>';
+    if (cel) {
+      var maxV = Math.max.apply(null, maxima.concat([idealRRK, 1]));
+      cel.innerHTML = '';
+      for (var i = 0; i < 12; i++) {
+        var hp = maxima[i] / maxV * 85, isOver = (idealRRK + mrkNav[i]) < maxima[i];
+        cel.innerHTML += '<div class="bwrap"><div class="bar ' + (isOver ? 'bo' : 'ba') + '" style="height:' + hp + '%"></div><div class="blbl">' + MS[i] + '</div></div>';
+      }
+      var old = document.getElementById('rrkLine'); if (old) old.remove();
+      var line = document.createElement('div'); line.id = 'rrkLine';
+      line.style.cssText = 'position:absolute;bottom:' + (idealRRK / maxV * 85) + '%;left:0;right:0;height:1px;background:#00e87a;pointer-events:none;';
+      cel.appendChild(line);
+    }
+  }
+
+  var bc = document.getElementById('btnCalc'), be = document.getElementById('btnEx');
+  if (bc) bc.addEventListener('click', vypocitat);
+  if (be) be.addEventListener('click', fillExample);
+
+  window.addEventListener('scroll', function () {
+    var nav = document.getElementById('mainNav');
+    if (nav) nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  var obs = new IntersectionObserver(functio  var obs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('v'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fi').forEach(function (el) { obs.observe(el); });
 });
-
-// Fade-in observer
-const obs = new
+</script>
+</body>
+</html>
