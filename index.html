@@ -7,25 +7,10 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120'%3E%3Crect width='100' height='120' rx='18' fill='%23f4f0e8'/%3E%3Cpath d='M50 10C50 10 20 50 20 70C20 88 33 102 50 102C67 102 80 88 80 70C80 50 50 10 50 10Z' stroke='%2300c060' stroke-width='6' stroke-linejoin='round' stroke-linecap='round' fill='none'/%3E%3Cline x1='50' y1='88' x2='50' y2='56' stroke='%2300c060' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M50 56C44 46 35 43 31 45C33 53 40 58 50 59C60 58 67 53 69 45C65 43 56 46 50 56Z' stroke='%2300c060' stroke-width='4' fill='none' stroke-linejoin='round' stroke-linecap='round'/%3E%3Cpath d='M50 71C43 64 35 63 32 65C34 71 41 74 50 73Z' stroke='%2300c060' stroke-width='3.5' fill='none' stroke-linejoin='round' stroke-linecap='round'/%3E%3Cpath d='M50 71C57 64 65 63 68 65C66 71 59 74 50 73Z' stroke='%2300c060' stroke-width='3.5' fill='none' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #f4f0e8;
-  --bg2: #ede9e0;
-  --text: #1a1a18;
-  --mid: #6b6860;
-  --light: #b0aca4;
-  --border: #d8d4cc;
-  --g: #00e87a;
-  --gdim: rgba(0,232,122,.13);
-  --green: #1e5c3a;
-  --serif: 'DM Serif Display', Georgia, serif;
-  --sans: 'DM Sans', sans-serif;
-  --mono: 'DM Mono', monospace;
-}
+:root{--bg:#f4f0e8;--bg2:#ede9e0;--text:#1a1a18;--mid:#6b6860;--light:#b0aca4;--border:#d8d4cc;--g:#00e87a;--gdim:rgba(0,232,122,.13);--green:#1e5c3a;--serif:'DM Serif Display',Georgia,serif;--sans:'DM Sans',sans-serif;--mono:'DM Mono',monospace}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:var(--sans);background:var(--bg);color:var(--text);overflow-x:hidden}
-
-/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;padding:1.5rem 3rem;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
 nav.scrolled{background:rgba(244,240,232,.94);border-color:var(--border);backdrop-filter:blur(12px)}
 .nav-logo{display:flex;align-items:center;gap:.75rem;text-decoration:none;color:var(--text)}
@@ -34,8 +19,6 @@ nav.scrolled{background:rgba(244,240,232,.94);border-color:var(--border);backdro
 .nav-links{display:flex;align-items:center;gap:2.5rem;margin-left:auto;list-style:none}
 .nav-links a{text-decoration:none;font-size:.85rem;color:var(--mid);font-weight:500;transition:color .2s}
 .nav-links a:hover{color:var(--text)}
-
-/* HERO */
 #home{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10rem 2rem 6rem;position:relative}
 .hero-eyebrow{font-family:var(--mono);font-size:.75rem;color:var(--g);letter-spacing:.12em;text-transform:uppercase;margin-bottom:2.5rem;animation:fadeUp .7s ease both}
 .hero-h1{font-family:var(--serif);font-size:clamp(3.5rem,9vw,7.5rem);font-weight:400;letter-spacing:-.03em;line-height:.95;max-width:900px;animation:fadeUp .7s .1s ease both}
@@ -56,27 +39,20 @@ nav.scrolled{background:rgba(244,240,232,.94);border-color:var(--border);backdro
 .scroll-arrow span{font-family:var(--mono);font-size:.65rem;color:var(--mid);letter-spacing:.1em;text-transform:uppercase}
 .scroll-arrow svg{animation:bounce 2s ease infinite}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
-
-/* SHARED */
 section{position:relative}
 .sw{max-width:1100px;margin:0 auto;padding:6rem 3rem}
 .divider{border:none;height:1px;background:linear-gradient(90deg,transparent 0%,var(--g) 30%,var(--g) 70%,transparent 100%);opacity:.2}
 .stag{font-family:var(--mono);font-size:.7rem;color:var(--g);text-transform:uppercase;letter-spacing:.12em;margin-bottom:3rem}
-
-/* O NAS */
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
 .about-h{font-family:var(--serif);font-size:clamp(2.5rem,4vw,3.5rem);letter-spacing:-.03em;line-height:1.05;font-weight:400}
 .about-h em{font-style:italic;color:var(--mid)}
 .about-body{margin-top:2rem}
 .about-body p{color:var(--mid);line-height:1.8;font-size:.95rem;margin-bottom:1rem}
-.feature-list{}
 .fi-row{display:flex;gap:1.5rem;padding:1.5rem 0;border-bottom:1px solid var(--border)}
 .fi-row:first-child{border-top:1px solid var(--border)}
 .fi-num{font-family:var(--mono);font-size:.7rem;color:var(--g);padding-top:.2rem;flex-shrink:0;width:2rem}
 .fi-body h3{font-size:.9rem;font-weight:600;margin-bottom:.35rem}
 .fi-body p{font-size:.82rem;color:var(--mid);line-height:1.6}
-
-/* RIZENI */
 #rizeni{background:var(--bg2)}
 .how-layout{display:grid;grid-template-columns:1fr 1fr;gap:6rem}
 .how-h{font-family:var(--serif);font-size:clamp(2.5rem,4vw,3.5rem);letter-spacing:-.03em;line-height:1.05;font-weight:400;position:sticky;top:8rem;align-self:start}
@@ -88,13 +64,11 @@ section{position:relative}
 .step-row h3{font-family:var(--serif);font-size:1.3rem;letter-spacing:-.02em;margin-bottom:.75rem;font-weight:400}
 .step-row p{font-size:.875rem;color:var(--mid);line-height:1.75}
 .insight{margin-top:1rem;background:var(--gdim);border:1px solid rgba(0,232,122,.25);border-left:3px solid var(--g);border-radius:0 2px 2px 0;padding:1rem 1.25rem;font-family:var(--mono);font-size:.75rem;color:var(--green);line-height:1.6}
-
-/* KALKULATOR */
 .calc-intro{max-width:600px;margin-bottom:4rem}
 .calc-intro h2{font-family:var(--serif);font-size:clamp(2.5rem,4vw,3.5rem);letter-spacing:-.03em;line-height:1.05;font-weight:400;margin-bottom:1rem}
 .calc-intro p{font-size:.95rem;color:var(--mid);line-height:1.75}
 .calc-layout{display:grid;grid-template-columns:1fr 300px;gap:3rem;align-items:start}
-.table-wrap{border:1px solid var(--border);border-top:2px solid transparent;border-image:linear-gradient(90deg,var(--g),transparent) 1;border-radius:0 0 2px 2px;overflow:hidden;background:white}
+.table-wrap{border:1px solid var(--border);border-top:2px solid transparent;border-image:linear-gradient(90deg,var(--g),transparent) 1;overflow:hidden;background:white}
 .table-top{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;border-bottom:1px solid var(--border);background:var(--bg2)}
 .table-top span{font-family:var(--mono);font-size:.7rem;color:var(--mid);text-transform:uppercase;letter-spacing:.1em}
 .prices-bar{display:flex;gap:2rem;padding:1rem 1.5rem;border-bottom:1px solid var(--border);background:var(--bg2);flex-wrap:wrap}
@@ -124,8 +98,6 @@ input[type="number"]:focus{border-color:var(--g)}
 .btn-ex:hover{border-color:var(--g);color:var(--green)}
 .method-note{margin-top:1.25rem;font-family:var(--mono);font-size:.7rem;color:var(--light);line-height:1.7;padding-left:1rem;border-left:2px solid var(--border)}
 .method-note strong{color:var(--mid)}
-
-/* Results */
 .results-col{display:flex;flex-direction:column;gap:0}
 .res-block{padding:1.5rem 0;border-bottom:1px solid var(--border)}
 .res-block:first-child{border-top:1px solid var(--border)}
@@ -139,6 +111,10 @@ input[type="number"]:focus{border-color:var(--g)}
 .brow.tot{color:var(--text);font-weight:600;border-top:1px solid var(--g);margin-top:4px;padding-top:8px}
 .brow.tot .bv{color:var(--green)}
 .empty-state{font-family:var(--mono);font-size:.72rem;color:var(--light);line-height:1.7;padding:1rem 0}
+.sub-box{background:var(--gdim);border:1px solid rgba(0,232,122,.2);border-left:3px solid var(--g);border-radius:0 2px 2px 0;padding:1rem 1.25rem;margin:1rem 0}
+.sub-box .sb-title{font-family:var(--mono);font-size:.62rem;color:var(--g);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem}
+.sub-box .sb-val{font-family:var(--serif);font-size:1.4rem;letter-spacing:-.03em;color:var(--text)}
+.sub-box .sb-sub{font-family:var(--mono);font-size:.62rem;color:var(--mid);margin-top:.25rem}
 .chart-block{margin-top:1.5rem}
 .chart-tag{font-family:var(--mono);font-size:.62rem;color:var(--light);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem}
 .bars{display:flex;align-items:flex-end;gap:3px;height:80px;position:relative}
@@ -150,31 +126,18 @@ input[type="number"]:focus{border-color:var(--g)}
 .clegend{display:flex;gap:.75rem;margin-top:.6rem;flex-wrap:wrap}
 .lg{display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:.58rem;color:var(--light)}
 .lgd{width:8px;height:6px;border-radius:1px}
-
-/* KONTAKT */
 #kontakt{background:var(--bg2)}
 .contact-h{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);letter-spacing:-.03em;line-height:1.05;font-weight:400;margin-bottom:1.5rem}
 .contact-h em{font-style:italic}
-.contact-p{font-size:.95rem;color:var(--mid);line-height:1.75;margin-bottom:2.5rem;max-width:500px}
+.contact-p{font-size:.95rem;color:var(--mid);line-height:1.75;margin-bottom:2.5rem;max-width:520px}
 .contact-email{display:inline-flex;align-items:center;gap:.75rem;font-family:var(--serif);font-size:1.5rem;letter-spacing:-.02em;color:var(--text);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:.5rem;transition:border-color .2s,color .2s}
 .contact-email:hover{border-color:var(--g);color:var(--green)}
 footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);font-family:var(--mono);font-size:.65rem;color:var(--light)}
-
-/* ANIMATIONS */
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 .fi{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
 .fi.v{opacity:1;transform:translateY(0)}
-
-/* RESPONSIVE */
 @media(max-width:960px){.calc-layout{grid-template-columns:1fr}}
-@media(max-width:768px){
-  nav{padding:1.25rem 1.5rem}.nav-links{display:none}
-  .sw{padding:4rem 1.5rem}
-  .about-grid,.how-layout{grid-template-columns:1fr;gap:3rem}
-  .how-h{position:static}
-  .hero-stats{flex-wrap:wrap}
-  .hstat{border-right:none!important;border-bottom:1px solid var(--border);min-width:140px;flex:1}
-}
+@media(max-width:768px){nav{padding:1.25rem 1.5rem}.nav-links{display:none}.sw{padding:4rem 1.5rem}.about-grid,.how-layout{grid-template-columns:1fr;gap:3rem}.how-h{position:static}.hero-stats{flex-wrap:wrap}.hstat{border-right:none!important;border-bottom:1px solid var(--border);min-width:140px;flex:1}}
 </style>
 </head>
 <body>
@@ -187,17 +150,12 @@ footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-b
       <path d="M50 56C44 46 35 43 31 45C33 53 40 58 50 59C60 58 67 53 69 45C65 43 56 46 50 56Z" stroke="url(#lg1)" stroke-width="4" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
       <path d="M50 71C43 64 35 63 32 65C34 71 41 74 50 73Z" stroke="url(#lg1)" stroke-width="3.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
       <path d="M50 71C57 64 65 63 68 65C66 71 59 74 50 73Z" stroke="url(#lg1)" stroke-width="3.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
-      <defs>
-        <linearGradient id="lg1" x1="50" y1="8" x2="50" y2="104" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stop-color="#1a1a18"/>
-          <stop offset="100%" stop-color="#00c060"/>
-        </linearGradient>
-      </defs>
+      <defs><linearGradient id="lg1" x1="50" y1="8" x2="50" y2="104" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#1a1a18"/><stop offset="100%" stop-color="#00c060"/></linearGradient></defs>
     </svg>
     <div class="nav-name">Livenia</div>
   </a>
   <ul class="nav-links">
-    <li><a href="#onas">O nás</a></li>
+    <li><a href="#onas">O&nbsp;nás</a></li>
     <li><a href="#rizeni">Jak to funguje</a></li>
     <li><a href="#modelovani">Kalkulačka</a></li>
     <li><a href="#kontakt">Kontakt</a></li>
@@ -218,7 +176,7 @@ footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-b
   <div class="hero-stats">
     <div class="hstat"><div class="n">30 %</div><div class="l">průměrné předražení RK</div></div>
     <div class="hstat"><div class="n">500 tis.</div><div class="l">Kč zbytečně ročně</div></div>
-    <div class="hstat"><div class="n">1 den</div><div class="l">na doporučení</div></div>
+    <div class="hstat"><div class="n">990 Kc</div><div class="l">měsíčně / předplatné</div></div>
   </div>
   <a href="#onas" class="scroll-arrow">
     <span>Pokračovat</span>
@@ -230,20 +188,20 @@ footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-b
 
 <section id="onas">
   <div class="sw">
-    <div class="stag fi">O nás</div>
+    <div class="stag fi">O&nbsp;nás</div>
     <div class="about-grid fi">
       <div>
         <h2 class="about-h">Platforma pro <em>inteligentní</em> správu energií</h2>
         <div class="about-body">
-          <p>Livenia je analytická platforma zaměřená na optimalizaci energetických smluv pro průmyslové a komerční odběratele. Náš matematický model pro nastavení rezervované kapacity pomáhá firmám ušetřit statisíce korun ročně bez investic do nového vybavení.</p>
-          <p>Předplatné stojí <strong>11 800 Kč ročně</strong> — to je jen 990 Kč měsíčně. Každý rok vám nastavíme a zkontrolujeme rezervovanou kapacitu, aby platila správně nastavenou smlouvu.</p>
+          <p>Livenia je analytická platforma zaměřená na optimalizaci energetických smluv pro průmyslové a komerční odběratele. Náš matematický model pomáhá firmám ušetřit statisíce korun ročně bez investic do nového vybavení.</p>
+          <p>Předplatné stojí <strong>11&nbsp;800&nbsp;Kč ročně</strong> — to je jen 990&nbsp;Kč měsíčně. Každý rok vám nastavíme a zkontrolujeme rezervovanou kapacitu, aby vaše smlouva platila správné nastavení.</p>
         </div>
       </div>
-      <div class="feature-list">
+      <div>
         <div class="fi-row"><div class="fi-num">01</div><div class="fi-body"><h3>Přesný matematický model</h3><p>Optimalizace RRK + MRK na základě vašich historických dat z faktur nebo systému distributora.</p></div></div>
-        <div class="fi-row"><div class="fi-num">02</div><div class="fi-body"><h3>Reálná úspora bez investic</h3><p>Průměrná úspora přesahuje 300 000 Kč ročně. Žádné nové přístroje, jen správně nastavená smlouva.</p></div></div>
+        <div class="fi-row"><div class="fi-num">02</div><div class="fi-body"><h3>Reálná úspora bez investic</h3><p>Průměrná úspora přesahuje 300&nbsp;000&nbsp;Kč ročně. Žádné nové přístroje, jen správně nastavená smlouva.</p></div></div>
         <div class="fi-row"><div class="fi-num">03</div><div class="fi-body"><h3>Rychlá analýza</h3><p>Stačí data z posledních 12 faktur. Do 24 hodin máte konkrétní doporučení ke smlouvě.</p></div></div>
-        <div class="fi-row"><div class="fi-num">04</div><div class="fi-body"><h3>Předplatné 990 Kč/měsíc</h3><p>Pevná cena 11 800 Kč ročně. Každý rok nastavíme, zkontrolujeme a doporučíme optimální nastavení pro vaši smlouvu.</p></div></div>
+        <div class="fi-row"><div class="fi-num">04</div><div class="fi-body"><h3>Předplatné 990&nbsp;Kč/měsíc</h3><p>Pevná cena 11&nbsp;800&nbsp;Kč ročně. Každý rok nastavíme, zkontrolujeme a doporučíme optimální nastavení.</p></div></div>
       </div>
     </div>
   </div>
@@ -266,7 +224,7 @@ footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-b
           <div class="step-n">Krok 02</div>
           <h3>Rezervovaná kapacita</h3>
           <p>Ve smlouvě si sjednáváte roční (RRK) a měsíční (MRK) strop. Za překročení platíte 1,5násobek sazby MRK.</p>
-          <div class="insight">Příklad: RRK 650 kW = ~1 500 000 Kč ročně. Snížením na 580 kW ušetříte až 500 000 Kč — i přes letní překročení.</div>
+          <div class="insight">Příklad: RRK 650 kW = ~1&nbsp;500&nbsp;000&nbsp;Kč ročně. Snížením na 580 kW ušetříte až 500&nbsp;000&nbsp;Kč — i přes letní překročení.</div>
         </div>
         <div class="step-row">
           <div class="step-n">Krok 03</div>
@@ -275,8 +233,8 @@ footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-b
         </div>
         <div class="step-row">
           <div class="step-n">Krok 04</div>
-          <h3>Implementace</h3>
-          <p>Doporučíme konkrétní hodnoty do smlouvy s distributorem. Pro kontrolu špiček lze doplnit hlídač 1/4max připojený k elektroměru.</p>
+          <h3>Implementace a roční kontrola</h3>
+          <p>Doporučíme konkrétní hodnoty do smlouvy s distributorem. Každý rok v rámci předplatného nastavení zkontrolujeme a aktualizujeme.</p>
         </div>
       </div>
     </div>
@@ -314,23 +272,23 @@ footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-b
             <span class="rn">Porovná se s optimem</span>
           </div>
         </div>
-        <button class="btn-calc" id="btnCalc">Spočítat optimální nastavení →</button>
+        <button class="btn-calc" id="btnCalc">Spočítat optimální nastavení &rarr;</button>
         <p class="method-note"><strong>Metodika:</strong> Model hledá nejnižší RRK, při níž je součet ročních nákladů na RRK + MRK navýšení + 1,5× poplatky za překročení minimální.</p>
       </div>
       <div class="results-col fi">
+        <div class="sub-box">
+          <div class="sb-title">Předplatné</div>
+          <div class="sb-val">11 800 Kc / rok</div>
+          <div class="sb-sub">= 990&nbsp;Kč měsíčně &middot; roční kontrola a nastavení</div>
+        </div>
         <div class="res-block">
           <div class="res-tag">Potenciální roční úspora</div>
-          <div class="res-val pos" id="resUspora">—</div>
+          <div class="res-val" id="resUspora">&mdash;</div>
           <div class="res-sub" id="resUsporaSub">Zadejte data a spočítejte</div>
-        </div>
-        <div class="res-block" style="background:var(--gdim);border-radius:2px;padding:1rem;margin-top:.5rem;border:1px solid rgba(0,232,122,.2);border-left:3px solid var(--g)">
-          <div class="res-tag" style="margin-bottom:.4rem">Předplatné</div>
-          <div style="font-family:var(--serif);font-size:1.4rem;letter-spacing:-.03em">11 800 Kč/rok</div>
-          <div class="res-sub" style="margin-top:.3rem">= 990 Kč měsíčně · roční kontrola a nastavení</div>
         </div>
         <div class="res-block">
           <div class="res-tag">Doporučená hodnota RRK</div>
-          <div class="res-val" id="resRRK">—</div>
+          <div class="res-val" id="resRRK">&mdash;</div>
           <div class="res-sub" id="resRRKsub">kW ročně sjednaná kapacita</div>
         </div>
         <div class="res-block">
@@ -358,9 +316,8 @@ footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-b
     <div class="stag fi">Kontakt</div>
     <div class="fi">
       <h2 class="contact-h">Pojďme si promluvit<br><em>o vaší úspoře.</em></h2>
-      <p class="contact-p">Pošlete nám e-mail s daty z faktur a do 24 hodin připravíme konkrétní analýzu vaší rezervované kapacity. Předplatné začíná na 11 800 Kč ročně (990 Kč/měs.) — každý rok nastavíme a zkontrolujeme vaši smlouvu.</p>
-      <a href="/cdn-cgi/l/email-protection#87e6f5f7e8b3e6ebebc7e0eae6eeeba9e4e8ea" class="contact-email">
-        <span class="__cf_email__" data-cfemail="513023213e65303d3d11363c30383d7f323e3c">[email&#160;protected]</span>
+      <p class="contact-p">Pošlete nám e-mail s daty z faktur a do 24 hodin připravíme konkrétní analýzu vaší rezervované kapacity. Předplatné začíná na <strong>11 800 Kč ročně</strong> (990 Kč/měs.) — každý rok nastavíme a zkontrolujeme vaši smlouvu.</p>
+      <a href=mailto:info@livenia.eu class=contact-email>info@livenia.eu
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
       </a>
     </div>
@@ -368,20 +325,23 @@ footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-b
 </section>
 
 <footer>
-  <span>© 2025 Livenia</span>
-  <span>Snižujeme náklady na energie.</span>
+  <span>&copy; 2025 Livenia</span>
+  <span>Snižujeme naklady na energie.</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 document.addEventListener('DOMContentLoaded', function () {
-  var MF = ['Leden','Unor','Brezen','Duben','Kveten','Cerven','Cervenec','Srpen','Zari','Rijen','Listopad','Prosinec'];
-  var MS = ['Led','Uno','Bre','Dub','Kve','Cer','Cvc','Srp','Zar','Rij','Lis','Pro'];
+  var MF = ['Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec'];
+  var MS = ['Led','Úno','Bře','Dub','Kvě','Čer','Čvc','Srp','Zář','Říj','Lis','Pro'];
 
   var tb = document.getElementById('calcTable');
   if (tb) {
     for (var i = 0; i < 12; i++) {
       var tr = document.createElement('tr');
-      tr.innerHTML = '<td class="mc">' + MF[i] + '</td><td><input type="number" id="max' + i + '" placeholder="0" min="0"></td><td><input type="number" id="mrk' + i + '" value="0" min="0"></td><td><span class="rbadge" id="hint' + i + '">—</span></td>';
+      tr.innerHTML = '<td class="mc">' + MF[i] + '</td>'
+        + '<td><input type="number" id="max' + i + '" placeholder="0" min="0"></td>'
+        + '<td><input type="number" id="mrk' + i + '" value="0" min="0"></td>'
+        + '<td><span class="rbadge" id="hint' + i + '">&mdash;</span></td>';
       tb.appendChild(tr);
     }
   }
@@ -399,7 +359,8 @@ document.addEventListener('DOMContentLoaded', function () {
     var mx = [566,583,608,615,661,732,724,776,729,620,583,566];
     var mr = [0,0,0,50,0,120,150,100,100,0,0,0];
     for (var i = 0; i < 12; i++) {
-      var e1 = document.getElementById('max' + i), e2 = document.getElementById('mrk' + i);
+      var e1 = document.getElementById('max' + i);
+      var e2 = document.getElementById('mrk' + i);
       if (e1) e1.value = mx[i];
       if (e2) e2.value = mr[i];
     }
@@ -412,12 +373,16 @@ document.addEventListener('DOMContentLoaded', function () {
     var cMRK = parseFloat(document.getElementById('cenaMRK').value) || 224.429;
     var koef = parseFloat(document.getElementById('koef').value) || 1.5;
     var sjed = parseFloat(document.getElementById('sjednanaRRK').value) || 650;
+
     var maxima = [], mrkNav = [];
     for (var i = 0; i < 12; i++) {
-      var e1 = document.getElementById('max' + i), e2 = document.getElementById('mrk' + i);
+      var e1 = document.getElementById('max' + i);
+      var e2 = document.getElementById('mrk' + i);
       maxima.push(e1 ? (parseFloat(e1.value) || 0) : 0);
       mrkNav.push(e2 ? (parseFloat(e2.value) || 0) : 0);
     }
+
+    // Find optimal RRK
     var minC = Infinity, idealRRK = 1;
     for (var rk = 1; rk <= 3000; rk++) {
       var c = rk * cRRK * 12;
@@ -429,6 +394,8 @@ document.addEventListener('DOMContentLoaded', function () {
       if (c < minC) { minC = c; idealRRK = rk; }
       else if (c > minC + 5000) break;
     }
+
+    // Current costs
     var sC = sjed * cRRK * 12, sM = 0, sO = 0;
     for (var i = 0; i < 12; i++) {
       sM += mrkNav[i] * cMRK;
@@ -436,66 +403,84 @@ document.addEventListener('DOMContentLoaded', function () {
       if (ef2 < maxima[i]) sO += (maxima[i] - ef2) * cMRK * koef;
     }
     var sTot = sC + sM + sO;
+
+    // Optimal costs
     var oC = idealRRK * cRRK * 12, oM = 0, oO = 0, dop = [];
     for (var i = 0; i < 12; i++) {
       oM += mrkNav[i] * cMRK;
       var ef3 = idealRRK + mrkNav[i];
-      if (ef3 < maxima[i]) { var d = maxima[i] - ef3; oO += d * cMRK * koef; dop.push(Math.ceil(d)); }
-      else dop.push(0);
+      if (ef3 < maxima[i]) {
+        var d = maxima[i] - ef3;
+        oO += d * cMRK * koef;
+        dop.push(Math.ceil(d));
+      } else {
+        dop.push(0);
+      }
     }
-    var oTot = oC + oM + oO, usp = sTot - oTot;
+    var oTot = oC + oM + oO;
+    var usp = sTot - oTot;
+
+    // Update hints
     for (var i = 0; i < 12; i++) {
       var h = document.getElementById('hint' + i);
       if (h) {
         if (dop[i] > 0) { h.textContent = '+' + dop[i] + ' kW'; h.className = 'rbadge over'; }
-        else { h.textContent = 'V poradku'; h.className = 'rbadge ok'; }
+        else { h.textContent = 'V pořádku'; h.className = 'rbadge ok'; }
       }
     }
-    var ru = document.getElementById('resUspora'), rs = document.getElementById('resUsporaSub');
-    var rr = document.getElementById('resRRK'), rb = document.getElementById('resRRKsub'), rd = document.getElementById('resBreakdown');
-    if (ru) { ru.textContent = fmt(usp); ru.className = usp > 0 ? 'res-val pos' : 'res-val'; }
 
-    // Threshold logic: < 20 000 Kč = already optimal within subscription
+    var ru = document.getElementById('resUspora');
+    var rs = document.getElementById('resUsporaSub');
+    var rr = document.getElementById('resRRK');
+    var rb = document.getElementById('resRRKsub');
+    var rd = document.getElementById('resBreakdown');
+
+    // Threshold: under 20 000 Kc = already set correctly within subscription
     if (usp < 20000) {
-      if (ru) { ru.textContent = 'Nastaveno správně'; ru.className = 'res-val'; ru.style.fontSize = '1.4rem'; }
-      if (rs) rs.innerHTML = 'V rámci předplatného a odchylky máte<br>nastaveno správně — <strong>můžete být spokojeni.</strong>';
+      if (ru) { ru.textContent = 'Nastaveno správně'; ru.className = 'res-val'; ru.style.fontSize = '1.3rem'; }
+      if (rs) rs.innerHTML = 'V rámci předplatného a odchylky máte nastaveno<br>správně &mdash; <strong>můžete být spokojeni.</strong>';
     } else {
-      if (ru) { ru.style.fontSize = ''; }
+      if (ru) { ru.textContent = fmt(usp); ru.className = 'res-val pos'; ru.style.fontSize = ''; }
       var cistUsp = usp - 11800;
       if (rs) rs.textContent = 'Čistá úspora po odečtení předplatného: ' + fmt(cistUsp);
     }
+
     if (rr) rr.textContent = idealRRK + ' kW';
-    if (rb) rb.textContent = 'Minimalni naklady: ' + fmt(oTot);
+    if (rb) rb.textContent = 'Minimální náklady: ' + fmt(oTot);
     if (rd) rd.innerHTML =
       '<div class="brow"><span>Rocni RRK</span><span class="bv">' + fmt(oC) + '</span></div>' +
-      '<div class="brow"><span>MRK navyseni</span><span class="bv">' + fmt(oM) + '</span></div>' +
-      '<div class="brow"><span>Poplatky za prekroceni</span><span class="bv">' + fmt(oO) + '</span></div>' +
+      '<div class="brow"><span>MRK navýšení</span><span class="bv">' + fmt(oM) + '</span></div>' +
+      '<div class="brow"><span>Poplatky za překročení</span><span class="bv">' + fmt(oO) + '</span></div>' +
       '<div class="brow tot"><span>Optimum celkem</span><span class="bv">' + fmt(oTot) + '</span></div>' +
-      '<div class="brow"><span>Aktualne platite</span><span class="bv">' + fmt(sTot) + '</span></div>';
+      '<div class="brow"><span>Aktuálně platíte</span><span class="bv">' + fmt(sTot) + '</span></div>';
+
+    // Chart
     if (cel) {
       var maxV = Math.max.apply(null, maxima.concat([idealRRK, 1]));
       cel.innerHTML = '';
       for (var i = 0; i < 12; i++) {
-        var hp = maxima[i] / maxV * 85, isOver = (idealRRK + mrkNav[i]) < maxima[i];
+        var hp = maxima[i] / maxV * 85;
+        var isOver = (idealRRK + mrkNav[i]) < maxima[i];
         cel.innerHTML += '<div class="bwrap"><div class="bar ' + (isOver ? 'bo' : 'ba') + '" style="height:' + hp + '%"></div><div class="blbl">' + MS[i] + '</div></div>';
       }
-      var old = document.getElementById('rrkLine'); if (old) old.remove();
-      var line = document.createElement('div'); line.id = 'rrkLine';
+      var old = document.getElementById('rrkLine');
+      if (old) old.remove();
+      var line = document.createElement('div');
+      line.id = 'rrkLine';
       line.style.cssText = 'position:absolute;bottom:' + (idealRRK / maxV * 85) + '%;left:0;right:0;height:1px;background:#00e87a;pointer-events:none;';
       cel.appendChild(line);
     }
   }
 
-  var bc = document.getElementById('btnCalc'), be = document.getElementById('btnEx');
-  if (bc) bc.addEventListener('click', vypocitat);
-  if (be) be.addEventListener('click', fillExample);
+  document.getElementById('btnCalc').addEventListener('click', vypocitat);
+  document.getElementById('btnEx').addEventListener('click', fillExample);
 
   window.addEventListener('scroll', function () {
     var nav = document.getElementById('mainNav');
     if (nav) nav.classList.toggle('scrolled', window.scrollY > 60);
   });
 
-  var obs = new IntersectionObserver(functio  var obs = new IntersectionObserver(function (entries) {
+  var obs = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('v'); });
   }, { threshold: 0.08 });
   document.querySelectorAll('.fi').forEach(function (el) { obs.observe(el); });
