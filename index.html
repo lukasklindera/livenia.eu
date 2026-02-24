@@ -11,14 +11,23 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:var(--sans);background:var(--bg);color:var(--text);overflow-x:hidden}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;padding:1.5rem 3rem;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
-nav.scrolled{background:rgba(244,240,232,.94);border-color:var(--border);backdrop-filter:blur(12px)}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;padding:1.25rem 3rem;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+nav.scrolled{background:rgba(244,240,232,.95);border-color:var(--border);backdrop-filter:blur(12px)}
 .nav-logo{display:flex;align-items:center;gap:.75rem;text-decoration:none;color:var(--text)}
 .nav-logo svg{width:26px;height:32px}
 .nav-name{font-family:var(--serif);font-size:1.35rem;letter-spacing:-.01em;background:linear-gradient(135deg,var(--text) 40%,var(--green) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.nav-links{display:flex;align-items:center;gap:2.5rem;margin-left:auto;list-style:none}
-.nav-links a{text-decoration:none;font-size:.85rem;color:var(--mid);font-weight:500;transition:color .2s}
+.nav-links{display:flex;align-items:center;gap:2rem;margin-left:auto;list-style:none}
+.nav-links a{text-decoration:none;font-size:.82rem;color:var(--mid);font-weight:500;transition:color .2s}
 .nav-links a:hover{color:var(--text)}
+.nav-right{display:flex;align-items:center;gap:.75rem;margin-left:1.5rem}
+.nav-btn{font-family:var(--mono);font-size:.72rem;background:transparent;border:1px solid var(--border);border-radius:2px;padding:5px 12px;cursor:pointer;color:var(--mid);transition:border-color .2s,color .2s}
+.nav-btn:hover{border-color:var(--text);color:var(--text)}
+.nav-btn-g{font-family:var(--mono);font-size:.72rem;background:transparent;border:1px solid rgba(0,232,122,.4);border-radius:2px;padding:5px 12px;cursor:pointer;color:var(--green);transition:background .2s}
+.nav-btn-g:hover{background:var(--gdim)}
+.nav-email{font-family:var(--mono);font-size:.7rem;color:var(--mid)}
+.sub-badge{font-family:var(--mono);font-size:.6rem;background:var(--gdim);border:1px solid rgba(0,232,122,.3);color:var(--green);border-radius:100px;padding:2px 7px;margin-left:.25rem}
+/* SECTIONS */
 #home{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10rem 2rem 6rem;position:relative}
 .hero-eyebrow{font-family:var(--mono);font-size:.75rem;color:var(--g);letter-spacing:.12em;text-transform:uppercase;margin-bottom:2.5rem;animation:fadeUp .7s ease both}
 .hero-h1{font-family:var(--serif);font-size:clamp(3.5rem,9vw,7.5rem);font-weight:400;letter-spacing:-.03em;line-height:.95;max-width:900px;animation:fadeUp .7s .1s ease both}
@@ -43,6 +52,7 @@ section{position:relative}
 .sw{max-width:1100px;margin:0 auto;padding:6rem 3rem}
 .divider{border:none;height:1px;background:linear-gradient(90deg,transparent 0%,var(--g) 30%,var(--g) 70%,transparent 100%);opacity:.2}
 .stag{font-family:var(--mono);font-size:.7rem;color:var(--g);text-transform:uppercase;letter-spacing:.12em;margin-bottom:3rem}
+/* O NAS */
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
 .about-h{font-family:var(--serif);font-size:clamp(2.5rem,4vw,3.5rem);letter-spacing:-.03em;line-height:1.05;font-weight:400}
 .about-h em{font-style:italic;color:var(--mid)}
@@ -53,6 +63,7 @@ section{position:relative}
 .fi-num{font-family:var(--mono);font-size:.7rem;color:var(--g);padding-top:.2rem;flex-shrink:0;width:2rem}
 .fi-body h3{font-size:.9rem;font-weight:600;margin-bottom:.35rem}
 .fi-body p{font-size:.82rem;color:var(--mid);line-height:1.6}
+/* JAK TO FUNGUJE */
 #rizeni{background:var(--bg2)}
 .how-layout{display:grid;grid-template-columns:1fr 1fr;gap:6rem}
 .how-h{font-family:var(--serif);font-size:clamp(2.5rem,4vw,3.5rem);letter-spacing:-.03em;line-height:1.05;font-weight:400;position:sticky;top:8rem;align-self:start}
@@ -64,6 +75,7 @@ section{position:relative}
 .step-row h3{font-family:var(--serif);font-size:1.3rem;letter-spacing:-.02em;margin-bottom:.75rem;font-weight:400}
 .step-row p{font-size:.875rem;color:var(--mid);line-height:1.75}
 .insight{margin-top:1rem;background:var(--gdim);border:1px solid rgba(0,232,122,.25);border-left:3px solid var(--g);border-radius:0 2px 2px 0;padding:1rem 1.25rem;font-family:var(--mono);font-size:.75rem;color:var(--green);line-height:1.6}
+/* KALKULATOR */
 .calc-intro{max-width:600px;margin-bottom:4rem}
 .calc-intro h2{font-family:var(--serif);font-size:clamp(2.5rem,4vw,3.5rem);letter-spacing:-.03em;line-height:1.05;font-weight:400;margin-bottom:1rem}
 .calc-intro p{font-size:.95rem;color:var(--mid);line-height:1.75}
@@ -98,6 +110,7 @@ input[type="number"]:focus{border-color:var(--g)}
 .btn-ex:hover{border-color:var(--g);color:var(--green)}
 .method-note{margin-top:1.25rem;font-family:var(--mono);font-size:.7rem;color:var(--light);line-height:1.7;padding-left:1rem;border-left:2px solid var(--border)}
 .method-note strong{color:var(--mid)}
+/* RESULTS */
 .results-col{display:flex;flex-direction:column;gap:0}
 .res-block{padding:1.5rem 0;border-bottom:1px solid var(--border)}
 .res-block:first-child{border-top:1px solid var(--border)}
@@ -111,7 +124,7 @@ input[type="number"]:focus{border-color:var(--g)}
 .brow.tot{color:var(--text);font-weight:600;border-top:1px solid var(--g);margin-top:4px;padding-top:8px}
 .brow.tot .bv{color:var(--green)}
 .empty-state{font-family:var(--mono);font-size:.72rem;color:var(--light);line-height:1.7;padding:1rem 0}
-.sub-box{background:var(--gdim);border:1px solid rgba(0,232,122,.2);border-left:3px solid var(--g);border-radius:0 2px 2px 0;padding:1rem 1.25rem;margin:1rem 0}
+.sub-box{background:var(--gdim);border:1px solid rgba(0,232,122,.2);border-left:3px solid var(--g);padding:1rem 1.25rem;margin:1rem 0}
 .sub-box .sb-title{font-family:var(--mono);font-size:.62rem;color:var(--g);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem}
 .sub-box .sb-val{font-family:var(--serif);font-size:1.4rem;letter-spacing:-.03em;color:var(--text)}
 .sub-box .sb-sub{font-family:var(--mono);font-size:.62rem;color:var(--mid);margin-top:.25rem}
@@ -126,6 +139,28 @@ input[type="number"]:focus{border-color:var(--g)}
 .clegend{display:flex;gap:.75rem;margin-top:.6rem;flex-wrap:wrap}
 .lg{display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:.58rem;color:var(--light)}
 .lgd{width:8px;height:6px;border-radius:1px}
+/* SAVE PANEL */
+.save-panel{margin-top:1.25rem;padding:1rem 1.25rem;background:var(--bg2);border:1px solid var(--border);border-radius:2px;display:none}
+.save-panel-row{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+.save-panel label{font-family:var(--mono);font-size:.65rem;color:var(--mid);white-space:nowrap}
+.save-input{background:white;border:1px solid var(--border);border-radius:2px;color:var(--text);font-family:var(--mono);font-size:.8rem;padding:5px 8px;outline:none;flex:1;min-width:140px}
+.save-input:focus{border-color:var(--g)}
+.btn-save{background:var(--green);color:white;border:none;border-radius:2px;padding:6px 14px;font-family:var(--mono);font-size:.72rem;cursor:pointer;white-space:nowrap;transition:opacity .2s}
+.btn-save:hover{opacity:.85}
+/* SAVED CALCS */
+.saved-section{margin-top:2.5rem;border-top:1px solid var(--border);padding-top:2rem;display:none}
+.saved-title{font-family:var(--mono);font-size:.7rem;color:var(--mid);text-transform:uppercase;letter-spacing:.1em;margin-bottom:1rem}
+.calc-item{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;border:1px solid var(--border);border-radius:2px;margin-bottom:.5rem;background:white;transition:border-color .2s}
+.calc-item:hover{border-color:var(--g)}
+.calc-item-left{display:flex;flex-direction:column;gap:.2rem}
+.calc-item-name{font-size:.85rem;font-weight:500}
+.calc-item-date{font-family:var(--mono);font-size:.62rem;color:var(--light)}
+.calc-item-btns{display:flex;gap:.5rem}
+.btn-load{font-family:var(--mono);font-size:.62rem;color:var(--green);background:transparent;border:1px solid rgba(0,232,122,.35);border-radius:2px;padding:3px 9px;cursor:pointer;transition:background .2s}
+.btn-load:hover{background:var(--gdim)}
+.btn-del{font-family:var(--mono);font-size:.62rem;color:var(--light);background:transparent;border:1px solid var(--border);border-radius:2px;padding:3px 9px;cursor:pointer;transition:color .2s,border-color .2s}
+.btn-del:hover{color:#c45c00;border-color:#c45c00}
+/* KONTAKT */
 #kontakt{background:var(--bg2)}
 .contact-h{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);letter-spacing:-.03em;line-height:1.05;font-weight:400;margin-bottom:1.5rem}
 .contact-h em{font-style:italic}
@@ -133,9 +168,56 @@ input[type="number"]:focus{border-color:var(--g)}
 .contact-email{display:inline-flex;align-items:center;gap:.75rem;font-family:var(--serif);font-size:1.5rem;letter-spacing:-.02em;color:var(--text);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:.5rem;transition:border-color .2s,color .2s}
 .contact-email:hover{border-color:var(--g);color:var(--green)}
 footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);font-family:var(--mono);font-size:.65rem;color:var(--light)}
+/* MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(26,26,24,.55);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.overlay.show{display:flex}
+.modal-card{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:2.5rem;width:100%;max-width:430px;position:relative;margin:1rem}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;cursor:pointer;color:var(--light);font-size:1.2rem;line-height:1;padding:4px 8px;transition:color .2s}
+.modal-close:hover{color:var(--text)}
+.modal-logo{font-family:var(--serif);font-size:1.1rem;margin-bottom:1.75rem;letter-spacing:-.02em;background:linear-gradient(135deg,var(--text) 40%,var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.modal-title{font-family:var(--serif);font-size:1.6rem;letter-spacing:-.03em;margin-bottom:.5rem;font-weight:400}
+.modal-sub{font-family:var(--mono);font-size:.7rem;color:var(--mid);margin-bottom:1.75rem;line-height:1.6}
+.form-field{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1.1rem}
+.form-field label{font-family:var(--mono);font-size:.65rem;color:var(--mid);text-transform:uppercase;letter-spacing:.07em}
+.form-input{background:white;border:1px solid var(--border);border-radius:2px;color:var(--text);font-family:var(--sans);font-size:.9rem;padding:.65rem .85rem;outline:none;transition:border-color .2s}
+.form-input:focus{border-color:var(--g)}
+.btn-primary{width:100%;padding:.85rem;background:var(--text);color:var(--bg);border:none;border-radius:2px;font-family:var(--sans);font-size:.9rem;font-weight:600;cursor:pointer;margin-top:.5rem;transition:opacity .2s}
+.btn-primary:hover{opacity:.85}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.modal-switch{font-family:var(--mono);font-size:.7rem;color:var(--mid);text-align:center;margin-top:1.25rem}
+.modal-switch a{color:var(--green);cursor:pointer;text-decoration:underline}
+.form-error{font-family:var(--mono);font-size:.7rem;color:#c45c00;margin-top:.5rem;display:none;padding:.5rem .75rem;background:rgba(196,92,0,.07);border-radius:2px}
+.form-error.show{display:block}
+.code-input{letter-spacing:.35em;text-transform:uppercase;font-size:1.4rem;text-align:center;font-family:var(--mono)}
+/* PROMPT MODAL */
+.prompt-card{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:3rem 2.5rem;width:100%;max-width:480px;position:relative;margin:1rem;text-align:center}
+.prompt-h{font-family:var(--serif);font-size:clamp(1.6rem,4vw,2.2rem);letter-spacing:-.03em;line-height:1.1;font-weight:400;margin-bottom:1rem}
+.prompt-h em{font-style:italic;color:var(--green)}
+.prompt-sub{font-size:.9rem;color:var(--mid);line-height:1.7;margin-bottom:2rem}
+.prompt-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.prompt-btns .btn-dark{padding:.75rem 1.75rem}
+.prompt-btns .btn-ghost{padding:.75rem 1.75rem}
+/* ADMIN */
+.admin-card{background:var(--bg);border:1px solid var(--border);border-radius:4px;width:100%;max-width:860px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;margin:1rem;position:relative}
+.admin-head{padding:1.5rem 2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--bg2)}
+.admin-head h2{font-family:var(--serif);font-size:1.5rem;font-weight:400;letter-spacing:-.03em}
+.admin-body{overflow-y:auto;padding:1.5rem 2rem;flex:1}
+.admin-table{width:100%;border-collapse:collapse}
+.admin-table th{font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:var(--light);text-align:left;padding:.6rem .75rem;border-bottom:2px solid var(--border)}
+.admin-table td{padding:.75rem .75rem;border-bottom:1px solid var(--border);font-size:.85rem;vertical-align:middle}
+.admin-table tr:last-child td{border-bottom:none}
+.admin-table tr:hover td{background:#faf8f4}
+.tag-y{font-family:var(--mono);font-size:.65rem;color:var(--green);background:var(--gdim);border:1px solid rgba(0,232,122,.3);border-radius:100px;padding:2px 8px}
+.tag-n{font-family:var(--mono);font-size:.65rem;color:var(--light);background:var(--bg2);border:1px solid var(--border);border-radius:100px;padding:2px 8px}
+.btn-toggle-y{font-family:var(--mono);font-size:.65rem;background:var(--gdim);border:1px solid rgba(0,232,122,.3);color:var(--green);border-radius:2px;padding:4px 10px;cursor:pointer;transition:opacity .2s}
+.btn-toggle-y:hover{opacity:.75}
+.btn-toggle-n{font-family:var(--mono);font-size:.65rem;background:var(--bg2);border:1px solid var(--border);color:var(--mid);border-radius:2px;padding:4px 10px;cursor:pointer;transition:border-color .2s}
+.btn-toggle-n:hover{border-color:var(--g);color:var(--green)}
+/* ANIMATIONS */
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 .fi{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
 .fi.v{opacity:1;transform:translateY(0)}
+/* RESPONSIVE */
 @media(max-width:960px){.calc-layout{grid-template-columns:1fr}}
 @media(max-width:768px){nav{padding:1.25rem 1.5rem}.nav-links{display:none}.sw{padding:4rem 1.5rem}.about-grid,.how-layout{grid-template-columns:1fr;gap:3rem}.how-h{position:static}.hero-stats{flex-wrap:wrap}.hstat{border-right:none!important;border-bottom:1px solid var(--border);min-width:140px;flex:1}}
 </style>
@@ -155,11 +237,22 @@ footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-b
     <div class="nav-name">Livenia</div>
   </a>
   <ul class="nav-links">
-    <li><a href="#onas">O&nbsp;nás</a></li>
+    <li><a href="#onas">O n&#225;s</a></li>
     <li><a href="#rizeni">Jak to funguje</a></li>
     <li><a href="#modelovani">Kalkulačka</a></li>
     <li><a href="#kontakt">Kontakt</a></li>
   </ul>
+  <div class="nav-right">
+    <div id="navAuth">
+      <button class="nav-btn" onclick="showAuth('login')">Přihlásit se</button>
+    </div>
+    <div id="navUser" style="display:none;align-items:center;gap:.75rem">
+      <span class="nav-email" id="navUserEmail"></span>
+      <span class="sub-badge" id="navSubBadge" style="display:none">Předplatné</span>
+      <button class="nav-btn-g" id="navAdminBtn" style="display:none" onclick="showAdmin()">Admin</button>
+      <button class="nav-btn" onclick="doLogout()">Odhlásit</button>
+    </div>
+  </div>
 </nav>
 
 <section id="home">
@@ -174,9 +267,9 @@ footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-b
     <a href="#rizeni" class="btn-ghost">Jak to funguje?</a>
   </div>
   <div class="hero-stats">
-    <div class="hstat"><div class="n">30 %</div><div class="l">průměrné předražení RK</div></div>
-    <div class="hstat"><div class="n">500 tis.</div><div class="l">Kč zbytečně ročně</div></div>
-    <div class="hstat"><div class="n">990 Kc</div><div class="l">měsíčně / předplatné</div></div>
+    <div class="hstat"><div class="n">30&nbsp;%</div><div class="l">průměrné předražení RK</div></div>
+    <div class="hstat"><div class="n">500&nbsp;tis.</div><div class="l">Kč zbytečně ročně</div></div>
+    <div class="hstat"><div class="n">990&nbsp;Kč</div><div class="l">měsíčně / předplatné</div></div>
   </div>
   <a href="#onas" class="scroll-arrow">
     <span>Pokračovat</span>
@@ -188,7 +281,7 @@ footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-b
 
 <section id="onas">
   <div class="sw">
-    <div class="stag fi">O&nbsp;nás</div>
+    <div class="stag fi">O nás</div>
     <div class="about-grid fi">
       <div>
         <h2 class="about-h">Platforma pro <em>inteligentní</em> správu energií</h2>
@@ -216,24 +309,20 @@ footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-b
       <div><h2 class="how-h fi">Systém rezervované <em>kapacity.</em></h2></div>
       <div class="steps-list fi">
         <div class="step-row">
-          <div class="step-n">Krok 01</div>
-          <h3>Čtvrthodinové maximum</h3>
+          <div class="step-n">Krok 01</div><h3>Čtvrthodinové maximum</h3>
           <p>Distributor měří každých 15 minut průměrný příkon. Nejvyšší naměřená hodnota za měsíc — čtvrthodinové maximum — určuje výši poplatků.</p>
         </div>
         <div class="step-row">
-          <div class="step-n">Krok 02</div>
-          <h3>Rezervovaná kapacita</h3>
+          <div class="step-n">Krok 02</div><h3>Rezervovaná kapacita</h3>
           <p>Ve smlouvě si sjednáváte roční (RRK) a měsíční (MRK) strop. Za překročení platíte 1,5násobek sazby MRK.</p>
           <div class="insight">Příklad: RRK 650 kW = ~1&nbsp;500&nbsp;000&nbsp;Kč ročně. Snížením na 580 kW ušetříte až 500&nbsp;000&nbsp;Kč — i přes letní překročení.</div>
         </div>
         <div class="step-row">
-          <div class="step-n">Krok 03</div>
-          <h3>Kde je optimum?</h3>
+          <div class="step-n">Krok 03</div><h3>Kde je optimum?</h3>
           <p>Model prochází všechny hodnoty RRK a hledá bod, kde je součet RRK + MRK navýšení + poplatky za překročení nejnižší. To je vaše ideální smlouva.</p>
         </div>
         <div class="step-row">
-          <div class="step-n">Krok 04</div>
-          <h3>Implementace a roční kontrola</h3>
+          <div class="step-n">Krok 04</div><h3>Implementace a roční kontrola</h3>
           <p>Doporučíme konkrétní hodnoty do smlouvy s distributorem. Každý rok v rámci předplatného nastavení zkontrolujeme a aktualizujeme.</p>
         </div>
       </div>
@@ -273,12 +362,24 @@ footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-b
           </div>
         </div>
         <button class="btn-calc" id="btnCalc">Spočítat optimální nastavení &rarr;</button>
-        <p class="method-note"><strong>Metodika:</strong> Model hledá nejnižší RRK, při níž je součet ročních nákladů na RRK + MRK navýšení + 1,5× poplatky za překročení minimální.</p>
+        <div class="save-panel" id="savePanel">
+          <div class="save-panel-row">
+            <label>Název:</label>
+            <input class="save-input" type="text" id="calcName" placeholder="Výpočet ...">
+            <button class="btn-save" id="btnSave">Uložit výpočet</button>
+          </div>
+          <div id="saveMsg" style="font-family:var(--mono);font-size:.68rem;color:var(--mid);margin-top:.5rem"></div>
+        </div>
+        <p class="method-note"><strong>Metodika:</strong> Model hledá nejnižší RRK, při níž je součet ročních nákladů na RRK + MRK navýšení + 1,5&times; poplatky za překročení minimální.</p>
+        <div class="saved-section" id="savedSection">
+          <div class="saved-title">Uložené výpočty</div>
+          <div id="savedList"></div>
+        </div>
       </div>
       <div class="results-col fi">
         <div class="sub-box">
           <div class="sb-title">Předplatné</div>
-          <div class="sb-val">11 800 Kc / rok</div>
+          <div class="sb-val">11&nbsp;800&nbsp;Kč&nbsp;/ rok</div>
           <div class="sb-sub">= 990&nbsp;Kč měsíčně &middot; roční kontrola a nastavení</div>
         </div>
         <div class="res-block">
@@ -316,8 +417,9 @@ footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-b
     <div class="stag fi">Kontakt</div>
     <div class="fi">
       <h2 class="contact-h">Pojďme si promluvit<br><em>o vaší úspoře.</em></h2>
-      <p class="contact-p">Pošlete nám e-mail s daty z faktur a do 24 hodin připravíme konkrétní analýzu vaší rezervované kapacity. Předplatné začíná na <strong>11 800 Kč ročně</strong> (990 Kč/měs.) — každý rok nastavíme a zkontrolujeme vaši smlouvu.</p>
-      <a href=mailto:livenia@email.cz class=contact-email>livenia@email.cz
+      <p class="contact-p">Pošlete nám e-mail s daty z faktur a do 24 hodin připravíme konkrétní analýzu vaší rezervované kapacity. Předplatné začíná na <strong>11&nbsp;800&nbsp;Kč ročně</strong> (990&nbsp;Kč/měs.) — každý rok nastavíme a zkontrolujeme vaši smlouvu.</p>
+      <a href="mailto:livenia@email.cz" class="contact-email">
+        livenia@email.cz
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
       </a>
     </div>
@@ -326,166 +428,479 @@ footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-b
 
 <footer>
   <span>&copy; 2025 Livenia</span>
-  <span>Snižujeme naklady na energie.</span>
+  <span>Snižujeme náklady na energie.</span>
 </footer>
+
+<!-- AUTH MODAL -->
+<div class="overlay" id="authOverlay">
+  <div class="modal-card">
+    <button class="modal-close" onclick="hideAuth()">&times;</button>
+    <div class="modal-logo">Livenia</div>
+
+    <!-- LOGIN -->
+    <div id="authViewLogin">
+      <div class="modal-title">Přihlásit se</div>
+      <div class="modal-sub">Přistupte ke svým výpočtům a nastavením.</div>
+      <div class="form-field"><label>E-mail</label><input class="form-input" type="email" id="loginEmail" autocomplete="email"></div>
+      <div class="form-field"><label>Heslo</label><input class="form-input" type="password" id="loginPw" autocomplete="current-password"></div>
+      <div class="form-error" id="loginErr"></div>
+      <button class="btn-primary" id="btnLogin" onclick="doLogin()">Přihlásit se</button>
+      <div class="modal-switch">Nemáte účet? <a onclick="switchAuth('register')">Registrovat se &rarr;</a></div>
+    </div>
+
+    <!-- REGISTER -->
+    <div id="authViewRegister" style="display:none">
+      <div class="modal-title">Registrace</div>
+      <div class="modal-sub">Vytvoříme vám účet a pošleme ověřovací kód na e-mail.</div>
+      <div class="form-field"><label>E-mail</label><input class="form-input" type="email" id="regEmail" autocomplete="email"></div>
+      <div class="form-field"><label>Heslo</label><input class="form-input" type="password" id="regPw" autocomplete="new-password"></div>
+      <div class="form-error" id="regErr"></div>
+      <button class="btn-primary" id="btnRegister" onclick="doRegister()">Vytvořit účet</button>
+      <div class="modal-switch">Máte účet? <a onclick="switchAuth('login')">&larr; Přihlásit se</a></div>
+    </div>
+
+    <!-- VERIFY -->
+    <div id="authViewVerify" style="display:none">
+      <div class="modal-title">Ověření e-mailu</div>
+      <div class="modal-sub" id="verifySubText">Zadejte 4-místný kód, který jsme poslali na váš e-mail.</div>
+      <input type="hidden" id="verifyEmail">
+      <div class="form-field" style="margin-top:1.5rem"><label>Ověřovací kód</label><input class="form-input code-input" type="text" id="verifyCode" maxlength="4" autocomplete="one-time-code"></div>
+      <div class="form-error" id="verifyErr"></div>
+      <button class="btn-primary" id="btnVerify" onclick="doVerify()">Potvrdit kód</button>
+      <div class="modal-switch"><a onclick="switchAuth('register')">&larr; Zpět na registraci</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROMPT MODAL -->
+<div class="overlay" id="promptOverlay">
+  <div class="prompt-card">
+    <button class="modal-close" onclick="hidePrompt()">&times;</button>
+    <div class="prompt-h">Stačí už jen <em>jeden krok</em> zdarma,<br>abyste zjistili kolik můžete uspořit.</div>
+    <div class="prompt-sub">Po přihlášení okamžitě zobrazíme váš výsledek a uložíme výpočet pro příští návštěvu.</div>
+    <div class="prompt-btns">
+      <a class="btn-dark" style="cursor:pointer" onclick="hidePrompt();showAuth('login')">Přihlásit se</a>
+      <a class="btn-ghost" style="cursor:pointer" onclick="hidePrompt();showAuth('register')">Registrovat se</a>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN MODAL -->
+<div class="overlay" id="adminOverlay">
+  <div class="admin-card">
+    <div class="admin-head">
+      <h2>Správa uživatelů</h2>
+      <button class="modal-close" style="position:static" onclick="hideAdmin()">&times;</button>
+    </div>
+    <div class="admin-body">
+      <table class="admin-table" id="adminTable">
+        <thead><tr><th>E-mail</th><th>Ověřen</th><th>Výpočty</th><th>Registrace</th><th>Předplatné</th></tr></thead>
+        <tbody id="adminTbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+  /* ─── STATE ─── */
+  var currentUser = null;
+  var dataSource  = 'empty'; // 'empty' | 'example' | 'manual'
+  var pendingCalc = false;
+  var lastCalcData = null;
+
   var MF = ['Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec'];
   var MS = ['Led','Úno','Bře','Dub','Kvě','Čer','Čvc','Srp','Zář','Říj','Lis','Pro'];
 
+  /* ─── BUILD TABLE ─── */
   var tb = document.getElementById('calcTable');
-  if (tb) {
-    for (var i = 0; i < 12; i++) {
-      var tr = document.createElement('tr');
-      tr.innerHTML = '<td class="mc">' + MF[i] + '</td>'
-        + '<td><input type="number" id="max' + i + '" placeholder="0" min="0"></td>'
-        + '<td><input type="number" id="mrk' + i + '" value="0" min="0"></td>'
-        + '<td><span class="rbadge" id="hint' + i + '">&mdash;</span></td>';
-      tb.appendChild(tr);
-    }
+  for (var i = 0; i < 12; i++) {
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<td class="mc">' + MF[i] + '</td>'
+      + '<td><input type="number" id="max' + i + '" placeholder="0" min="0"></td>'
+      + '<td><input type="number" id="mrk' + i + '" value="0" min="0"></td>'
+      + '<td><span class="rbadge" id="hint' + i + '">&mdash;</span></td>';
+    tb.appendChild(tr);
+    (function(idx){
+      document.getElementById('max'+idx).addEventListener('input', function(){ dataSource='manual'; });
+      document.getElementById('mrk'+idx).addEventListener('input', function(){ dataSource='manual'; });
+    })(i);
   }
 
+  /* ─── PLACEHOLDER CHART ─── */
   var cel = document.getElementById('chartBars');
-  if (cel) {
-    for (var j = 0; j < 12; j++) {
-      cel.innerHTML += '<div class="bwrap"><div class="bar ba" style="height:' + (15 + Math.floor(Math.random() * 40)) + '%"></div><div class="blbl">' + MS[j] + '</div></div>';
-    }
+  for (var j = 0; j < 12; j++) {
+    cel.innerHTML += '<div class="bwrap"><div class="bar ba" style="height:' + (15+Math.floor(Math.random()*40)) + '%"></div><div class="blbl">' + MS[j] + '</div></div>';
   }
 
-  function fmt(n) { return Math.round(n).toLocaleString('cs-CZ') + ' Kc'; }
-
-  function fillExample() {
-    var mx = [566,583,608,615,661,732,724,776,729,620,583,566];
-    var mr = [0,0,0,50,0,120,150,100,100,0,0,0];
-    for (var i = 0; i < 12; i++) {
-      var e1 = document.getElementById('max' + i);
-      var e2 = document.getElementById('mrk' + i);
-      if (e1) e1.value = mx[i];
-      if (e2) e2.value = mr[i];
-    }
-    var s = document.getElementById('sjednanaRRK');
-    if (s) s.value = 650;
+  /* ─── API HELPER ─── */
+  function api(params, cb) {
+    var fd = new FormData();
+    for (var k in params) fd.append(k, params[k]);
+    fetch('api.php', {method:'POST', body:fd, credentials:'same-origin'})
+      .then(function(r){ return r.json(); })
+      .then(cb)
+      .catch(function(){ cb({ok:false,error:'Chyba připojení'}); });
   }
 
-  function vypocitat() {
-    var cRRK = parseFloat(document.getElementById('cenaRRK').value) || 204.788;
-    var cMRK = parseFloat(document.getElementById('cenaMRK').value) || 224.429;
-    var koef = parseFloat(document.getElementById('koef').value) || 1.5;
-    var sjed = parseFloat(document.getElementById('sjednanaRRK').value) || 650;
+  /* ─── SESSION CHECK ─── */
+  function checkSession() {
+    api({action:'check_session'}, function(d){
+      if (d.ok) setUser(d.user);
+    });
+  }
 
-    var maxima = [], mrkNav = [];
-    for (var i = 0; i < 12; i++) {
-      var e1 = document.getElementById('max' + i);
-      var e2 = document.getElementById('mrk' + i);
-      maxima.push(e1 ? (parseFloat(e1.value) || 0) : 0);
-      mrkNav.push(e2 ? (parseFloat(e2.value) || 0) : 0);
-    }
-
-    // Find optimal RRK
-    var minC = Infinity, idealRRK = 1;
-    for (var rk = 1; rk <= 3000; rk++) {
-      var c = rk * cRRK * 12;
-      for (var i = 0; i < 12; i++) {
-        c += mrkNav[i] * cMRK;
-        var ef = rk + mrkNav[i];
-        if (ef < maxima[i]) c += (maxima[i] - ef) * cMRK * koef;
-      }
-      if (c < minC) { minC = c; idealRRK = rk; }
-      else if (c > minC + 5000) break;
-    }
-
-    // Current costs
-    var sC = sjed * cRRK * 12, sM = 0, sO = 0;
-    for (var i = 0; i < 12; i++) {
-      sM += mrkNav[i] * cMRK;
-      var ef2 = sjed + mrkNav[i];
-      if (ef2 < maxima[i]) sO += (maxima[i] - ef2) * cMRK * koef;
-    }
-    var sTot = sC + sM + sO;
-
-    // Optimal costs
-    var oC = idealRRK * cRRK * 12, oM = 0, oO = 0, dop = [];
-    for (var i = 0; i < 12; i++) {
-      oM += mrkNav[i] * cMRK;
-      var ef3 = idealRRK + mrkNav[i];
-      if (ef3 < maxima[i]) {
-        var d = maxima[i] - ef3;
-        oO += d * cMRK * koef;
-        dop.push(Math.ceil(d));
-      } else {
-        dop.push(0);
-      }
-    }
-    var oTot = oC + oM + oO;
-    var usp = sTot - oTot;
-
-    // Update hints
-    for (var i = 0; i < 12; i++) {
-      var h = document.getElementById('hint' + i);
-      if (h) {
-        if (dop[i] > 0) { h.textContent = '+' + dop[i] + ' kW'; h.className = 'rbadge over'; }
-        else { h.textContent = 'V pořádku'; h.className = 'rbadge ok'; }
-      }
-    }
-
-    var ru = document.getElementById('resUspora');
-    var rs = document.getElementById('resUsporaSub');
-    var rr = document.getElementById('resRRK');
-    var rb = document.getElementById('resRRKsub');
-    var rd = document.getElementById('resBreakdown');
-
-    // Threshold: under 20 000 Kc = already set correctly within subscription
-    if (usp < 20000) {
-      if (ru) { ru.textContent = 'Nastaveno správně'; ru.className = 'res-val'; ru.style.fontSize = '1.3rem'; }
-      if (rs) rs.innerHTML = 'V rámci předplatného a odchylky máte nastaveno<br>správně &mdash; <strong>můžete být spokojeni.</strong>';
+  function setUser(u) {
+    currentUser = u;
+    if (u) {
+      document.getElementById('navAuth').style.display = 'none';
+      var nu = document.getElementById('navUser');
+      nu.style.display = 'flex';
+      document.getElementById('navUserEmail').textContent = u.email;
+      document.getElementById('navSubBadge').style.display = u.subscription ? 'inline' : 'none';
+      document.getElementById('navAdminBtn').style.display = u.is_admin ? 'inline-block' : 'none';
+      loadCalcs();
     } else {
-      if (ru) { ru.textContent = fmt(usp); ru.className = 'res-val pos'; ru.style.fontSize = ''; }
-      var cistUsp = usp - 11800;
-      if (rs) rs.textContent = 'Čistá úspora po odečtení předplatného: ' + fmt(cistUsp);
-    }
-
-    if (rr) rr.textContent = idealRRK + ' kW';
-    if (rb) rb.textContent = 'Minimální náklady: ' + fmt(oTot);
-    if (rd) rd.innerHTML =
-      '<div class="brow"><span>Rocni RRK</span><span class="bv">' + fmt(oC) + '</span></div>' +
-      '<div class="brow"><span>MRK navýšení</span><span class="bv">' + fmt(oM) + '</span></div>' +
-      '<div class="brow"><span>Poplatky za překročení</span><span class="bv">' + fmt(oO) + '</span></div>' +
-      '<div class="brow tot"><span>Optimum celkem</span><span class="bv">' + fmt(oTot) + '</span></div>' +
-      '<div class="brow"><span>Aktuálně platíte</span><span class="bv">' + fmt(sTot) + '</span></div>';
-
-    // Chart
-    if (cel) {
-      var maxV = Math.max.apply(null, maxima.concat([idealRRK, 1]));
-      cel.innerHTML = '';
-      for (var i = 0; i < 12; i++) {
-        var hp = maxima[i] / maxV * 85;
-        var isOver = (idealRRK + mrkNav[i]) < maxima[i];
-        cel.innerHTML += '<div class="bwrap"><div class="bar ' + (isOver ? 'bo' : 'ba') + '" style="height:' + hp + '%"></div><div class="blbl">' + MS[i] + '</div></div>';
-      }
-      var old = document.getElementById('rrkLine');
-      if (old) old.remove();
-      var line = document.createElement('div');
-      line.id = 'rrkLine';
-      line.style.cssText = 'position:absolute;bottom:' + (idealRRK / maxV * 85) + '%;left:0;right:0;height:1px;background:#00e87a;pointer-events:none;';
-      cel.appendChild(line);
+      currentUser = null;
+      document.getElementById('navAuth').style.display = 'flex';
+      document.getElementById('navUser').style.display = 'none';
+      document.getElementById('savePanel').style.display = 'none';
+      document.getElementById('savedSection').style.display = 'none';
     }
   }
 
-  document.getElementById('btnCalc').addEventListener('click', vypocitat);
-  document.getElementById('btnEx').addEventListener('click', fillExample);
+  /* ─── LOGOUT ─── */
+  window.doLogout = function() {
+    api({action:'logout'}, function(){
+      setUser(null);
+    });
+  };
 
-  window.addEventListener('scroll', function () {
-    var nav = document.getElementById('mainNav');
-    if (nav) nav.classList.toggle('scrolled', window.scrollY > 60);
+  /* ─── AUTH MODAL ─── */
+  window.showAuth = function(tab) {
+    document.getElementById('authOverlay').classList.add('show');
+    switchAuth(tab);
+  };
+  window.hideAuth = function() {
+    document.getElementById('authOverlay').classList.remove('show');
+    clearAuthErrors();
+  };
+  window.switchAuth = function(tab) {
+    document.getElementById('authViewLogin').style.display    = tab==='login'    ? '' : 'none';
+    document.getElementById('authViewRegister').style.display = tab==='register' ? '' : 'none';
+    document.getElementById('authViewVerify').style.display   = tab==='verify'   ? '' : 'none';
+    clearAuthErrors();
+  };
+  function clearAuthErrors(){
+    ['loginErr','regErr','verifyErr'].forEach(function(id){
+      var el=document.getElementById(id); el.textContent=''; el.classList.remove('show');
+    });
+  }
+  function showErr(id, msg){
+    var el=document.getElementById(id); el.textContent=msg; el.classList.add('show');
+  }
+  function setBtnLoading(id, loading){
+    var b=document.getElementById(id); b.disabled=loading; b.textContent=loading?'Moment...':b.dataset.label||(b.textContent);
+  }
+
+  /* ─── REGISTER ─── */
+  window.doRegister = function() {
+    var email = document.getElementById('regEmail').value.trim();
+    var pw    = document.getElementById('regPw').value;
+    if (!email||!pw) { showErr('regErr','Vyplňte e-mail a heslo'); return; }
+    var btn = document.getElementById('btnRegister');
+    btn.disabled=true; btn.textContent='Odesílám...';
+    api({action:'register', email:email, password:pw}, function(d){
+      btn.disabled=false; btn.textContent='Vytvořit účet';
+      if (!d.ok) { showErr('regErr', d.error); return; }
+      document.getElementById('verifyEmail').value = email;
+      document.getElementById('verifySubText').textContent = 'Zadejte 4-místný kód, který jsme poslali na ' + email + '.';
+      switchAuth('verify');
+    });
+  };
+
+  /* ─── VERIFY ─── */
+  window.doVerify = function() {
+    var email = document.getElementById('verifyEmail').value;
+    var code  = document.getElementById('verifyCode').value.trim().toUpperCase();
+    if (code.length !== 4) { showErr('verifyErr','Zadejte 4-místný kód'); return; }
+    var btn = document.getElementById('btnVerify');
+    btn.disabled=true; btn.textContent='Ověřuji...';
+    api({action:'verify', email:email, code:code}, function(d){
+      btn.disabled=false; btn.textContent='Potvrdit kód';
+      if (!d.ok) { showErr('verifyErr', d.error); return; }
+      hideAuth();
+      setUser(d.user);
+      if (pendingCalc) { pendingCalc=false; runCalc(); }
+    });
+  };
+
+  /* ─── LOGIN ─── */
+  window.doLogin = function() {
+    var email = document.getElementById('loginEmail').value.trim();
+    var pw    = document.getElementById('loginPw').value;
+    if (!email||!pw) { showErr('loginErr','Vyplňte e-mail a heslo'); return; }
+    var btn = document.getElementById('btnLogin');
+    btn.disabled=true; btn.textContent='Přihlašuji...';
+    api({action:'login', email:email, password:pw}, function(d){
+      btn.disabled=false; btn.textContent='Přihlásit se';
+      if (!d.ok) {
+        if (d.needs_verify) {
+          document.getElementById('verifyEmail').value = d.email;
+          document.getElementById('verifySubText').textContent = 'Zadejte ověřovací kód odeslaný na ' + d.email + '.';
+          switchAuth('verify');
+        } else {
+          showErr('loginErr', d.error);
+        }
+        return;
+      }
+      hideAuth();
+      setUser(d.user);
+      if (pendingCalc) { pendingCalc=false; runCalc(); }
+    });
+  };
+
+  /* ─── PROMPT MODAL ─── */
+  window.showPrompt = function() { document.getElementById('promptOverlay').classList.add('show'); };
+  window.hidePrompt = function() { document.getElementById('promptOverlay').classList.remove('show'); };
+
+  /* ─── CALCULATOR ─── */
+  function fmt(n) { return Math.round(n).toLocaleString('cs-CZ') + ' Kč'; }
+
+  window.fillExample = function() {
+    var mx=[566,583,608,615,661,732,724,776,729,620,583,566];
+    var mr=[0,0,0,50,0,120,150,100,100,0,0,0];
+    for(var i=0;i<12;i++){
+      document.getElementById('max'+i).value=mx[i];
+      document.getElementById('mrk'+i).value=mr[i];
+    }
+    document.getElementById('sjednanaRRK').value=650;
+    dataSource='example';
+  };
+
+  function runCalc() {
+    var cRRK=parseFloat(document.getElementById('cenaRRK').value)||204.788;
+    var cMRK=parseFloat(document.getElementById('cenaMRK').value)||224.429;
+    var koef=parseFloat(document.getElementById('koef').value)||1.5;
+    var sjed=parseFloat(document.getElementById('sjednanaRRK').value)||650;
+    var maxima=[],mrkNav=[];
+    for(var i=0;i<12;i++){
+      maxima.push(parseFloat(document.getElementById('max'+i).value)||0);
+      mrkNav.push(parseFloat(document.getElementById('mrk'+i).value)||0);
+    }
+    var minC=Infinity,idealRRK=1;
+    for(var rk=1;rk<=3000;rk++){
+      var c=rk*cRRK*12;
+      for(var i=0;i<12;i++){c+=mrkNav[i]*cMRK;var ef=rk+mrkNav[i];if(ef<maxima[i])c+=(maxima[i]-ef)*cMRK*koef;}
+      if(c<minC){minC=c;idealRRK=rk;} else if(c>minC+5000)break;
+    }
+    var sC=sjed*cRRK*12,sM=0,sO=0;
+    for(var i=0;i<12;i++){sM+=mrkNav[i]*cMRK;var ef2=sjed+mrkNav[i];if(ef2<maxima[i])sO+=(maxima[i]-ef2)*cMRK*koef;}
+    var sTot=sC+sM+sO;
+    var oC=idealRRK*cRRK*12,oM=0,oO=0,dop=[];
+    for(var i=0;i<12;i++){
+      oM+=mrkNav[i]*cMRK;var ef3=idealRRK+mrkNav[i];
+      if(ef3<maxima[i]){var d=maxima[i]-ef3;oO+=d*cMRK*koef;dop.push(Math.ceil(d));}else dop.push(0);
+    }
+    var oTot=oC+oM+oO,usp=sTot-oTot;
+    for(var i=0;i<12;i++){
+      var h=document.getElementById('hint'+i);
+      if(dop[i]>0){h.textContent='+'+dop[i]+' kW';h.className='rbadge over';}
+      else{h.textContent='V pořádku';h.className='rbadge ok';}
+    }
+    var ru=document.getElementById('resUspora'),rs=document.getElementById('resUsporaSub');
+    var rr=document.getElementById('resRRK'),rb=document.getElementById('resRRKsub'),rd=document.getElementById('resBreakdown');
+    if(usp<20000){
+      ru.textContent='Nastaveno správně'; ru.className='res-val'; ru.style.fontSize='1.3rem';
+      rs.innerHTML='V rámci předplatného a odchylky máte nastaveno<br>správně &mdash; <strong>můžete být spokojeni.</strong>';
+    } else {
+      ru.textContent=fmt(usp); ru.className='res-val pos'; ru.style.fontSize='';
+      rs.textContent='Čistá úspora po odečtení předplatného: '+fmt(usp-11800);
+    }
+    rr.textContent=idealRRK+' kW';
+    rb.textContent='Minimální náklady: '+fmt(oTot);
+    rd.innerHTML='<div class="brow"><span>Roční RRK</span><span class="bv">'+fmt(oC)+'</span></div>'
+      +'<div class="brow"><span>MRK navýšení</span><span class="bv">'+fmt(oM)+'</span></div>'
+      +'<div class="brow"><span>Poplatky za překročení</span><span class="bv">'+fmt(oO)+'</span></div>'
+      +'<div class="brow tot"><span>Optimum celkem</span><span class="bv">'+fmt(oTot)+'</span></div>'
+      +'<div class="brow"><span>Aktuálně platíte</span><span class="bv">'+fmt(sTot)+'</span></div>';
+    // Chart
+    var maxV=Math.max.apply(null,maxima.concat([idealRRK,1]));
+    cel.innerHTML='';
+    for(var i=0;i<12;i++){
+      var hp=maxima[i]/maxV*85,isOver=(idealRRK+mrkNav[i])<maxima[i];
+      cel.innerHTML+='<div class="bwrap"><div class="bar '+(isOver?'bo':'ba')+'" style="height:'+hp+'%"></div><div class="blbl">'+MS[i]+'</div></div>';
+    }
+    var old=document.getElementById('rrkLine');if(old)old.remove();
+    var line=document.createElement('div');line.id='rrkLine';
+    line.style.cssText='position:absolute;bottom:'+(idealRRK/maxV*85)+'%;left:0;right:0;height:1px;background:#00e87a;pointer-events:none;';
+    cel.appendChild(line);
+    // Store for saving
+    lastCalcData = {
+      data: JSON.stringify({maxima:maxima,mrkNav:mrkNav,sjed:sjed,cRRK:cRRK,cMRK:cMRK,koef:koef}),
+      result: JSON.stringify({idealRRK:idealRRK,usp:usp,oTot:oTot,sTot:sTot})
+    };
+    // Show save panel if logged in
+    if (currentUser) {
+      document.getElementById('savePanel').style.display='block';
+      document.getElementById('calcName').value='Výpočet '+new Date().toLocaleDateString('cs-CZ');
+    }
+  }
+
+  window.vypocitat = function() {
+    if (dataSource === 'manual' && !currentUser) {
+      pendingCalc = true;
+      showPrompt();
+      return;
+    }
+    runCalc();
+  };
+
+  /* ─── SAVE CALC ─── */
+  document.getElementById('btnSave').addEventListener('click', function(){
+    if (!currentUser || !lastCalcData) return;
+    var name=document.getElementById('calcName').value.trim()||'Výpočet';
+    var msg=document.getElementById('saveMsg');
+    api({action:'save_calc', name:name, data:lastCalcData.data, result:lastCalcData.result}, function(d){
+      if (!d.ok) {
+        if (d.needs_subscription) {
+          msg.textContent='Bez předplatného lze uložit pouze 1 výpočet. Kontaktujte nás pro aktivaci předplatného.';
+          msg.style.color='#c45c00';
+        } else {
+          msg.textContent=d.error;
+          msg.style.color='#c45c00';
+        }
+      } else {
+        msg.textContent='Výpočet byl uložen.';
+        msg.style.color='var(--green)';
+        loadCalcs();
+        setTimeout(function(){msg.textContent='';},3000);
+      }
+    });
   });
 
-  var obs = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('v'); });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.fi').forEach(function (el) { obs.observe(el); });
+  /* ─── LOAD CALCS LIST ─── */
+  function loadCalcs() {
+    api({action:'get_calcs'}, function(d){
+      if (!d.ok || !d.calcs.length) {
+        document.getElementById('savedSection').style.display='none';
+        return;
+      }
+      document.getElementById('savedSection').style.display='block';
+      var list=document.getElementById('savedList');
+      list.innerHTML='';
+      d.calcs.forEach(function(c){
+        var item=document.createElement('div');
+        item.className='calc-item';
+        var dt=c.created_at ? c.created_at.substring(0,16).replace('T',' ') : '';
+        item.innerHTML='<div class="calc-item-left"><div class="calc-item-name">'+escHtml(c.name)+'</div><div class="calc-item-date">'+dt+'</div></div>'
+          +'<div class="calc-item-btns">'
+          +'<button class="btn-load" onclick="doLoadCalc('+c.id+')">Načíst</button>'
+          +'<button class="btn-del" onclick="doDeleteCalc('+c.id+',this)">Smazat</button>'
+          +'</div>';
+        list.appendChild(item);
+      });
+    });
+  }
+
+  window.doLoadCalc = function(id) {
+    api({action:'load_calc', id:id}, function(d){
+      if (!d.ok) return;
+      try {
+        var data=JSON.parse(d.calc.data);
+        for(var i=0;i<12;i++){
+          document.getElementById('max'+i).value=data.maxima[i]||0;
+          document.getElementById('mrk'+i).value=data.mrkNav[i]||0;
+        }
+        document.getElementById('sjednanaRRK').value=data.sjed||650;
+        document.getElementById('cenaRRK').value=data.cRRK||204.788;
+        document.getElementById('cenaMRK').value=data.cMRK||224.429;
+        document.getElementById('koef').value=data.koef||1.5;
+        dataSource='example';
+        runCalc();
+        document.getElementById('modelovani').scrollIntoView({behavior:'smooth'});
+      } catch(e){}
+    });
+  };
+
+  window.doDeleteCalc = function(id, btn) {
+    if (!confirm('Opravdu smazat tento výpočet?')) return;
+    api({action:'delete_calc', id:id}, function(d){
+      if (d.ok) { btn.closest('.calc-item').remove(); }
+    });
+  };
+
+  function escHtml(s){
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  /* ─── ADMIN ─── */
+  window.showAdmin = function() {
+    document.getElementById('adminOverlay').classList.add('show');
+    loadAdminUsers();
+  };
+  window.hideAdmin = function() {
+    document.getElementById('adminOverlay').classList.remove('show');
+  };
+
+  function loadAdminUsers() {
+    var tbody=document.getElementById('adminTbody');
+    tbody.innerHTML='<tr><td colspan="5" style="font-family:var(--mono);font-size:.72rem;color:var(--light);padding:1rem">Načítám...</td></tr>';
+    api({action:'admin_users'}, function(d){
+      if (!d.ok) { tbody.innerHTML='<tr><td colspan="5">Chyba</td></tr>'; return; }
+      tbody.innerHTML='';
+      if (!d.users.length) {
+        tbody.innerHTML='<tr><td colspan="5" style="font-family:var(--mono);font-size:.72rem;color:var(--light);padding:1rem">Žádní uživatelé</td></tr>';
+        return;
+      }
+      d.users.forEach(function(u){
+        var tr=document.createElement('tr');
+        var subBtn=u.subscription
+          ? '<button class="btn-toggle-y" onclick="toggleSub('+u.id+',this)">✓ Aktivní</button>'
+          : '<button class="btn-toggle-n" onclick="toggleSub('+u.id+',this)">Aktivovat</button>';
+        var verTag=u.verified ? '<span class="tag-y">Ověřen</span>' : '<span class="tag-n">Čeká</span>';
+        var dt=u.created_at?u.created_at.substring(0,10):'';
+        tr.innerHTML='<td style="font-size:.82rem">'+escHtml(u.email)+'</td>'
+          +'<td>'+verTag+'</td>'
+          +'<td style="font-family:var(--mono);font-size:.75rem;text-align:center">'+u.calcs+'</td>'
+          +'<td style="font-family:var(--mono);font-size:.72rem;color:var(--light)">'+dt+'</td>'
+          +'<td>'+subBtn+'</td>';
+        tbody.appendChild(tr);
+      });
+    });
+  }
+
+  window.toggleSub = function(id, btn) {
+    api({action:'admin_toggle_sub', id:id}, function(d){
+      if (!d.ok) return;
+      if (d.subscription) {
+        btn.className='btn-toggle-y'; btn.textContent='✓ Aktivní';
+        btn.setAttribute('onclick','toggleSub('+id+',this)');
+      } else {
+        btn.className='btn-toggle-n'; btn.textContent='Aktivovat';
+        btn.setAttribute('onclick','toggleSub('+id+',this)');
+      }
+    });
+  };
+
+  /* ─── BUTTON WIRING ─── */
+  document.getElementById('btnCalc').addEventListener('click', window.vypocitat);
+  document.getElementById('btnEx').addEventListener('click', window.fillExample);
+
+  /* ─── NAV SCROLL ─── */
+  window.addEventListener('scroll', function(){
+    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY>60);
+  });
+
+  /* ─── SCROLL FADE ─── */
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('v');});
+  },{threshold:0.08});
+  document.querySelectorAll('.fi').forEach(function(el){obs.observe(el);});
+
+  /* ─── INIT ─── */
+  checkSession();
 });
 </script>
 </body>
 </html>
-
