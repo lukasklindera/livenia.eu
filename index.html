@@ -3,223 +3,127 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Livenia – Optimalizace rezervované kapacity</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120'%3E%3Crect width='100' height='120' rx='18' fill='%23f4f0e8'/%3E%3Cpath d='M50 10C50 10 20 50 20 70C20 88 33 102 50 102C67 102 80 88 80 70C80 50 50 10 50 10Z' stroke='%2300c060' stroke-width='6' stroke-linejoin='round' stroke-linecap='round' fill='none'/%3E%3Cline x1='50' y1='88' x2='50' y2='56' stroke='%2300c060' stroke-width='5' stroke-linecap='round'/%3E%3Cpath d='M50 56C44 46 35 43 31 45C33 53 40 58 50 59C60 58 67 53 69 45C65 43 56 46 50 56Z' stroke='%2300c060' stroke-width='4' fill='none' stroke-linejoin='round' stroke-linecap='round'/%3E%3Cpath d='M50 71C43 64 35 63 32 65C34 71 41 74 50 73Z' stroke='%2300c060' stroke-width='3.5' fill='none' stroke-linejoin='round' stroke-linecap='round'/%3E%3Cpath d='M50 71C57 64 65 63 68 65C66 71 59 74 50 73Z' stroke='%2300c060' stroke-width='3.5' fill='none' stroke-linejoin='round' stroke-linecap='round'/%3E%3C/svg%3E">
+<title>Livenia – Energy Savings in Europe</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 120'%3E%3Crect width='100' height='120' rx='18' fill='%23f4f0e8'/%3E%3Cpath d='M50 10C50 10 20 50 20 70C20 88 33 102 50 102C67 102 80 88 80 70C80 50 50 10 50 10Z' stroke='%2300c060' stroke-width='6' stroke-linejoin='round' stroke-linecap='round' fill='none'/%3E%3Cline x1='50' y1='88' x2='50' y2='56' stroke='%2300c060' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f4f0e8;--bg2:#ede9e0;--text:#1a1a18;--mid:#6b6860;--light:#b0aca4;--border:#d8d4cc;--g:#00e87a;--gdim:rgba(0,232,122,.13);--green:#1e5c3a;--serif:'DM Serif Display',Georgia,serif;--sans:'DM Sans',sans-serif;--mono:'DM Mono',monospace}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:var(--sans);background:var(--bg);color:var(--text);overflow-x:hidden}
+
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;padding:1.25rem 3rem;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
 nav.scrolled{background:rgba(244,240,232,.95);border-color:var(--border);backdrop-filter:blur(12px)}
 .nav-logo{display:flex;align-items:center;gap:.75rem;text-decoration:none;color:var(--text)}
 .nav-logo svg{width:26px;height:32px}
 .nav-name{font-family:var(--serif);font-size:1.35rem;letter-spacing:-.01em;background:linear-gradient(135deg,var(--text) 40%,var(--green) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.nav-links{display:flex;align-items:center;gap:2rem;margin-left:auto;list-style:none}
-.nav-links a{text-decoration:none;font-size:.82rem;color:var(--mid);font-weight:500;transition:color .2s}
-.nav-links a:hover{color:var(--text)}
-.nav-right{display:flex;align-items:center;gap:.75rem;margin-left:1.5rem}
-.nav-btn{font-family:var(--mono);font-size:.72rem;background:transparent;border:1px solid var(--border);border-radius:2px;padding:5px 12px;cursor:pointer;color:var(--mid);transition:border-color .2s,color .2s}
-.nav-btn:hover{border-color:var(--text);color:var(--text)}
-.nav-btn-g{font-family:var(--mono);font-size:.72rem;background:transparent;border:1px solid rgba(0,232,122,.4);border-radius:2px;padding:5px 12px;cursor:pointer;color:var(--green);transition:background .2s}
-.nav-btn-g:hover{background:var(--gdim)}
-.nav-email{font-family:var(--mono);font-size:.7rem;color:var(--mid)}
-.sub-badge{font-family:var(--mono);font-size:.6rem;background:var(--gdim);border:1px solid rgba(0,232,122,.3);color:var(--green);border-radius:100px;padding:2px 7px;margin-left:.25rem}
-/* SECTIONS */
-#home{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10rem 2rem 6rem;position:relative}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:.5rem}
+.lang-btn{font-family:var(--mono);font-size:.68rem;background:transparent;border:1px solid var(--border);border-radius:2px;padding:4px 10px;cursor:pointer;color:var(--mid);transition:border-color .2s,color .2s;letter-spacing:.05em}
+.lang-btn:hover,.lang-btn.active{border-color:var(--g);color:var(--green)}
+
+/* HERO */
+#home{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10rem 2rem 5rem;position:relative}
 .hero-eyebrow{font-family:var(--mono);font-size:.75rem;color:var(--g);letter-spacing:.12em;text-transform:uppercase;margin-bottom:2.5rem;animation:fadeUp .7s ease both}
-.hero-h1{font-family:var(--serif);font-size:clamp(3.5rem,9vw,7.5rem);font-weight:400;letter-spacing:-.03em;line-height:.95;max-width:900px;animation:fadeUp .7s .1s ease both}
-.hero-h1 .big{display:block}
-.hero-h1 .italic{display:block;font-style:italic;color:var(--mid);font-size:.72em}
-.hero-sub{margin-top:2.5rem;font-size:1rem;color:var(--mid);max-width:460px;line-height:1.75;animation:fadeUp .7s .2s ease both}
-.hero-cta{display:flex;gap:1rem;margin-top:3rem;animation:fadeUp .7s .3s ease both;flex-wrap:wrap;justify-content:center}
-.btn-dark{background:var(--text);color:var(--bg);padding:.8rem 2rem;border-radius:2px;text-decoration:none;font-size:.875rem;font-weight:500;transition:opacity .2s}
-.btn-dark:hover{opacity:.8}
-.btn-ghost{background:transparent;color:var(--text);padding:.8rem 2rem;border-radius:2px;text-decoration:none;font-size:.875rem;font-weight:500;border:1px solid var(--border);transition:border-color .2s}
-.btn-ghost:hover{border-color:var(--g)}
-.hero-stats{display:flex;gap:0;margin-top:6rem;animation:fadeUp .7s .4s ease both;border:1px solid var(--border);border-top:2px solid transparent;border-image:linear-gradient(90deg,transparent,var(--g),transparent) 1}
-.hstat{padding:1.5rem 2.5rem;text-align:center;border-right:1px solid var(--border)}
-.hstat:last-child{border-right:none}
-.hstat .n{font-family:var(--serif);font-size:2rem;letter-spacing:-.03em}
-.hstat .l{font-size:.72rem;color:var(--mid);margin-top:.3rem;font-family:var(--mono);letter-spacing:.05em}
-.scroll-arrow{position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.75rem;animation:fadeUp .7s .6s ease both;text-decoration:none}
+.hero-h1{font-family:var(--serif);font-size:clamp(3rem,8vw,6.5rem);font-weight:400;letter-spacing:-.03em;line-height:.95;max-width:860px;animation:fadeUp .7s .1s ease both}
+.hero-h1 em{font-style:italic;color:var(--mid)}
+.hero-sub{margin-top:2.5rem;font-size:1rem;color:var(--mid);max-width:500px;line-height:1.8;animation:fadeUp .7s .2s ease both}
+.scroll-arrow{position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.75rem;text-decoration:none;animation:fadeUp .7s .5s ease both}
 .scroll-arrow span{font-family:var(--mono);font-size:.65rem;color:var(--mid);letter-spacing:.1em;text-transform:uppercase}
 .scroll-arrow svg{animation:bounce 2s ease infinite}
 @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
-section{position:relative}
-.sw{max-width:1100px;margin:0 auto;padding:6rem 3rem}
+
+/* DIVIDER */
 .divider{border:none;height:1px;background:linear-gradient(90deg,transparent 0%,var(--g) 30%,var(--g) 70%,transparent 100%);opacity:.2}
+.sw{max-width:1100px;margin:0 auto;padding:6rem 3rem}
 .stag{font-family:var(--mono);font-size:.7rem;color:var(--g);text-transform:uppercase;letter-spacing:.12em;margin-bottom:3rem}
-/* O NAS */
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:start}
-.about-h{font-family:var(--serif);font-size:clamp(2.5rem,4vw,3.5rem);letter-spacing:-.03em;line-height:1.05;font-weight:400}
+
+/* MAP SECTION */
+#mapa{background:var(--bg2)}
+.map-layout{display:grid;grid-template-columns:1fr 380px;gap:4rem;align-items:center}
+.map-text h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);letter-spacing:-.03em;line-height:1.05;font-weight:400;margin-bottom:1.5rem}
+.map-text h2 em{font-style:italic;color:var(--mid)}
+.map-text p{font-size:.95rem;color:var(--mid);line-height:1.8;margin-bottom:1.25rem}
+.country-list{margin-top:2rem;display:flex;flex-direction:column;gap:.75rem}
+.cl-item{display:flex;align-items:center;gap:1rem;padding:.75rem 1rem;border:1px solid var(--border);border-radius:2px;background:var(--bg);transition:border-color .2s,background .2s;cursor:pointer;text-decoration:none;color:var(--text)}
+.cl-item:hover,.cl-item.hl{border-color:var(--g);background:var(--gdim)}
+.cl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.cl-dot.featured{background:var(--g);box-shadow:0 0 0 3px rgba(0,232,122,.2)}
+.cl-dot.eu{background:var(--border)}
+.cl-name{font-size:.88rem;font-weight:500}
+.cl-desc{font-family:var(--mono);font-size:.62rem;color:var(--mid);margin-left:auto}
+
+/* MAP SVG */
+.map-wrap{position:relative;width:100%}
+#euroMap{width:100%;height:auto;display:block}
+.country-path{fill:#e8e4dc;stroke:white;stroke-width:0.5;transition:fill .25s}
+.country-path.eu{fill:#d0ccc4}
+.country-path.featured{fill:rgba(0,232,122,.35);stroke:white;stroke-width:0.8}
+.country-path.featured:hover{fill:rgba(0,232,122,.6);cursor:pointer}
+.country-path.cz:hover{fill:#00e87a;cursor:pointer}
+.map-tooltip{position:absolute;background:var(--text);color:var(--bg);font-family:var(--mono);font-size:.7rem;padding:5px 10px;border-radius:2px;pointer-events:none;opacity:0;transition:opacity .15s;white-space:nowrap;z-index:10}
+.map-legend{display:flex;flex-direction:column;gap:.5rem;margin-top:1.5rem}
+.ml-row{display:flex;align-items:center;gap:.75rem;font-family:var(--mono);font-size:.65rem;color:var(--mid)}
+.ml-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+/* SERVICES SECTION */
+#sluzby .sw{padding-top:5rem;padding-bottom:5rem}
+.services-h{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);letter-spacing:-.03em;line-height:1.05;font-weight:400;margin-bottom:1rem}
+.services-h em{font-style:italic;color:var(--mid)}
+.services-sub{font-size:.95rem;color:var(--mid);line-height:1.8;max-width:560px;margin-bottom:4rem}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+.srv-card{padding:2rem;border:1px solid var(--border);border-top:2px solid transparent;border-radius:0 0 2px 2px;background:white;transition:border-color .2s,box-shadow .2s}
+.srv-card:hover{border-color:var(--g);box-shadow:0 4px 24px rgba(0,232,122,.08)}
+.srv-num{font-family:var(--mono);font-size:.65rem;color:var(--g);letter-spacing:.1em;margin-bottom:1rem}
+.srv-card h3{font-family:var(--serif);font-size:1.25rem;letter-spacing:-.02em;font-weight:400;margin-bottom:.75rem}
+.srv-card p{font-size:.85rem;color:var(--mid);line-height:1.7}
+.srv-top-border{border-image:linear-gradient(90deg,var(--g),transparent) 1}
+
+/* ABOUT */
+#about{background:var(--bg2)}
+.about-cols{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+.about-h{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);letter-spacing:-.03em;line-height:1.05;font-weight:400;margin-bottom:1.5rem}
 .about-h em{font-style:italic;color:var(--mid)}
-.about-body{margin-top:2rem}
-.about-body p{color:var(--mid);line-height:1.8;font-size:.95rem;margin-bottom:1rem}
-.fi-row{display:flex;gap:1.5rem;padding:1.5rem 0;border-bottom:1px solid var(--border)}
-.fi-row:first-child{border-top:1px solid var(--border)}
-.fi-num{font-family:var(--mono);font-size:.7rem;color:var(--g);padding-top:.2rem;flex-shrink:0;width:2rem}
-.fi-body h3{font-size:.9rem;font-weight:600;margin-bottom:.35rem}
-.fi-body p{font-size:.82rem;color:var(--mid);line-height:1.6}
-/* JAK TO FUNGUJE */
-#rizeni{background:var(--bg2)}
-.how-layout{display:grid;grid-template-columns:1fr 1fr;gap:6rem}
-.how-h{font-family:var(--serif);font-size:clamp(2.5rem,4vw,3.5rem);letter-spacing:-.03em;line-height:1.05;font-weight:400;position:sticky;top:8rem;align-self:start}
-.how-h em{font-style:italic}
-.steps-list{display:flex;flex-direction:column}
-.step-row{padding:2rem 0;border-bottom:1px solid var(--border)}
-.step-row:first-child{border-top:1px solid var(--border)}
-.step-n{font-family:var(--mono);font-size:.65rem;color:var(--g);letter-spacing:.1em;margin-bottom:.75rem;text-transform:uppercase}
-.step-row h3{font-family:var(--serif);font-size:1.3rem;letter-spacing:-.02em;margin-bottom:.75rem;font-weight:400}
-.step-row p{font-size:.875rem;color:var(--mid);line-height:1.75}
-.insight{margin-top:1rem;background:var(--gdim);border:1px solid rgba(0,232,122,.25);border-left:3px solid var(--g);border-radius:0 2px 2px 0;padding:1rem 1.25rem;font-family:var(--mono);font-size:.75rem;color:var(--green);line-height:1.6}
-/* KALKULATOR */
-.calc-intro{max-width:600px;margin-bottom:4rem}
-.calc-intro h2{font-family:var(--serif);font-size:clamp(2.5rem,4vw,3.5rem);letter-spacing:-.03em;line-height:1.05;font-weight:400;margin-bottom:1rem}
-.calc-intro p{font-size:.95rem;color:var(--mid);line-height:1.75}
-.calc-layout{display:grid;grid-template-columns:1fr 300px;gap:3rem;align-items:start}
-.table-wrap{border:1px solid var(--border);border-top:2px solid transparent;border-image:linear-gradient(90deg,var(--g),transparent) 1;overflow:hidden;background:white}
-.table-top{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;border-bottom:1px solid var(--border);background:var(--bg2)}
-.table-top span{font-family:var(--mono);font-size:.7rem;color:var(--mid);text-transform:uppercase;letter-spacing:.1em}
-.prices-bar{display:flex;gap:2rem;padding:1rem 1.5rem;border-bottom:1px solid var(--border);background:var(--bg2);flex-wrap:wrap}
-.pc{display:flex;flex-direction:column;gap:3px}
-.pc label{font-family:var(--mono);font-size:.6rem;color:var(--light);text-transform:uppercase;letter-spacing:.07em}
-.pc input{background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:.85rem;width:120px;outline:none;padding:2px 0}
-.pc input:focus{border-color:var(--g)}
-table{width:100%;border-collapse:collapse;background:white}
-thead th{padding:.75rem 1.5rem;font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:var(--light);text-align:left;border-bottom:1px solid var(--border);background:var(--bg2)}
-tbody tr{border-bottom:1px solid var(--border);transition:background .15s}
-tbody tr:last-child{border-bottom:none}
-tbody tr:hover{background:#f8fdf9}
-tbody td{padding:.6rem 1.5rem;font-size:.875rem;vertical-align:middle}
-.mc{font-family:var(--mono);font-size:.75rem;color:var(--mid)}
-input[type="number"]{background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--text);font-family:var(--mono);font-size:.85rem;width:80px;text-align:right;outline:none;padding:3px 0;transition:border-color .2s;-moz-appearance:textfield}
-input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none}
-input[type="number"]:focus{border-color:var(--g)}
-.rbadge{font-family:var(--mono);font-size:.65rem;color:var(--light);white-space:nowrap;transition:color .3s}
-.rbadge.ok{color:var(--green)}
-.rbadge.over{color:#c45c00}
-.rrk-bar{display:flex;align-items:center;gap:1.5rem;padding:1rem 1.5rem;border-top:1px solid var(--border);background:var(--bg2);flex-wrap:wrap}
-.rrk-bar label{font-family:var(--mono);font-size:.7rem;color:var(--mid)}
-.rrk-bar .rn{font-family:var(--mono);font-size:.65rem;color:var(--light);margin-left:auto}
-.btn-calc{width:100%;margin-top:1.5rem;padding:.9rem;background:var(--text);color:var(--bg);border:none;border-radius:2px;font-family:var(--sans);font-size:.9rem;font-weight:600;cursor:pointer;letter-spacing:.02em;transition:opacity .2s,box-shadow .2s}
-.btn-calc:hover{opacity:.9;box-shadow:0 0 0 2px var(--g)}
-.btn-ex{font-family:var(--mono);font-size:.65rem;color:var(--mid);background:transparent;border:1px solid var(--border);border-radius:2px;padding:4px 10px;cursor:pointer;transition:border-color .2s,color .2s}
-.btn-ex:hover{border-color:var(--g);color:var(--green)}
-.method-note{margin-top:1.25rem;font-family:var(--mono);font-size:.7rem;color:var(--light);line-height:1.7;padding-left:1rem;border-left:2px solid var(--border)}
-.method-note strong{color:var(--mid)}
-/* RESULTS */
-.results-col{display:flex;flex-direction:column;gap:0}
-.res-block{padding:1.5rem 0;border-bottom:1px solid var(--border)}
-.res-block:first-child{border-top:1px solid var(--border)}
-.res-tag{font-family:var(--mono);font-size:.62rem;color:var(--g);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem}
-.res-val{font-family:var(--serif);font-size:2.2rem;letter-spacing:-.04em;color:var(--text);line-height:1}
-.res-val.pos{background:linear-gradient(135deg,var(--text) 30%,var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.res-sub{font-family:var(--mono);font-size:.65rem;color:var(--light);margin-top:.4rem}
-.brow{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.7rem;color:var(--mid);padding:.35rem 0;border-bottom:1px solid var(--border)}
-.brow:last-child{border-bottom:none}
-.brow .bv{color:var(--text)}
-.brow.tot{color:var(--text);font-weight:600;border-top:1px solid var(--g);margin-top:4px;padding-top:8px}
-.brow.tot .bv{color:var(--green)}
-.empty-state{font-family:var(--mono);font-size:.72rem;color:var(--light);line-height:1.7;padding:1rem 0}
-.sub-box{background:var(--gdim);border:1px solid rgba(0,232,122,.2);border-left:3px solid var(--g);padding:1rem 1.25rem;margin:1rem 0}
-.sub-box .sb-title{font-family:var(--mono);font-size:.62rem;color:var(--g);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.4rem}
-.sub-box .sb-val{font-family:var(--serif);font-size:1.4rem;letter-spacing:-.03em;color:var(--text)}
-.sub-box .sb-sub{font-family:var(--mono);font-size:.62rem;color:var(--mid);margin-top:.25rem}
-.chart-block{margin-top:1.5rem}
-.chart-tag{font-family:var(--mono);font-size:.62rem;color:var(--light);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.75rem}
-.bars{display:flex;align-items:flex-end;gap:3px;height:80px;position:relative}
-.bwrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;height:100%;justify-content:flex-end}
-.bar{width:100%;border-radius:1px 1px 0 0;transition:height .5s cubic-bezier(.34,1.3,.64,1);min-height:2px}
-.bar.ba{background:var(--border)}
-.bar.bo{background:#c45c00;opacity:.7}
-.blbl{font-family:var(--mono);font-size:.45rem;color:var(--light)}
-.clegend{display:flex;gap:.75rem;margin-top:.6rem;flex-wrap:wrap}
-.lg{display:flex;align-items:center;gap:4px;font-family:var(--mono);font-size:.58rem;color:var(--light)}
-.lgd{width:8px;height:6px;border-radius:1px}
-/* SAVE PANEL */
-.save-panel{margin-top:1.25rem;padding:1rem 1.25rem;background:var(--bg2);border:1px solid var(--border);border-radius:2px;display:none}
-.save-panel-row{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
-.save-panel label{font-family:var(--mono);font-size:.65rem;color:var(--mid);white-space:nowrap}
-.save-input{background:white;border:1px solid var(--border);border-radius:2px;color:var(--text);font-family:var(--mono);font-size:.8rem;padding:5px 8px;outline:none;flex:1;min-width:140px}
-.save-input:focus{border-color:var(--g)}
-.btn-save{background:var(--green);color:white;border:none;border-radius:2px;padding:6px 14px;font-family:var(--mono);font-size:.72rem;cursor:pointer;white-space:nowrap;transition:opacity .2s}
-.btn-save:hover{opacity:.85}
-/* SAVED CALCS */
-.saved-section{margin-top:2.5rem;border-top:1px solid var(--border);padding-top:2rem;display:none}
-.saved-title{font-family:var(--mono);font-size:.7rem;color:var(--mid);text-transform:uppercase;letter-spacing:.1em;margin-bottom:1rem}
-.calc-item{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1rem;border:1px solid var(--border);border-radius:2px;margin-bottom:.5rem;background:white;transition:border-color .2s}
-.calc-item:hover{border-color:var(--g)}
-.calc-item-left{display:flex;flex-direction:column;gap:.2rem}
-.calc-item-name{font-size:.85rem;font-weight:500}
-.calc-item-date{font-family:var(--mono);font-size:.62rem;color:var(--light)}
-.calc-item-btns{display:flex;gap:.5rem}
-.btn-load{font-family:var(--mono);font-size:.62rem;color:var(--green);background:transparent;border:1px solid rgba(0,232,122,.35);border-radius:2px;padding:3px 9px;cursor:pointer;transition:background .2s}
-.btn-load:hover{background:var(--gdim)}
-.btn-del{font-family:var(--mono);font-size:.62rem;color:var(--light);background:transparent;border:1px solid var(--border);border-radius:2px;padding:3px 9px;cursor:pointer;transition:color .2s,border-color .2s}
-.btn-del:hover{color:#c45c00;border-color:#c45c00}
-/* KONTAKT */
-#kontakt{background:var(--bg2)}
+.about-p{font-size:.95rem;color:var(--mid);line-height:1.8;margin-bottom:1rem}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem}
+.stat-box{padding:1.5rem;border:1px solid var(--border);background:var(--bg)}
+.stat-n{font-family:var(--serif);font-size:2.2rem;letter-spacing:-.04em;line-height:1;background:linear-gradient(135deg,var(--text) 30%,var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-l{font-family:var(--mono);font-size:.62rem;color:var(--mid);margin-top:.4rem;letter-spacing:.05em}
+
+/* CONTACT */
 .contact-h{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);letter-spacing:-.03em;line-height:1.05;font-weight:400;margin-bottom:1.5rem}
 .contact-h em{font-style:italic}
-.contact-p{font-size:.95rem;color:var(--mid);line-height:1.75;margin-bottom:2.5rem;max-width:520px}
+.contact-p{font-size:.95rem;color:var(--mid);line-height:1.8;margin-bottom:2.5rem;max-width:520px}
 .contact-email{display:inline-flex;align-items:center;gap:.75rem;font-family:var(--serif);font-size:1.5rem;letter-spacing:-.02em;color:var(--text);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:.5rem;transition:border-color .2s,color .2s}
 .contact-email:hover{border-color:var(--g);color:var(--green)}
-footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);font-family:var(--mono);font-size:.65rem;color:var(--light)}
+
 /* MODAL */
 .overlay{display:none;position:fixed;inset:0;background:rgba(26,26,24,.55);z-index:300;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
 .overlay.show{display:flex}
-.modal-card{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:2.5rem;width:100%;max-width:430px;position:relative;margin:1rem}
-.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;cursor:pointer;color:var(--light);font-size:1.2rem;line-height:1;padding:4px 8px;transition:color .2s}
+.modal-card{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:2.5rem;width:100%;max-width:520px;position:relative;margin:1rem}
+.modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;cursor:pointer;color:var(--light);font-size:1.4rem;line-height:1;padding:4px 8px}
 .modal-close:hover{color:var(--text)}
-.modal-logo{font-family:var(--serif);font-size:1.1rem;margin-bottom:1.75rem;letter-spacing:-.02em;background:linear-gradient(135deg,var(--text) 40%,var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.modal-title{font-family:var(--serif);font-size:1.6rem;letter-spacing:-.03em;margin-bottom:.5rem;font-weight:400}
-.modal-sub{font-family:var(--mono);font-size:.7rem;color:var(--mid);margin-bottom:1.75rem;line-height:1.6}
-.form-field{display:flex;flex-direction:column;gap:.35rem;margin-bottom:1.1rem}
-.form-field label{font-family:var(--mono);font-size:.65rem;color:var(--mid);text-transform:uppercase;letter-spacing:.07em}
-.form-input{background:white;border:1px solid var(--border);border-radius:2px;color:var(--text);font-family:var(--sans);font-size:.9rem;padding:.65rem .85rem;outline:none;transition:border-color .2s}
-.form-input:focus{border-color:var(--g)}
-.btn-primary{width:100%;padding:.85rem;background:var(--text);color:var(--bg);border:none;border-radius:2px;font-family:var(--sans);font-size:.9rem;font-weight:600;cursor:pointer;margin-top:.5rem;transition:opacity .2s}
-.btn-primary:hover{opacity:.85}
-.btn-primary:disabled{opacity:.5;cursor:not-allowed}
-.modal-switch{font-family:var(--mono);font-size:.7rem;color:var(--mid);text-align:center;margin-top:1.25rem}
-.modal-switch a{color:var(--green);cursor:pointer;text-decoration:underline}
-.form-error{font-family:var(--mono);font-size:.7rem;color:#c45c00;margin-top:.5rem;display:none;padding:.5rem .75rem;background:rgba(196,92,0,.07);border-radius:2px}
-.form-error.show{display:block}
-.code-input{letter-spacing:.35em;text-transform:uppercase;font-size:1.4rem;text-align:center;font-family:var(--mono)}
-/* PROMPT MODAL */
-.prompt-card{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:3rem 2.5rem;width:100%;max-width:480px;position:relative;margin:1rem;text-align:center}
-.prompt-h{font-family:var(--serif);font-size:clamp(1.6rem,4vw,2.2rem);letter-spacing:-.03em;line-height:1.1;font-weight:400;margin-bottom:1rem}
-.prompt-h em{font-style:italic;color:var(--green)}
-.prompt-sub{font-size:.9rem;color:var(--mid);line-height:1.7;margin-bottom:2rem}
-.prompt-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-.prompt-btns .btn-dark{padding:.75rem 1.75rem}
-.prompt-btns .btn-ghost{padding:.75rem 1.75rem}
-/* ADMIN */
-.admin-card{background:var(--bg);border:1px solid var(--border);border-radius:4px;width:100%;max-width:860px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;margin:1rem;position:relative}
-.admin-head{padding:1.5rem 2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--bg2)}
-.admin-head h2{font-family:var(--serif);font-size:1.5rem;font-weight:400;letter-spacing:-.03em}
-.admin-body{overflow-y:auto;padding:1.5rem 2rem;flex:1}
-.admin-table{width:100%;border-collapse:collapse}
-.admin-table th{font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:var(--light);text-align:left;padding:.6rem .75rem;border-bottom:2px solid var(--border)}
-.admin-table td{padding:.75rem .75rem;border-bottom:1px solid var(--border);font-size:.85rem;vertical-align:middle}
-.admin-table tr:last-child td{border-bottom:none}
-.admin-table tr:hover td{background:#faf8f4}
-.tag-y{font-family:var(--mono);font-size:.65rem;color:var(--green);background:var(--gdim);border:1px solid rgba(0,232,122,.3);border-radius:100px;padding:2px 8px}
-.tag-n{font-family:var(--mono);font-size:.65rem;color:var(--light);background:var(--bg2);border:1px solid var(--border);border-radius:100px;padding:2px 8px}
-.btn-toggle-y{font-family:var(--mono);font-size:.65rem;background:var(--gdim);border:1px solid rgba(0,232,122,.3);color:var(--green);border-radius:2px;padding:4px 10px;cursor:pointer;transition:opacity .2s}
-.btn-toggle-y:hover{opacity:.75}
-.btn-toggle-n{font-family:var(--mono);font-size:.65rem;background:var(--bg2);border:1px solid var(--border);color:var(--mid);border-radius:2px;padding:4px 10px;cursor:pointer;transition:border-color .2s}
-.btn-toggle-n:hover{border-color:var(--g);color:var(--green)}
+.modal-tag{font-family:var(--mono);font-size:.65rem;color:var(--g);text-transform:uppercase;letter-spacing:.12em;margin-bottom:1rem}
+.modal-h{font-family:var(--serif);font-size:2rem;letter-spacing:-.03em;font-weight:400;margin-bottom:.75rem}
+.modal-h em{font-style:italic;color:var(--mid)}
+.modal-p{font-size:.9rem;color:var(--mid);line-height:1.8;margin-bottom:2rem}
+.modal-services{display:flex;flex-direction:column;gap:.75rem}
+.ms-row{display:flex;align-items:flex-start;gap:1rem;padding:1rem;border:1px solid var(--border);border-radius:2px;background:white}
+.ms-row:hover{border-color:rgba(0,232,122,.4)}
+.ms-icon{width:32px;height:32px;border-radius:2px;background:var(--gdim);border:1px solid rgba(0,232,122,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ms-body h4{font-size:.88rem;font-weight:600;margin-bottom:.2rem}
+.ms-body p{font-size:.78rem;color:var(--mid);line-height:1.5}
+
+/* FOOTER */
+footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);font-family:var(--mono);font-size:.65rem;color:var(--light)}
+
 /* ANIMATIONS */
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 .fi{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
 .fi.v{opacity:1;transform:translateY(0)}
-/* RESPONSIVE */
-@media(max-width:960px){.calc-layout{grid-template-columns:1fr}}
-@media(max-width:768px){nav{padding:1.25rem 1.5rem}.nav-links{display:none}.sw{padding:4rem 1.5rem}.about-grid,.how-layout{grid-template-columns:1fr;gap:3rem}.how-h{position:static}.hero-stats{flex-wrap:wrap}.hstat{border-right:none!important;border-bottom:1px solid var(--border);min-width:140px;flex:1}}
+
+@media(max-width:900px){.map-layout,.about-cols,.services-grid{grid-template-columns:1fr;gap:2.5rem}}
+@media(max-width:768px){nav{padding:1.25rem 1.5rem}.sw{padding:4rem 1.5rem}}
 </style>
 </head>
 <body>
@@ -236,95 +140,73 @@ footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-b
     </svg>
     <div class="nav-name">Livenia</div>
   </a>
-  <ul class="nav-links">
-    <li><a href="#onas">O n&#225;s</a></li>
-    <li><a href="#rizeni">Jak to funguje</a></li>
-    <li><a href="#modelovani">Kalkulačka</a></li>
-    <li><a href="#kontakt">Kontakt</a></li>
-  </ul>
   <div class="nav-right">
-    <div id="navAuth">
-      <button class="nav-btn" onclick="showAuth('login')">Přihlásit se</button>
-    </div>
-    <div id="navUser" style="display:none;align-items:center;gap:.75rem">
-      <span class="nav-email" id="navUserEmail"></span>
-      <span class="sub-badge" id="navSubBadge" style="display:none">Předplatné</span>
-      <button class="nav-btn-g" id="navAdminBtn" style="display:none" onclick="showAdmin()">Admin</button>
-      <button class="nav-btn" onclick="doLogout()">Odhlásit</button>
-    </div>
+    <button class="lang-btn active" onclick="setLang('cs')" id="btn-cs">CS</button>
+    <button class="lang-btn" onclick="setLang('nl')" id="btn-nl">NL</button>
+    <button class="lang-btn" onclick="setLang('sk')" id="btn-sk">SK</button>
   </div>
 </nav>
 
+<!-- HERO -->
 <section id="home">
-  <p class="hero-eyebrow">Optimalizace rezervované kapacity elektřiny</p>
+  <p class="hero-eyebrow" data-t="eyebrow">Energetické úspory v Evropské unii</p>
   <h1 class="hero-h1">
-    <span class="big">Snižujeme</span>
-    <span class="italic">náklady na elektřinu.</span>
+    <span data-t="h1a">Šetříme energie</span><br>
+    <em data-t="h1b">napříč Evropou.</em>
   </h1>
-  <p class="hero-sub">Váš podnik pravděpodobně přeplácí za rezervovanou kapacitu. Náš model přesně spočítá, jak nastavit smlouvu — abyste platili jen to nezbytné.</p>
-  <div class="hero-cta">
-    <a href="#modelovani" class="btn-dark">Vyzkoušet kalkulačku</a>
-    <a href="#rizeni" class="btn-ghost">Jak to funguje?</a>
-  </div>
-  <div class="hero-stats">
-    <div class="hstat"><div class="n">30&nbsp;%</div><div class="l">průměrné předražení RK</div></div>
-    <div class="hstat"><div class="n">500&nbsp;tis.</div><div class="l">Kč zbytečně ročně</div></div>
-    <div class="hstat"><div class="n">990&nbsp;Kč</div><div class="l">měsíčně / předplatné</div></div>
-  </div>
-  <a href="#onas" class="scroll-arrow">
-    <span>Pokračovat</span>
+  <p class="hero-sub" data-t="heroSub">Pomáháme průmyslovým a komerčním odběratelům snižovat náklady na energie v zemích Evropské unie. Analýzy, monitoring a optimalizace smluv.</p>
+  <a href="#mapa" class="scroll-arrow">
+    <span data-t="scroll">Zjistit více</span>
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6b6860" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
   </a>
 </section>
 
 <hr class="divider">
 
-<section id="onas">
+<!-- MAP -->
+<section id="mapa">
   <div class="sw">
-    <div class="stag fi">O nás</div>
-    <div class="about-grid fi">
-      <div>
-        <h2 class="about-h">Platforma pro <em>inteligentní</em> správu energií</h2>
-        <div class="about-body">
-          <p>Livenia je analytická platforma zaměřená na optimalizaci energetických smluv pro průmyslové a komerční odběratele. Náš matematický model pomáhá firmám ušetřit statisíce korun ročně bez investic do nového vybavení.</p>
-          <p>Předplatné stojí <strong>11&nbsp;800&nbsp;Kč ročně</strong> — to je jen 990&nbsp;Kč měsíčně. Každý rok vám nastavíme a zkontrolujeme rezervovanou kapacitu, aby vaše smlouva platila správné nastavení.</p>
+    <div class="stag fi" data-t="mapTag">Kde působíme</div>
+    <div class="map-layout">
+      <div class="map-text fi">
+        <h2><em data-t="mapH">Aktivní ve třech zemích</em></h2>
+        <p data-t="mapP1">Livenia působí v zemích, kde je potenciál úspor na trhu s elektřinou nejvyšší. Spolupracujeme s firmami napříč průmyslovými odvětvími.</p>
+        <p data-t="mapP2">Klikněte na zemi pro více informací o našich službách.</p>
+        <div class="country-list">
+          <a class="cl-item" id="cl-cz" href="https://livenia.cz" target="_blank">
+            <div class="cl-dot featured"></div>
+            <div>
+              <div class="cl-name" data-t="czName">Česká republika</div>
+              <div style="font-family:var(--mono);font-size:.6rem;color:var(--mid)" data-t="czSub">Optimalizace rezervované kapacity</div>
+            </div>
+            <div class="cl-desc">livenia.cz &rarr;</div>
+          </a>
+          <div class="cl-item" id="cl-nl" onclick="showServices()" style="cursor:pointer">
+            <div class="cl-dot featured"></div>
+            <div>
+              <div class="cl-name" data-t="nlName">Nederland</div>
+              <div style="font-family:var(--mono);font-size:.6rem;color:var(--mid)" data-t="nlSub">Monitoring, analýzy, úspory</div>
+            </div>
+            <div class="cl-desc" data-t="nlLink">Služby &rarr;</div>
+          </div>
+          <a class="cl-item" id="cl-sk" href="https://livenia.sk" target="_blank">
+            <div class="cl-dot featured"></div>
+            <div>
+              <div class="cl-name" data-t="skName">Slovensko</div>
+              <div style="font-family:var(--mono);font-size:.6rem;color:var(--mid)" data-t="skSub">Energetické analýzy</div>
+            </div>
+            <div class="cl-desc">livenia.sk &rarr;</div>
+          </a>
+        </div>
+        <div class="map-legend" style="margin-top:2rem">
+          <div class="ml-row"><div class="ml-dot" style="background:rgba(0,232,122,.5)"></div><span data-t="legActive">Aktivní země Livenia</span></div>
+          <div class="ml-row"><div class="ml-dot" style="background:#c8c4bc"></div><span data-t="legEU">Ostatní státy EU</span></div>
+          <div class="ml-row"><div class="ml-dot" style="background:#e4e0d8"></div><span data-t="legOther">Ostatní státy Evropy</span></div>
         </div>
       </div>
-      <div>
-        <div class="fi-row"><div class="fi-num">01</div><div class="fi-body"><h3>Přesný matematický model</h3><p>Optimalizace RRK + MRK na základě vašich historických dat z faktur nebo systému distributora.</p></div></div>
-        <div class="fi-row"><div class="fi-num">02</div><div class="fi-body"><h3>Reálná úspora bez investic</h3><p>Průměrná úspora přesahuje 300&nbsp;000&nbsp;Kč ročně. Žádné nové přístroje, jen správně nastavená smlouva.</p></div></div>
-        <div class="fi-row"><div class="fi-num">03</div><div class="fi-body"><h3>Rychlá analýza</h3><p>Stačí data z posledních 12 faktur. Do 24 hodin máte konkrétní doporučení ke smlouvě.</p></div></div>
-        <div class="fi-row"><div class="fi-num">04</div><div class="fi-body"><h3>Předplatné 990&nbsp;Kč/měsíc</h3><p>Pevná cena 11&nbsp;800&nbsp;Kč ročně. Každý rok nastavíme, zkontrolujeme a doporučíme optimální nastavení.</p></div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="divider">
-
-<section id="rizeni">
-  <div class="sw">
-    <div class="stag fi">Jak to funguje</div>
-    <div class="how-layout">
-      <div><h2 class="how-h fi">Systém rezervované <em>kapacity.</em></h2></div>
-      <div class="steps-list fi">
-        <div class="step-row">
-          <div class="step-n">Krok 01</div><h3>Čtvrthodinové maximum</h3>
-          <p>Distributor měří každých 15 minut průměrný příkon. Nejvyšší naměřená hodnota za měsíc — čtvrthodinové maximum — určuje výši poplatků.</p>
-        </div>
-        <div class="step-row">
-          <div class="step-n">Krok 02</div><h3>Rezervovaná kapacita</h3>
-          <p>Ve smlouvě si sjednáváte roční (RRK) a měsíční (MRK) strop. Za překročení platíte 1,5násobek sazby MRK.</p>
-          <div class="insight">Příklad: RRK 650 kW = ~1&nbsp;500&nbsp;000&nbsp;Kč ročně. Snížením na 580 kW ušetříte až 500&nbsp;000&nbsp;Kč — i přes letní překročení.</div>
-        </div>
-        <div class="step-row">
-          <div class="step-n">Krok 03</div><h3>Kde je optimum?</h3>
-          <p>Model prochází všechny hodnoty RRK a hledá bod, kde je součet RRK + MRK navýšení + poplatky za překročení nejnižší. To je vaše ideální smlouva.</p>
-        </div>
-        <div class="step-row">
-          <div class="step-n">Krok 04</div><h3>Implementace a roční kontrola</h3>
-          <p>Doporučíme konkrétní hodnoty do smlouvy s distributorem. Každý rok v rámci předplatného nastavení zkontrolujeme a aktualizujeme.</p>
-        </div>
+      <div class="map-wrap fi">
+        <div class="map-tooltip" id="mapTooltip"></div>
+        <svg id="euroMap" viewBox="0 0 560 520"></svg>
       </div>
     </div>
   </div>
@@ -332,79 +214,49 @@ footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-b
 
 <hr class="divider">
 
-<section id="modelovani">
+<!-- SERVICES -->
+<section id="sluzby">
   <div class="sw">
-    <div class="stag fi">Kalkulačka</div>
-    <div class="calc-intro fi">
-      <h2>Spočítejte si úsporu.</h2>
-      <p>Zadejte naměřená čtvrthodinová maxima z faktur a aktuálně sjednanou RRK. Model okamžitě spočítá ideální nastavení a roční úsporu.</p>
+    <div class="stag fi" data-t="srvTag">Naše služby</div>
+    <h2 class="services-h fi"><em data-t="srvH">Komplexní přístup</em><br><span data-t="srvH2">k úsporám energií</span></h2>
+    <p class="services-sub fi" data-t="srvSub">Od prvotní analýzy po dlouhodobý monitoring — pokrýváme celý cyklus optimalizace energetických nákladů.</p>
+    <div class="services-grid">
+      <div class="srv-card fi" style="border-top-color:var(--g)">
+        <div class="srv-num">01</div>
+        <h3 data-t="s1h">Monitoring energií</h3>
+        <p data-t="s1p">Kontinuální sledování spotřeby v reálném čase. Okamžité upozornění na odchylky od optima a překročení nastavených limitů.</p>
+      </div>
+      <div class="srv-card fi" style="border-top-color:rgba(0,232,122,.5)">
+        <div class="srv-num">02</div>
+        <h3 data-t="s2h">Energetické analýzy</h3>
+        <p data-t="s2p">Hloubková analýza historických dat spotřeby. Identifikace úsporného potenciálu a konkrétní doporučení ke smlouvám s distributory.</p>
+      </div>
+      <div class="srv-card fi" style="border-top-color:rgba(0,232,122,.25)">
+        <div class="srv-num">03</div>
+        <h3 data-t="s3h">Rezervovaná kapacita</h3>
+        <p data-t="s3p">Matematický model optimalizace RRK a MRK. Průměrná úspora 300 000 Kč ročně bez investic do nového vybavení.</p>
+      </div>
     </div>
-    <div class="calc-layout">
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sw">
+    <div class="stag fi" data-t="aboutTag">O společnosti</div>
+    <div class="about-cols">
       <div class="fi">
-        <div class="table-wrap">
-          <div class="table-top">
-            <span>Vstupní data — 12 měsíců</span>
-            <button class="btn-ex" id="btnEx">Načíst příklad</button>
-          </div>
-          <div class="prices-bar">
-            <div class="pc"><label>Cena RRK (Kč/kW/rok)</label><input type="number" id="cenaRRK" value="204.788" step="0.001"></div>
-            <div class="pc"><label>Cena MRK (Kč/kW/měs.)</label><input type="number" id="cenaMRK" value="224.429" step="0.001"></div>
-            <div class="pc"><label>Koef. překročení</label><input type="number" id="koef" value="1.5" step="0.1"></div>
-          </div>
-          <table>
-            <thead><tr><th>Měsíc</th><th>1/4h max (kW)</th><th>Navýšení MRK (kW)</th><th>Doporučení</th></tr></thead>
-            <tbody id="calcTable"></tbody>
-          </table>
-          <div class="rrk-bar">
-            <label>Aktuálně sjednaná RRK (kW):</label>
-            <input type="number" id="sjednanaRRK" value="650" style="width:90px">
-            <span class="rn">Porovná se s optimem</span>
-          </div>
-        </div>
-        <button class="btn-calc" id="btnCalc">Spočítat optimální nastavení &rarr;</button>
-        <div class="save-panel" id="savePanel">
-          <div class="save-panel-row">
-            <label>Název:</label>
-            <input class="save-input" type="text" id="calcName" placeholder="Výpočet ...">
-            <button class="btn-save" id="btnSave">Uložit výpočet</button>
-          </div>
-          <div id="saveMsg" style="font-family:var(--mono);font-size:.68rem;color:var(--mid);margin-top:.5rem"></div>
-        </div>
-        <p class="method-note"><strong>Metodika:</strong> Model hledá nejnižší RRK, při níž je součet ročních nákladů na RRK + MRK navýšení + 1,5&times; poplatky za překročení minimální.</p>
-        <div class="saved-section" id="savedSection">
-          <div class="saved-title">Uložené výpočty</div>
-          <div id="savedList"></div>
-        </div>
+        <h2 class="about-h"><em data-t="aboutH">Specialisté</em><br><span data-t="aboutH2">na energetické úspory</span></h2>
+        <p class="about-p" data-t="aboutP1">Livenia je analytická platforma zaměřená na snižování nákladů na energie pro průmyslové a komerční odběratele v EU. Kombinujeme matematické modely s hlubokými znalostmi lokálních energetických trhů.</p>
+        <p class="about-p" data-t="aboutP2">Naším cílem je, aby každá firma platila za energie přesně to, co skutečně potřebuje — ani euro navíc.</p>
       </div>
-      <div class="results-col fi">
-        <div class="sub-box">
-          <div class="sb-title">Předplatné</div>
-          <div class="sb-val">11&nbsp;800&nbsp;Kč&nbsp;/ rok</div>
-          <div class="sb-sub">= 990&nbsp;Kč měsíčně &middot; roční kontrola a nastavení</div>
-        </div>
-        <div class="res-block">
-          <div class="res-tag">Potenciální roční úspora</div>
-          <div class="res-val" id="resUspora">&mdash;</div>
-          <div class="res-sub" id="resUsporaSub">Zadejte data a spočítejte</div>
-        </div>
-        <div class="res-block">
-          <div class="res-tag">Doporučená hodnota RRK</div>
-          <div class="res-val" id="resRRK">&mdash;</div>
-          <div class="res-sub" id="resRRKsub">kW ročně sjednaná kapacita</div>
-        </div>
-        <div class="res-block">
-          <div class="res-tag">Rozpis nákladů</div>
-          <div id="resBreakdown"><div class="empty-state">Po spočítání se zobrazí<br>detailní výsledky.</div></div>
-        </div>
-        <div class="chart-block">
-          <div class="chart-tag">Průběh odběrů</div>
-          <div class="bars" id="chartBars"></div>
-          <div class="clegend">
-            <div class="lg"><div class="lgd" style="background:var(--border)"></div>V normě</div>
-            <div class="lg"><div class="lgd" style="background:#c45c00;opacity:.7"></div>Překročení</div>
-            <div class="lg"><div class="lgd" style="background:var(--g);height:2px;width:14px"></div>Ideální RRK</div>
-          </div>
-        </div>
+      <div class="stat-grid fi">
+        <div class="stat-box"><div class="stat-n">3</div><div class="stat-l" data-t="st1">Aktivní země EU</div></div>
+        <div class="stat-box"><div class="stat-n">30%</div><div class="stat-l" data-t="st2">Průměrné předražení</div></div>
+        <div class="stat-box"><div class="stat-n">24h</div><div class="stat-l" data-t="st3">Dodání analýzy</div></div>
+        <div class="stat-box"><div class="stat-n">EU</div><div class="stat-l" data-t="st4">Jednotný trh energií</div></div>
       </div>
     </div>
   </div>
@@ -412,495 +264,274 @@ footer{padding:2rem 3rem;display:flex;align-items:center;justify-content:space-b
 
 <hr class="divider">
 
+<!-- CONTACT -->
 <section id="kontakt">
   <div class="sw">
-    <div class="stag fi">Kontakt</div>
+    <div class="stag fi" data-t="ctaTag">Kontakt</div>
     <div class="fi">
-      <h2 class="contact-h">Pojďme si promluvit<br><em>o vaší úspoře.</em></h2>
-      <p class="contact-p">Pošlete nám e-mail s daty z faktur a do 24 hodin připravíme konkrétní analýzu vaší rezervované kapacity. Předplatné začíná na <strong>11&nbsp;800&nbsp;Kč ročně</strong> (990&nbsp;Kč/měs.) — každý rok nastavíme a zkontrolujeme vaši smlouvu.</p>
-      <a href="mailto:livenia@email.cz" class="contact-email">
-        livenia@email.cz
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-      </a>
+      <h2 class="contact-h" data-t="ctaH">Začněte šetřit<br><em data-t="ctaHi">ještě dnes.</em></h2>
+      <p class="contact-p" data-t="ctaP">Vyberte svou zemi na mapě výše a kontaktujte nás přes místní pobočku.</p>
+      
     </div>
   </div>
 </section>
 
 <footer>
   <span>&copy; 2025 Livenia</span>
-  <span>Snižujeme náklady na energie.</span>
+  <span data-t="footSub">Energetické úspory v EU</span>
 </footer>
 
-<!-- AUTH MODAL -->
-<div class="overlay" id="authOverlay">
+<!-- SERVICES MODAL (Netherlands) -->
+<div class="overlay" id="srvOverlay">
   <div class="modal-card">
-    <button class="modal-close" onclick="hideAuth()">&times;</button>
-    <div class="modal-logo">Livenia</div>
-
-    <!-- LOGIN -->
-    <div id="authViewLogin">
-      <div class="modal-title">Přihlásit se</div>
-      <div class="modal-sub">Přistupte ke svým výpočtům a nastavením.</div>
-      <div class="form-field"><label>E-mail</label><input class="form-input" type="email" id="loginEmail" autocomplete="email"></div>
-      <div class="form-field"><label>Heslo</label><input class="form-input" type="password" id="loginPw" autocomplete="current-password"></div>
-      <div class="form-error" id="loginErr"></div>
-      <button class="btn-primary" id="btnLogin" onclick="doLogin()">Přihlásit se</button>
-      <div class="modal-switch">Nemáte účet? <a onclick="switchAuth('register')">Registrovat se &rarr;</a></div>
-    </div>
-
-    <!-- REGISTER -->
-    <div id="authViewRegister" style="display:none">
-      <div class="modal-title">Registrace</div>
-      <div class="modal-sub">Vytvoříme vám účet a pošleme ověřovací kód na e-mail.</div>
-      <div class="form-field"><label>E-mail</label><input class="form-input" type="email" id="regEmail" autocomplete="email"></div>
-      <div class="form-field"><label>Heslo</label><input class="form-input" type="password" id="regPw" autocomplete="new-password"></div>
-      <div class="form-error" id="regErr"></div>
-      <button class="btn-primary" id="btnRegister" onclick="doRegister()">Vytvořit účet</button>
-      <div class="modal-switch">Máte účet? <a onclick="switchAuth('login')">&larr; Přihlásit se</a></div>
-    </div>
-
-    <!-- VERIFY -->
-    <div id="authViewVerify" style="display:none">
-      <div class="modal-title">Ověření e-mailu</div>
-      <div class="modal-sub" id="verifySubText">Zadejte 4-místný kód, který jsme poslali na váš e-mail.</div>
-      <input type="hidden" id="verifyEmail">
-      <div class="form-field" style="margin-top:1.5rem"><label>Ověřovací kód</label><input class="form-input code-input" type="text" id="verifyCode" maxlength="4" autocomplete="one-time-code"></div>
-      <div class="form-error" id="verifyErr"></div>
-      <button class="btn-primary" id="btnVerify" onclick="doVerify()">Potvrdit kód</button>
-      <div class="modal-switch"><a onclick="switchAuth('register')">&larr; Zpět na registraci</a></div>
+    <button class="modal-close" onclick="hideServices()">&times;</button>
+    <div class="modal-tag" data-t="mTag">Nederland – Onze diensten</div>
+    <div class="modal-h"><em data-t="mH">Energiebesparing</em><br><span data-t="mH2">in Nederland</span></div>
+    <p class="modal-p" data-t="mP">Livenia biedt energieoptimalisatiediensten voor industriële en commerciële afnemers in Nederland. Wij helpen u de energiekosten structureel te verlagen.</p>
+    <div class="modal-services">
+      <div class="ms-row">
+        <div class="ms-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="ms-body">
+          <h4 data-t="m1h">Energiemonitoring</h4>
+          <p data-t="m1p">Realtime bewaking van uw energieverbruik. Direct inzicht in afwijkingen en overschrijdingen van ingestelde limieten.</p>
+        </div>
+      </div>
+      <div class="ms-row">
+        <div class="ms-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <div class="ms-body">
+          <h4 data-t="m2h">Energieanalyses</h4>
+          <p data-t="m2p">Diepgaande analyse van historische verbruiksdata. Identificatie van besparingspotentieel en concrete aanbevelingen.</p>
+        </div>
+      </div>
+      <div class="ms-row">
+        <div class="ms-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div class="ms-body">
+          <h4 data-t="m3h">Gereserveerde capaciteit</h4>
+          <p data-t="m3p">Optimalisatie van uw aansluitcapaciteit op basis van kwartierwaarden. Gemiddeld 15–30% kostenbesparing.</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- PROMPT MODAL -->
-<div class="overlay" id="promptOverlay">
-  <div class="prompt-card">
-    <button class="modal-close" onclick="hidePrompt()">&times;</button>
-    <div class="prompt-h">Stačí už jen <em>jeden krok</em> zdarma,<br>abyste zjistili kolik můžete uspořit.</div>
-    <div class="prompt-sub">Po přihlášení okamžitě zobrazíme váš výsledek a uložíme výpočet pro příští návštěvu.</div>
-    <div class="prompt-btns">
-      <a class="btn-dark" style="cursor:pointer" onclick="hidePrompt();showAuth('login')">Přihlásit se</a>
-      <a class="btn-ghost" style="cursor:pointer" onclick="hidePrompt();showAuth('register')">Registrovat se</a>
-    </div>
-  </div>
-</div>
-
-<!-- ADMIN MODAL -->
-<div class="overlay" id="adminOverlay">
-  <div class="admin-card">
-    <div class="admin-head">
-      <h2>Správa uživatelů</h2>
-      <button class="modal-close" style="position:static" onclick="hideAdmin()">&times;</button>
-    </div>
-    <div class="admin-body">
-      <table class="admin-table" id="adminTable">
-        <thead><tr><th>E-mail</th><th>Ověřen</th><th>Výpočty</th><th>Registrace</th><th>Předplatné</th></tr></thead>
-        <tbody id="adminTbody"></tbody>
-      </table>
-    </div>
-  </div>
-</div>
-
+<script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson@3.0.2/dist/topojson.min.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  /* ─── STATE ─── */
-  var currentUser = null;
-  var dataSource  = 'empty'; // 'empty' | 'example' | 'manual'
-  var pendingCalc = false;
-  var lastCalcData = null;
-
-  var MF = ['Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec'];
-  var MS = ['Led','Úno','Bře','Dub','Kvě','Čer','Čvc','Srp','Zář','Říj','Lis','Pro'];
-
-  /* ─── BUILD TABLE ─── */
-  var tb = document.getElementById('calcTable');
-  for (var i = 0; i < 12; i++) {
-    var tr = document.createElement('tr');
-    tr.innerHTML = '<td class="mc">' + MF[i] + '</td>'
-      + '<td><input type="number" id="max' + i + '" placeholder="0" min="0"></td>'
-      + '<td><input type="number" id="mrk' + i + '" value="0" min="0"></td>'
-      + '<td><span class="rbadge" id="hint' + i + '">&mdash;</span></td>';
-    tb.appendChild(tr);
-    (function(idx){
-      document.getElementById('max'+idx).addEventListener('input', function(){ dataSource='manual'; });
-      document.getElementById('mrk'+idx).addEventListener('input', function(){ dataSource='manual'; });
-    })(i);
+/* ── TRANSLATIONS ── */
+var T = {
+  cs: {
+    eyebrow:'Energetické úspory v Evropské unii',
+    h1a:'Šetříme energie', h1b:'napříč Evropou.',
+    heroSub:'Pomáháme průmyslovým a komerčním odběratelům snižovat náklady na energie v zemích Evropské unie. Analýzy, monitoring a optimalizace smluv.',
+    scroll:'Zjistit více',
+    mapTag:'Kde působíme', mapH:'Aktivní ve třech zemích',
+    mapP1:'Livenia působí v zemích, kde je potenciál úspor na trhu s elektřinou nejvyšší. Spolupracujeme s firmami napříč průmyslovými odvětvími.',
+    mapP2:'Klikněte na zemi pro více informací o našich službách.',
+    czName:'Česká republika', czSub:'Optimalizace rezervované kapacity',
+    nlName:'Nizozemsko', nlSub:'Monitoring, analýzy, úspory', nlLink:'Služby →',
+    skName:'Slovensko', skSub:'Energetické analýzy', skLink:'livenia.sk →',
+    legActive:'Aktivní země Livenia', legEU:'Ostatní státy EU', legOther:'Ostatní státy Evropy',
+    srvTag:'Naše služby', srvH:'Komplexní přístup', srvH2:'k úsporám energií',
+    srvSub:'Od prvotní analýzy po dlouhodobý monitoring — pokrýváme celý cyklus optimalizace energetických nákladů.',
+    s1h:'Monitoring energií', s1p:'Kontinuální sledování spotřeby v reálném čase. Okamžité upozornění na odchylky od optima.',
+    s2h:'Energetické analýzy', s2p:'Hloubková analýza historických dat spotřeby. Identifikace úsporného potenciálu a doporučení ke smlouvám.',
+    s3h:'Rezervovaná kapacita', s3p:'Matematický model optimalizace RRK a MRK. Průměrná úspora 300 000 Kč ročně bez investic.',
+    aboutTag:'O společnosti', aboutH:'Specialisté', aboutH2:'na energetické úspory',
+    aboutP1:'Livenia je analytická platforma zaměřená na snižování nákladů na energie v EU. Kombinujeme matematické modely s hlubokými znalostmi lokálních trhů.',
+    aboutP2:'Naším cílem je, aby každá firma platila za energie přesně to, co skutečně potřebuje.',
+    st1:'Aktivní země EU', st2:'Průměrné předražení', st3:'Dodání analýzy', st4:'Jednotný trh energií',
+    ctaTag:'Kontakt', ctaH:'Začněte šetřit', ctaHi:'ještě dnes.',
+    ctaP:'Vyberte svou zemi na mapě výše a kontaktujte nás přes místní pobočku.',
+    ctaCountry:'Vyberte svou zemi na mapě výše a kontaktujte nás přes místní pobočku.',
+    footSub:'Energetické úspory v EU',
+    mTag:'Nederland – Naše služby', mH:'Energetické úspory', mH2:'v Nizozemsku',
+    mP:'Livenia nabízí optimalizaci energetických nákladů pro průmyslové a komerční odběratele v Nizozemsku.',
+    m1h:'Monitoring energií', m1p:'Sledování spotřeby v reálném čase s okamžitými upozorněními na odchylky.',
+    m2h:'Energetické analýzy', m2p:'Hloubková analýza dat s identifikací úsporného potenciálu a konkrétními doporučeními.',
+    m3h:'Rezervovaná kapacita', m3p:'Optimalizace sjednané kapacity na základě čtvrthodinových maxim. Průměrná úspora 15–30 %.',
+  },
+  nl: {
+    eyebrow:'Energiebesparing in de Europese Unie',
+    h1a:'Wij besparen energie', h1b:'door heel Europa.',
+    heroSub:'Wij helpen industriële en commerciële afnemers in EU-landen hun energiekosten te verlagen. Analyses, monitoring en contractoptimalisatie.',
+    scroll:'Meer informatie',
+    mapTag:'Waar we actief zijn', mapH:'Actief in drie landen',
+    mapP1:'Livenia is actief in landen met het grootste besparingspotentieel op de elektriciteitsmarkt. Wij werken samen met bedrijven in diverse industrieën.',
+    mapP2:'Klik op een land voor meer informatie over onze diensten.',
+    czName:'Tsjechië', czSub:'Optimalisatie gereserveerde capaciteit',
+    nlName:'Nederland', nlSub:'Monitoring, analyses, besparing', nlLink:'Diensten →',
+    skName:'Slowakije', skSub:'Energie-analyses', skLink:'livenia.sk →',
+    legActive:'Actieve Livenia-landen', legEU:'Overige EU-landen', legOther:'Overige Europese landen',
+    srvTag:'Onze diensten', srvH:'Een complete aanpak', srvH2:'voor energiebesparing',
+    srvSub:'Van eerste analyse tot langdurige monitoring — wij dekken de volledige cyclus van energiekostenoptimalisatie.',
+    s1h:'Energiemonitoring', s1p:'Continue bewaking van het verbruik in realtime. Direct alarm bij afwijkingen van het optimum.',
+    s2h:'Energie-analyses', s2p:'Diepgaande analyse van historische verbruiksdata. Identificatie van besparingspotentieel.',
+    s3h:'Gereserveerde capaciteit', s3p:'Wiskundig model voor optimalisatie van aansluitcapaciteit. Gemiddeld 15–30% kostenbesparing.',
+    aboutTag:'Over ons', aboutH:'Specialisten', aboutH2:'in energiebesparing',
+    aboutP1:'Livenia is een analytisch platform gericht op het verlagen van energiekosten in de EU. Wij combineren wiskundige modellen met diepgaande kennis van lokale energiemarkten.',
+    aboutP2:'Ons doel: elk bedrijf betaalt precies wat het werkelijk nodig heeft — niet meer.',
+    st1:'Actieve EU-landen', st2:'Gemiddelde te veel betaald', st3:'Analyse in uren', st4:'Gemeenschappelijke energiemarkt',
+    ctaTag:'Contact', ctaH:'Begin vandaag', ctaHi:'met besparen.',
+    ctaP:'Selecteer uw land op de kaart hierboven en neem contact met ons op via het lokale kantoor.',
+    ctaCountry:'Selecteer uw land op de kaart hierboven en neem contact met ons op via het lokale kantoor.',
+    footSub:'Energiebesparing in de EU',
+    mTag:'Nederland – Onze diensten', mH:'Energiebesparing', mH2:'in Nederland',
+    mP:'Livenia biedt energieoptimalisatiediensten voor industriële en commerciële afnemers in Nederland.',
+    m1h:'Energiemonitoring', m1p:'Realtime bewaking van uw energieverbruik. Direct inzicht in afwijkingen en overschrijdingen.',
+    m2h:'Energieanalyses', m2p:'Diepgaande analyse van historische verbruiksdata met concrete aanbevelingen.',
+    m3h:'Gereserveerde capaciteit', m3p:'Optimalisatie van uw aansluitcapaciteit op basis van kwartierwaarden. 15–30% kostenbesparing.',
+  },
+  sk: {
+    eyebrow:'Energetické úspory v Európskej únii',
+    h1a:'Šetríme energie', h1b:'naprieč Európou.',
+    heroSub:'Pomáhame priemyselným a komerčným odberateľom znižovať náklady na energie v krajinách EÚ. Analýzy, monitoring a optimalizácia zmlúv.',
+    scroll:'Zistiť viac',
+    mapTag:'Kde pôsobíme', mapH:'Aktívni v troch krajinách',
+    mapP1:'Livenia pôsobí v krajinách, kde je potenciál úspor na trhu s elektrinou najvyšší. Spolupracujeme s firmami naprieč priemyselnými odvetviami.',
+    mapP2:'Kliknite na krajinu pre viac informácií o našich službách.',
+    czName:'Česká republika', czSub:'Optimalizácia rezervovanej kapacity',
+    nlName:'Holandsko', nlSub:'Monitoring, analýzy, úspory', nlLink:'Služby →',
+    skName:'Slovensko', skSub:'Energetické analýzy', skLink:'livenia.sk →',
+    legActive:'Aktívne krajiny Livenia', legEU:'Ostatné štáty EÚ', legOther:'Ostatné štáty Európy',
+    srvTag:'Naše služby', srvH:'Komplexný prístup', srvH2:'k úsporám energií',
+    srvSub:'Od prvotnej analýzy po dlhodobý monitoring — pokrývame celý cyklus optimalizácie energetických nákladov.',
+    s1h:'Monitoring energií', s1p:'Kontinuálne sledovanie spotreby v reálnom čase. Okamžité upozornenie na odchýlky od optima.',
+    s2h:'Energetické analýzy', s2p:'Hĺbková analýza historických dát spotreby. Identifikácia úsporného potenciálu a odporúčania k zmluvám.',
+    s3h:'Rezervovaná kapacita', s3p:'Matematický model optimalizácie RRK a MRK. Priemerná úspora 300 000 Kč ročne bez investícií.',
+    aboutTag:'O spoločnosti', aboutH:'Špecialisti', aboutH2:'na energetické úspory',
+    aboutP1:'Livenia je analytická platforma zameraná na znižovanie nákladov na energie v EÚ. Kombinujeme matematické modely s hlbokými znalosťami lokálnych trhov.',
+    aboutP2:'Naším cieľom je, aby každá firma platila za energie presne to, čo skutočne potrebuje.',
+    st1:'Aktívne krajiny EÚ', st2:'Priemerné predraženie', st3:'Dodanie analýzy', st4:'Jednotný trh energií',
+    ctaTag:'Kontakt', ctaH:'Začnite šetriť', ctaHi:'už dnes.',
+    ctaP:'Vyberte svoju krajinu na mape vyššie a kontaktujte nás prostredníctvom miestnej pobočky.',
+    ctaCountry:'Vyberte svoju krajinu na mape vyššie a kontaktujte nás prostredníctvom miestnej pobočky.',
+    footSub:'Energetické úspory v EÚ',
+    mTag:'Holandsko – Naše služby', mH:'Energetické úspory', mH2:'v Holandsku',
+    mP:'Livenia ponúka optimalizáciu energetických nákladov pre priemyselných a komerčných odberateľov v Holandsku.',
+    m1h:'Monitoring energií', m1p:'Sledovanie spotreby v reálnom čase s okamžitými upozorneniami na odchýlky.',
+    m2h:'Energetické analýzy', m2p:'Hĺbková analýza dát s identifikáciou úsporného potenciálu a konkrétnymi odporúčaniami.',
+    m3h:'Rezervovaná kapacita', m3p:'Optimalizácia dohodnutej kapacity na základe štvrťhodinových maxím. Priemerná úspora 15–30 %.',
   }
+};
 
-  /* ─── PLACEHOLDER CHART ─── */
-  var cel = document.getElementById('chartBars');
-  for (var j = 0; j < 12; j++) {
-    cel.innerHTML += '<div class="bwrap"><div class="bar ba" style="height:' + (15+Math.floor(Math.random()*40)) + '%"></div><div class="blbl">' + MS[j] + '</div></div>';
-  }
-
-  /* ─── API HELPER ─── */
-  function api(params, cb) {
-    var fd = new FormData();
-    for (var k in params) fd.append(k, params[k]);
-    fetch('api.php', {method:'POST', body:fd, credentials:'same-origin'})
-      .then(function(r){ return r.json(); })
-      .then(cb)
-      .catch(function(){ cb({ok:false,error:'Chyba připojení'}); });
-  }
-
-  /* ─── SESSION CHECK ─── */
-  function checkSession() {
-    api({action:'check_session'}, function(d){
-      if (d.ok) setUser(d.user);
-    });
-  }
-
-  function setUser(u) {
-    currentUser = u;
-    if (u) {
-      document.getElementById('navAuth').style.display = 'none';
-      var nu = document.getElementById('navUser');
-      nu.style.display = 'flex';
-      document.getElementById('navUserEmail').textContent = u.email;
-      document.getElementById('navSubBadge').style.display = u.subscription ? 'inline' : 'none';
-      document.getElementById('navAdminBtn').style.display = u.is_admin ? 'inline-block' : 'none';
-      loadCalcs();
-    } else {
-      currentUser = null;
-      document.getElementById('navAuth').style.display = 'flex';
-      document.getElementById('navUser').style.display = 'none';
-      document.getElementById('savePanel').style.display = 'none';
-      document.getElementById('savedSection').style.display = 'none';
-    }
-  }
-
-  /* ─── LOGOUT ─── */
-  window.doLogout = function() {
-    api({action:'logout'}, function(){
-      setUser(null);
-    });
-  };
-
-  /* ─── AUTH MODAL ─── */
-  window.showAuth = function(tab) {
-    document.getElementById('authOverlay').classList.add('show');
-    switchAuth(tab);
-  };
-  window.hideAuth = function() {
-    document.getElementById('authOverlay').classList.remove('show');
-    clearAuthErrors();
-  };
-  window.switchAuth = function(tab) {
-    document.getElementById('authViewLogin').style.display    = tab==='login'    ? '' : 'none';
-    document.getElementById('authViewRegister').style.display = tab==='register' ? '' : 'none';
-    document.getElementById('authViewVerify').style.display   = tab==='verify'   ? '' : 'none';
-    clearAuthErrors();
-  };
-  function clearAuthErrors(){
-    ['loginErr','regErr','verifyErr'].forEach(function(id){
-      var el=document.getElementById(id); el.textContent=''; el.classList.remove('show');
-    });
-  }
-  function showErr(id, msg){
-    var el=document.getElementById(id); el.textContent=msg; el.classList.add('show');
-  }
-  function setBtnLoading(id, loading){
-    var b=document.getElementById(id); b.disabled=loading; b.textContent=loading?'Moment...':b.dataset.label||(b.textContent);
-  }
-
-  /* ─── REGISTER ─── */
-  window.doRegister = function() {
-    var email = document.getElementById('regEmail').value.trim();
-    var pw    = document.getElementById('regPw').value;
-    if (!email||!pw) { showErr('regErr','Vyplňte e-mail a heslo'); return; }
-    var btn = document.getElementById('btnRegister');
-    btn.disabled=true; btn.textContent='Odesílám...';
-    api({action:'register', email:email, password:pw}, function(d){
-      btn.disabled=false; btn.textContent='Vytvořit účet';
-      if (!d.ok) { showErr('regErr', d.error); return; }
-      document.getElementById('verifyEmail').value = email;
-      document.getElementById('verifySubText').textContent = 'Zadejte 4-místný kód, který jsme poslali na ' + email + '.';
-      switchAuth('verify');
-    });
-  };
-
-  /* ─── VERIFY ─── */
-  window.doVerify = function() {
-    var email = document.getElementById('verifyEmail').value;
-    var code  = document.getElementById('verifyCode').value.trim().toUpperCase();
-    if (code.length !== 4) { showErr('verifyErr','Zadejte 4-místný kód'); return; }
-    var btn = document.getElementById('btnVerify');
-    btn.disabled=true; btn.textContent='Ověřuji...';
-    api({action:'verify', email:email, code:code}, function(d){
-      btn.disabled=false; btn.textContent='Potvrdit kód';
-      if (!d.ok) { showErr('verifyErr', d.error); return; }
-      hideAuth();
-      setUser(d.user);
-      if (pendingCalc) { pendingCalc=false; runCalc(); }
-    });
-  };
-
-  /* ─── LOGIN ─── */
-  window.doLogin = function() {
-    var email = document.getElementById('loginEmail').value.trim();
-    var pw    = document.getElementById('loginPw').value;
-    if (!email||!pw) { showErr('loginErr','Vyplňte e-mail a heslo'); return; }
-    var btn = document.getElementById('btnLogin');
-    btn.disabled=true; btn.textContent='Přihlašuji...';
-    api({action:'login', email:email, password:pw}, function(d){
-      btn.disabled=false; btn.textContent='Přihlásit se';
-      if (!d.ok) {
-        if (d.needs_verify) {
-          document.getElementById('verifyEmail').value = d.email;
-          document.getElementById('verifySubText').textContent = 'Zadejte ověřovací kód odeslaný na ' + d.email + '.';
-          switchAuth('verify');
-        } else {
-          showErr('loginErr', d.error);
-        }
-        return;
-      }
-      hideAuth();
-      setUser(d.user);
-      if (pendingCalc) { pendingCalc=false; runCalc(); }
-    });
-  };
-
-  /* ─── PROMPT MODAL ─── */
-  window.showPrompt = function() { document.getElementById('promptOverlay').classList.add('show'); };
-  window.hidePrompt = function() { document.getElementById('promptOverlay').classList.remove('show'); };
-
-  /* ─── CALCULATOR ─── */
-  function fmt(n) { return Math.round(n).toLocaleString('cs-CZ') + ' Kč'; }
-
-  window.fillExample = function() {
-    var mx=[566,583,608,615,661,732,724,776,729,620,583,566];
-    var mr=[0,0,0,50,0,120,150,100,100,0,0,0];
-    for(var i=0;i<12;i++){
-      document.getElementById('max'+i).value=mx[i];
-      document.getElementById('mrk'+i).value=mr[i];
-    }
-    document.getElementById('sjednanaRRK').value=650;
-    dataSource='example';
-  };
-
-  function runCalc() {
-    var cRRK=parseFloat(document.getElementById('cenaRRK').value)||204.788;
-    var cMRK=parseFloat(document.getElementById('cenaMRK').value)||224.429;
-    var koef=parseFloat(document.getElementById('koef').value)||1.5;
-    var sjed=parseFloat(document.getElementById('sjednanaRRK').value)||650;
-    var maxima=[],mrkNav=[];
-    for(var i=0;i<12;i++){
-      maxima.push(parseFloat(document.getElementById('max'+i).value)||0);
-      mrkNav.push(parseFloat(document.getElementById('mrk'+i).value)||0);
-    }
-    var minC=Infinity,idealRRK=1;
-    for(var rk=1;rk<=3000;rk++){
-      var c=rk*cRRK*12;
-      for(var i=0;i<12;i++){c+=mrkNav[i]*cMRK;var ef=rk+mrkNav[i];if(ef<maxima[i])c+=(maxima[i]-ef)*cMRK*koef;}
-      if(c<minC){minC=c;idealRRK=rk;} else if(c>minC+5000)break;
-    }
-    var sC=sjed*cRRK*12,sM=0,sO=0;
-    for(var i=0;i<12;i++){sM+=mrkNav[i]*cMRK;var ef2=sjed+mrkNav[i];if(ef2<maxima[i])sO+=(maxima[i]-ef2)*cMRK*koef;}
-    var sTot=sC+sM+sO;
-    var oC=idealRRK*cRRK*12,oM=0,oO=0,dop=[];
-    for(var i=0;i<12;i++){
-      oM+=mrkNav[i]*cMRK;var ef3=idealRRK+mrkNav[i];
-      if(ef3<maxima[i]){var d=maxima[i]-ef3;oO+=d*cMRK*koef;dop.push(Math.ceil(d));}else dop.push(0);
-    }
-    var oTot=oC+oM+oO,usp=sTot-oTot;
-    for(var i=0;i<12;i++){
-      var h=document.getElementById('hint'+i);
-      if(dop[i]>0){h.textContent='+'+dop[i]+' kW';h.className='rbadge over';}
-      else{h.textContent='V pořádku';h.className='rbadge ok';}
-    }
-    var ru=document.getElementById('resUspora'),rs=document.getElementById('resUsporaSub');
-    var rr=document.getElementById('resRRK'),rb=document.getElementById('resRRKsub'),rd=document.getElementById('resBreakdown');
-    if(usp<20000){
-      ru.textContent='Nastaveno správně'; ru.className='res-val'; ru.style.fontSize='1.3rem';
-      rs.innerHTML='V rámci předplatného a odchylky máte nastaveno<br>správně &mdash; <strong>můžete být spokojeni.</strong>';
-    } else {
-      ru.textContent=fmt(usp); ru.className='res-val pos'; ru.style.fontSize='';
-      rs.textContent='Čistá úspora po odečtení předplatného: '+fmt(usp-11800);
-    }
-    rr.textContent=idealRRK+' kW';
-    rb.textContent='Minimální náklady: '+fmt(oTot);
-    rd.innerHTML='<div class="brow"><span>Roční RRK</span><span class="bv">'+fmt(oC)+'</span></div>'
-      +'<div class="brow"><span>MRK navýšení</span><span class="bv">'+fmt(oM)+'</span></div>'
-      +'<div class="brow"><span>Poplatky za překročení</span><span class="bv">'+fmt(oO)+'</span></div>'
-      +'<div class="brow tot"><span>Optimum celkem</span><span class="bv">'+fmt(oTot)+'</span></div>'
-      +'<div class="brow"><span>Aktuálně platíte</span><span class="bv">'+fmt(sTot)+'</span></div>';
-    // Chart
-    var maxV=Math.max.apply(null,maxima.concat([idealRRK,1]));
-    cel.innerHTML='';
-    for(var i=0;i<12;i++){
-      var hp=maxima[i]/maxV*85,isOver=(idealRRK+mrkNav[i])<maxima[i];
-      cel.innerHTML+='<div class="bwrap"><div class="bar '+(isOver?'bo':'ba')+'" style="height:'+hp+'%"></div><div class="blbl">'+MS[i]+'</div></div>';
-    }
-    var old=document.getElementById('rrkLine');if(old)old.remove();
-    var line=document.createElement('div');line.id='rrkLine';
-    line.style.cssText='position:absolute;bottom:'+(idealRRK/maxV*85)+'%;left:0;right:0;height:1px;background:#00e87a;pointer-events:none;';
-    cel.appendChild(line);
-    // Store for saving
-    lastCalcData = {
-      data: JSON.stringify({maxima:maxima,mrkNav:mrkNav,sjed:sjed,cRRK:cRRK,cMRK:cMRK,koef:koef}),
-      result: JSON.stringify({idealRRK:idealRRK,usp:usp,oTot:oTot,sTot:sTot})
-    };
-    // Show save panel if logged in
-    if (currentUser) {
-      document.getElementById('savePanel').style.display='block';
-      document.getElementById('calcName').value='Výpočet '+new Date().toLocaleDateString('cs-CZ');
-    }
-  }
-
-  window.vypocitat = function() {
-    if (dataSource === 'manual' && !currentUser) {
-      pendingCalc = true;
-      showPrompt();
-      return;
-    }
-    runCalc();
-  };
-
-  /* ─── SAVE CALC ─── */
-  document.getElementById('btnSave').addEventListener('click', function(){
-    if (!currentUser || !lastCalcData) return;
-    var name=document.getElementById('calcName').value.trim()||'Výpočet';
-    var msg=document.getElementById('saveMsg');
-    api({action:'save_calc', name:name, data:lastCalcData.data, result:lastCalcData.result}, function(d){
-      if (!d.ok) {
-        if (d.needs_subscription) {
-          msg.textContent='Bez předplatného lze uložit pouze 1 výpočet. Kontaktujte nás pro aktivaci předplatného.';
-          msg.style.color='#c45c00';
-        } else {
-          msg.textContent=d.error;
-          msg.style.color='#c45c00';
-        }
-      } else {
-        msg.textContent='Výpočet byl uložen.';
-        msg.style.color='var(--green)';
-        loadCalcs();
-        setTimeout(function(){msg.textContent='';},3000);
-      }
-    });
+var currentLang = 'cs';
+function setLang(l) {
+  currentLang = l;
+  ['cs','nl','sk'].forEach(function(x){
+    document.getElementById('btn-'+x).classList.toggle('active', x===l);
   });
-
-  /* ─── LOAD CALCS LIST ─── */
-  function loadCalcs() {
-    api({action:'get_calcs'}, function(d){
-      if (!d.ok || !d.calcs.length) {
-        document.getElementById('savedSection').style.display='none';
-        return;
-      }
-      document.getElementById('savedSection').style.display='block';
-      var list=document.getElementById('savedList');
-      list.innerHTML='';
-      d.calcs.forEach(function(c){
-        var item=document.createElement('div');
-        item.className='calc-item';
-        var dt=c.created_at ? c.created_at.substring(0,16).replace('T',' ') : '';
-        item.innerHTML='<div class="calc-item-left"><div class="calc-item-name">'+escHtml(c.name)+'</div><div class="calc-item-date">'+dt+'</div></div>'
-          +'<div class="calc-item-btns">'
-          +'<button class="btn-load" onclick="doLoadCalc('+c.id+')">Načíst</button>'
-          +'<button class="btn-del" onclick="doDeleteCalc('+c.id+',this)">Smazat</button>'
-          +'</div>';
-        list.appendChild(item);
-      });
-    });
-  }
-
-  window.doLoadCalc = function(id) {
-    api({action:'load_calc', id:id}, function(d){
-      if (!d.ok) return;
-      try {
-        var data=JSON.parse(d.calc.data);
-        for(var i=0;i<12;i++){
-          document.getElementById('max'+i).value=data.maxima[i]||0;
-          document.getElementById('mrk'+i).value=data.mrkNav[i]||0;
-        }
-        document.getElementById('sjednanaRRK').value=data.sjed||650;
-        document.getElementById('cenaRRK').value=data.cRRK||204.788;
-        document.getElementById('cenaMRK').value=data.cMRK||224.429;
-        document.getElementById('koef').value=data.koef||1.5;
-        dataSource='example';
-        runCalc();
-        document.getElementById('modelovani').scrollIntoView({behavior:'smooth'});
-      } catch(e){}
-    });
-  };
-
-  window.doDeleteCalc = function(id, btn) {
-    if (!confirm('Opravdu smazat tento výpočet?')) return;
-    api({action:'delete_calc', id:id}, function(d){
-      if (d.ok) { btn.closest('.calc-item').remove(); }
-    });
-  };
-
-  function escHtml(s){
-    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  }
-
-  /* ─── ADMIN ─── */
-  window.showAdmin = function() {
-    document.getElementById('adminOverlay').classList.add('show');
-    loadAdminUsers();
-  };
-  window.hideAdmin = function() {
-    document.getElementById('adminOverlay').classList.remove('show');
-  };
-
-  function loadAdminUsers() {
-    var tbody=document.getElementById('adminTbody');
-    tbody.innerHTML='<tr><td colspan="5" style="font-family:var(--mono);font-size:.72rem;color:var(--light);padding:1rem">Načítám...</td></tr>';
-    api({action:'admin_users'}, function(d){
-      if (!d.ok) { tbody.innerHTML='<tr><td colspan="5">Chyba</td></tr>'; return; }
-      tbody.innerHTML='';
-      if (!d.users.length) {
-        tbody.innerHTML='<tr><td colspan="5" style="font-family:var(--mono);font-size:.72rem;color:var(--light);padding:1rem">Žádní uživatelé</td></tr>';
-        return;
-      }
-      d.users.forEach(function(u){
-        var tr=document.createElement('tr');
-        var subBtn=u.subscription
-          ? '<button class="btn-toggle-y" onclick="toggleSub('+u.id+',this)">✓ Aktivní</button>'
-          : '<button class="btn-toggle-n" onclick="toggleSub('+u.id+',this)">Aktivovat</button>';
-        var verTag=u.verified ? '<span class="tag-y">Ověřen</span>' : '<span class="tag-n">Čeká</span>';
-        var dt=u.created_at?u.created_at.substring(0,10):'';
-        tr.innerHTML='<td style="font-size:.82rem">'+escHtml(u.email)+'</td>'
-          +'<td>'+verTag+'</td>'
-          +'<td style="font-family:var(--mono);font-size:.75rem;text-align:center">'+u.calcs+'</td>'
-          +'<td style="font-family:var(--mono);font-size:.72rem;color:var(--light)">'+dt+'</td>'
-          +'<td>'+subBtn+'</td>';
-        tbody.appendChild(tr);
-      });
-    });
-  }
-
-  window.toggleSub = function(id, btn) {
-    api({action:'admin_toggle_sub', id:id}, function(d){
-      if (!d.ok) return;
-      if (d.subscription) {
-        btn.className='btn-toggle-y'; btn.textContent='✓ Aktivní';
-        btn.setAttribute('onclick','toggleSub('+id+',this)');
-      } else {
-        btn.className='btn-toggle-n'; btn.textContent='Aktivovat';
-        btn.setAttribute('onclick','toggleSub('+id+',this)');
-      }
-    });
-  };
-
-  /* ─── BUTTON WIRING ─── */
-  document.getElementById('btnCalc').addEventListener('click', window.vypocitat);
-  document.getElementById('btnEx').addEventListener('click', window.fillExample);
-
-  /* ─── NAV SCROLL ─── */
-  window.addEventListener('scroll', function(){
-    document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY>60);
+  document.querySelectorAll('[data-t]').forEach(function(el){
+    var key = el.getAttribute('data-t');
+    if (T[l][key] !== undefined) el.textContent = T[l][key];
   });
+  document.documentElement.lang = l;
+}
 
-  /* ─── SCROLL FADE ─── */
-  var obs=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('v');});
-  },{threshold:0.08});
-  document.querySelectorAll('.fi').forEach(function(el){obs.observe(el);});
-
-  /* ─── INIT ─── */
-  checkSession();
+/* ── SERVICES MODAL ── */
+window.showServices = function() {
+  document.getElementById('srvOverlay').classList.add('show');
+};
+window.hideServices = function() {
+  document.getElementById('srvOverlay').classList.remove('show');
+};
+document.getElementById('srvOverlay').addEventListener('click', function(e){
+  if (e.target === this) hideServices();
 });
+
+/* ── MAP ── */
+var EU_IDS = [40,56,100,191,196,203,208,233,246,250,276,300,348,372,380,428,440,442,470,528,616,620,642,703,705,724,752];
+var FEATURED = {528:'nl', 203:'cz', 703:'sk'};
+
+d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(function(world) {
+  var countries = topojson.feature(world, world.objects.countries);
+  var svg = d3.select('#euroMap');
+  var W = 560, H = 520;
+
+  var projection = d3.geoNaturalEarth1()
+    .center([14, 54])
+    .scale(700)
+    .translate([W/2 - 30, H/2 + 20]);
+
+  var pathGen = d3.geoPath().projection(projection);
+  var tooltip = document.getElementById('mapTooltip');
+
+  // Country names (simplified)
+  var NAMES = {40:'Österreich',56:'België',100:'България',191:'Hrvatska',196:'Κύπρος',203:'Česká republika',208:'Danmark',233:'Eesti',246:'Suomi',250:'France',276:'Deutschland',300:'Ελλάδα',348:'Magyarország',372:'Ireland',380:'Italia',428:'Latvija',440:'Lietuva',442:'Lëtzebuerg',470:'Malta',528:'Nederland',616:'Polska',620:'Portugal',642:'România',703:'Slovensko',705:'Slovenija',724:'España',752:'Sverige',756:'Schweiz',826:'United Kingdom',578:'Norge',752:'Sverige',643:'Россия',804:'Україна',112:'Беларусь',688:'Srbija',807:'Северна Македонија',8:'Shqipëri',70:'Bosna i Hercegovina',499:'Crna Gora'};
+
+  svg.selectAll('path')
+    .data(countries.features)
+    .join('path')
+    .attr('d', function(d){ return pathGen(d) || ''; })
+    .attr('class', function(d){
+      var id = +d.id;
+      var f = FEATURED[id];
+      if (f) return 'country-path featured ' + f;
+      if (EU_IDS.indexOf(id) >= 0) return 'country-path eu';
+      return 'country-path';
+    })
+    .attr('fill', function(d){
+      var id = +d.id;
+      if (FEATURED[id]) return 'rgba(0,232,122,.4)';
+      if (EU_IDS.indexOf(id) >= 0) return '#c8c4bc';
+      return '#e4e0d8';
+    })
+    .attr('stroke', 'white')
+    .attr('stroke-width', function(d){ return FEATURED[+d.id] ? 0.8 : 0.4; })
+    .on('mouseover', function(event, d) {
+      var id = +d.id;
+      var name = NAMES[id];
+      if (!name) return;
+      var f = FEATURED[id];
+      if (f) {
+        d3.select(this).attr('fill','rgba(0,232,122,.75)');
+        document.getElementById('cl-'+f) && document.getElementById('cl-'+f).classList.add('hl');
+      } else if (EU_IDS.indexOf(id) >= 0) {
+        d3.select(this).attr('fill','#b0aca4');
+      }
+      tooltip.textContent = name + (id===203 ? ' → livenia.cz' : id===528 ? ' → Diensten' : id===703 ? ' → livenia.sk' : '');
+      tooltip.style.opacity = '1';
+    })
+    .on('mousemove', function(event) {
+      var box = document.getElementById('euroMap').getBoundingClientRect();
+      var wrap = document.querySelector('.map-wrap').getBoundingClientRect();
+      tooltip.style.left = (event.clientX - wrap.left + 10) + 'px';
+      tooltip.style.top  = (event.clientY - wrap.top - 30) + 'px';
+    })
+    .on('mouseout', function(event, d) {
+      var id = +d.id;
+      var f = FEATURED[id];
+      if (f) {
+        d3.select(this).attr('fill','rgba(0,232,122,.4)');
+        document.getElementById('cl-'+f) && document.getElementById('cl-'+f).classList.remove('hl');
+      } else if (EU_IDS.indexOf(id) >= 0) {
+        d3.select(this).attr('fill','#c8c4bc');
+      }
+      tooltip.style.opacity = '0';
+    })
+    .on('click', function(event, d) {
+      var id = +d.id;
+      if (id === 203) window.open('https://livenia.cz', '_blank');
+      else if (id === 528) showServices();
+      else if (id === 703) window.open('https://livenia.sk', '_blank');
+    });
+});
+
+/* ── NAV SCROLL ── */
+window.addEventListener('scroll', function(){
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ── SCROLL FADE ── */
+var obs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('v'); });
+},{threshold:0.08});
+document.querySelectorAll('.fi').forEach(function(el){ obs.observe(el); });
 </script>
 </body>
 </html>
